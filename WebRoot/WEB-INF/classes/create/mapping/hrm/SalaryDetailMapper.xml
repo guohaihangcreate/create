@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.hrm.SalaryDetailMapper" >
+  <resultMap id="BaseResultMap" type="create.model.hrm.SalaryDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="StaffName" property="staffname" jdbcType="VARCHAR" />
+    <result column="Position" property="position" jdbcType="VARCHAR" />
+    <result column="hr" property="hr" jdbcType="INTEGER" />
+    <result column="idNo" property="idno" jdbcType="VARCHAR" />
+    <result column="entryDate" property="entrydate" jdbcType="DATE" />
+    <result column="fullSalary" property="fullsalary" jdbcType="REAL" />
+    <result column="fullSalaryDate" property="fullsalarydate" jdbcType="VARCHAR" />
+    <result column="paymentWage" property="paymentwage" jdbcType="REAL" />
+    <result column="pcdeposit" property="pcdeposit" jdbcType="VARCHAR" />
+    <result column="insuranceStatus" property="insurancestatus" jdbcType="VARCHAR" />
+    <result column="payDay" property="payday" jdbcType="REAL" />
+    <result column="ActualPayDay" property="actualpayday" jdbcType="REAL" />
+    <result column="subsidyDebit" property="subsidydebit" jdbcType="REAL" />
+    <result column="subsidyDebitExplain" property="subsidydebitexplain" jdbcType="VARCHAR" />
+    <result column="reimbursement" property="reimbursement" jdbcType="REAL" />
+    <result column="socialsecurity" property="socialsecurity" jdbcType="REAL" />
+    <result column="AccumulationFund" property="accumulationfund" jdbcType="REAL" />
+    <result column="wages" property="wages" jdbcType="REAL" />
+    <result column="ActualWages" property="actualwages" jdbcType="REAL" />
+    <result column="incometax" property="incometax" jdbcType="REAL" />
+    <result column="selftax" property="selftax" jdbcType="REAL" />
+    <result column="shifagongzi" property="shifagongzi" jdbcType="REAL" />
+    <result column="yifa" property="yifa" jdbcType="REAL" />
+    <result column="bufa" property="bufa" jdbcType="REAL" />
+    <result column="zhanghu" property="zhanghu" jdbcType="VARCHAR" />
+    <result column="kaihuhangName" property="kaihuhangname" jdbcType="VARCHAR" />
+    <result column="yl1" property="yl1" jdbcType="VARCHAR" />
+    <result column="yl2" property="yl2" jdbcType="VARCHAR" />
+    <result column="yl3" property="yl3" jdbcType="VARCHAR" />
+    <result column="yl4" property="yl4" jdbcType="VARCHAR" />
+    <result column="companyid" property="companyid" jdbcType="INTEGER" />
+    <result column="createby" property="createby" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, StaffName, Position, hr, idNo,entryDate, fullSalary, fullSalaryDate, paymentWage, 
+    pcdeposit, insuranceStatus, payDay, ActualPayDay, subsidyDebit, subsidyDebitExplain, 
+    reimbursement, socialsecurity, AccumulationFund, wages, ActualWages, incometax,selftax, shifagongzi, 
+    yifa, bufa, zhanghu, kaihuhangName, yl1, yl2, yl3, yl4, companyid, createby
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from salarydetails
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!--  根据属性查询-->
+	<select id="selectSalaryByParamMap" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from salarydetails
+		<where>
+			 <if test="id != null" >
+		       id = #{id,jdbcType=INTEGER}
+		      </if>
+		      <if test="staffname != null" >
+		       and staffname like concat('%',#{staffname,jdbcType=VARCHAR},'%')
+		      </if>
+		      <if test="position != null" >
+			   and position like concat('%',#{position,jdbcType=VARCHAR},'%')
+		      </if>
+		      <if test="idno != null" >
+			   and idno like concat('%',#{idno,jdbcType=VARCHAR},'%')
+		      </if>
+		      <if test="hr != null" >
+		        and hr = #{hr,jdbcType=INTEGER}
+		      </if>
+		      <if test="yl3 != null" >
+		        and yl3 like concat('%',#{yl3,jdbcType=VARCHAR},'%')
+		      </if>
+		       <if test="yl1 != null" >
+		        and yl1 = #{yl1,jdbcType=VARCHAR}
+		      </if>
+		       <if test="yl2 != null" >
+		        and yl2 = #{yl2,jdbcType=VARCHAR}
+		      </if>
+		      <if test="yl4 != null" >
+		         and yl4 = #{yl4,jdbcType=VARCHAR}
+		      </if>
+		</where>
+	</select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from salarydetails
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="create.model.hrm.SalaryDetail" >
+    insert into salarydetails (id, StaffName, Position, 
+      hr, idNo, entryDate, fullSalary, 
+      fullSalaryDate, paymentWage, pcdeposit, 
+      insuranceStatus, payDay, ActualPayDay, 
+      subsidyDebit, subsidyDebitExplain, reimbursement, 
+      socialsecurity, AccumulationFund, wages, 
+      ActualWages, incometax,selftax, shifagongzi, 
+      yifa, bufa, zhanghu, kaihuhangName, 
+      yl1, yl2, yl3, yl4, 
+      companyid, createby)
+    values (#{id,jdbcType=INTEGER}, #{staffname,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, 
+      #{hr,jdbcType=INTEGER}, #{idno,jdbcType=VARCHAR}, #{entrydate,jdbcType=DATE}, #{fullsalary,jdbcType=REAL}, 
+      #{fullsalarydate,jdbcType=DATE}, #{paymentwage,jdbcType=REAL}, #{pcdeposit,jdbcType=VARCHAR}, 
+      #{insurancestatus,jdbcType=VARCHAR}, #{payday,jdbcType=REAL}, #{actualpayday,jdbcType=REAL}, 
+      #{subsidydebit,jdbcType=REAL}, #{subsidydebitexplain,jdbcType=VARCHAR}, #{reimbursement,jdbcType=REAL}, 
+      #{socialsecurity,jdbcType=REAL}, #{accumulationfund,jdbcType=REAL}, #{wages,jdbcType=REAL}, 
+      #{actualwages,jdbcType=REAL}, #{incometax,jdbcType=REAL},#{selftax,jdbcType=REAL}, #{shifagongzi,jdbcType=REAL}, 
+      #{yifa,jdbcType=REAL}, #{bufa,jdbcType=REAL}, #{zhanghu,jdbcType=VARCHAR}, #{kaihuhangname,jdbcType=VARCHAR}, 
+      #{yl1,jdbcType=VARCHAR}, #{yl2,jdbcType=VARCHAR}, #{yl3,jdbcType=VARCHAR}, #{yl4,jdbcType=VARCHAR}, 
+      #{companyid,jdbcType=INTEGER}, #{createby,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="create.model.hrm.SalaryDetail" >
+    insert into salarydetails
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="staffname != null" >
+        StaffName,
+      </if>
+      <if test="position != null" >
+        Position,
+      </if>
+      <if test="hr != null" >
+        hr,
+      </if>
+      <if test="idno != null" >
+        idNo,
+      </if>
+      <if test="entrydate != null" >
+        entryDate,
+      </if>
+      <if test="fullsalary != null" >
+        fullSalary,
+      </if>
+      <if test="fullsalarydate != null" >
+        fullSalaryDate,
+      </if>
+      <if test="paymentwage != null" >
+        paymentWage,
+      </if>
+      <if test="pcdeposit != null" >
+        pcdeposit,
+      </if>
+      <if test="insurancestatus != null" >
+        insuranceStatus,
+      </if>
+      <if test="payday != null" >
+        payDay,
+      </if>
+      <if test="actualpayday != null" >
+        ActualPayDay,
+      </if>
+      <if test="subsidydebit != null" >
+        subsidyDebit,
+      </if>
+      <if test="subsidydebitexplain != null" >
+        subsidyDebitExplain,
+      </if>
+      <if test="reimbursement != null" >
+        reimbursement,
+      </if>
+      <if test="socialsecurity != null" >
+        socialsecurity,
+      </if>
+      <if test="accumulationfund != null" >
+        AccumulationFund,
+      </if>
+      <if test="wages != null" >
+        wages,
+      </if>
+      <if test="actualwages != null" >
+        ActualWages,
+      </if>
+      <if test="incometax != null" >
+        incometax,
+      </if>
+      <if test="selftax != null" >
+        selftax,
+      </if>
+      <if test="shifagongzi != null" >
+        shifagongzi,
+      </if>
+      <if test="yifa != null" >
+        yifa,
+      </if>
+      <if test="bufa != null" >
+        bufa,
+      </if>
+      <if test="zhanghu != null" >
+        zhanghu,
+      </if>
+      <if test="kaihuhangname != null" >
+        kaihuhangName,
+      </if>
+      <if test="yl1 != null" >
+        yl1,
+      </if>
+      <if test="yl2 != null" >
+        yl2,
+      </if>
+      <if test="yl3 != null" >
+        yl3,
+      </if>
+      <if test="yl4 != null" >
+        yl4,
+      </if>
+      <if test="companyid != null" >
+        companyid,
+      </if>
+      <if test="createby != null" >
+        createby,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="staffname != null" >
+        #{staffname,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="hr != null" >
+        #{hr,jdbcType=INTEGER},
+      </if>
+      <if test="idno != null" >
+        #{idno,jdbcType=VARCHAR},
+      </if>
+      <if test="entrydate != null" >
+        #{entrydate,jdbcType=DATE},
+      </if>
+      <if test="fullsalary != null" >
+        #{fullsalary,jdbcType=REAL},
+      </if>
+      <if test="fullsalarydate != null" >
+        #{fullsalarydate,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentwage != null" >
+        #{paymentwage,jdbcType=REAL},
+      </if>
+      <if test="pcdeposit != null" >
+        #{pcdeposit,jdbcType=VARCHAR},
+      </if>
+      <if test="insurancestatus != null" >
+        #{insurancestatus,jdbcType=VARCHAR},
+      </if>
+      <if test="payday != null" >
+        #{payday,jdbcType=REAL},
+      </if>
+      <if test="actualpayday != null" >
+        #{actualpayday,jdbcType=REAL},
+      </if>
+      <if test="subsidydebit != null" >
+        #{subsidydebit,jdbcType=REAL},
+      </if>
+      <if test="subsidydebitexplain != null" >
+        #{subsidydebitexplain,jdbcType=VARCHAR},
+      </if>
+      <if test="reimbursement != null" >
+        #{reimbursement,jdbcType=REAL},
+      </if>
+      <if test="socialsecurity != null" >
+        #{socialsecurity,jdbcType=REAL},
+      </if>
+      <if test="accumulationfund != null" >
+        #{accumulationfund,jdbcType=REAL},
+      </if>
+      <if test="wages != null" >
+        #{wages,jdbcType=REAL},
+      </if>
+      <if test="actualwages != null" >
+        #{actualwages,jdbcType=REAL},
+      </if>
+      <if test="incometax != null" >
+        #{incometax,jdbcType=REAL},
+      </if>
+      <if test="selftax != null" >
+        #{selftax,jdbcType=REAL},
+      </if>
+      <if test="shifagongzi != null" >
+        #{shifagongzi,jdbcType=REAL},
+      </if>
+      <if test="yifa != null" >
+        #{yifa,jdbcType=REAL},
+      </if>
+      <if test="bufa != null" >
+        #{bufa,jdbcType=REAL},
+      </if>
+      <if test="zhanghu != null" >
+        #{zhanghu,jdbcType=VARCHAR},
+      </if>
+      <if test="kaihuhangname != null" >
+        #{kaihuhangname,jdbcType=VARCHAR},
+      </if>
+      <if test="yl1 != null" >
+        #{yl1,jdbcType=VARCHAR},
+      </if>
+      <if test="yl2 != null" >
+        #{yl2,jdbcType=VARCHAR},
+      </if>
+      <if test="yl3 != null" >
+        #{yl3,jdbcType=VARCHAR},
+      </if>
+      <if test="yl4 != null" >
+        #{yl4,jdbcType=VARCHAR},
+      </if>
+      <if test="companyid != null" >
+        #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="createby != null" >
+        #{createby,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="create.model.hrm.SalaryDetail" >
+    update salarydetails
+    <set >
+      <if test="staffname != null" >
+        StaffName = #{staffname,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        Position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="hr != null" >
+        hr = #{hr,jdbcType=INTEGER},
+      </if>
+      <if test="idno != null" >
+        idNo = #{idno,jdbcType=VARCHAR},
+      </if>
+      <if test="entrydate != null" >
+        entryDate = #{entrydate,jdbcType=DATE},
+      </if>
+      <if test="fullsalary != null" >
+        fullSalary = #{fullsalary,jdbcType=REAL},
+      </if>
+      <if test="fullsalarydate != null" >
+        fullSalaryDate = #{fullsalarydate,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentwage != null" >
+        paymentWage = #{paymentwage,jdbcType=REAL},
+      </if>
+      <if test="pcdeposit != null" >
+        pcdeposit = #{pcdeposit,jdbcType=VARCHAR},
+      </if>
+      <if test="insurancestatus != null" >
+        insuranceStatus = #{insurancestatus,jdbcType=VARCHAR},
+      </if>
+      <if test="payday != null" >
+        payDay = #{payday,jdbcType=REAL},
+      </if>
+      <if test="actualpayday != null" >
+        ActualPayDay = #{actualpayday,jdbcType=REAL},
+      </if>
+      <if test="subsidydebit != null" >
+        subsidyDebit = #{subsidydebit,jdbcType=REAL},
+      </if>
+      <if test="subsidydebitexplain != null" >
+        subsidyDebitExplain = #{subsidydebitexplain,jdbcType=VARCHAR},
+      </if>
+      <if test="reimbursement != null" >
+        reimbursement = #{reimbursement,jdbcType=REAL},
+      </if>
+      <if test="socialsecurity != null" >
+        socialsecurity = #{socialsecurity,jdbcType=REAL},
+      </if>
+      <if test="accumulationfund != null" >
+        AccumulationFund = #{accumulationfund,jdbcType=REAL},
+      </if>
+      <if test="wages != null" >
+        wages = #{wages,jdbcType=REAL},
+      </if>
+      <if test="actualwages != null" >
+        ActualWages = #{actualwages,jdbcType=REAL},
+      </if>
+      <if test="incometax != null" >
+        incometax = #{incometax,jdbcType=REAL},
+      </if>
+      <if test="selftax != null" >
+        selftax = #{selftax,jdbcType=REAL},
+      </if>
+      <if test="shifagongzi != null" >
+        shifagongzi = #{shifagongzi,jdbcType=REAL},
+      </if>
+      <if test="yifa != null" >
+        yifa = #{yifa,jdbcType=REAL},
+      </if>
+      <if test="bufa != null" >
+        bufa = #{bufa,jdbcType=REAL},
+      </if>
+      <if test="zhanghu != null" >
+        zhanghu = #{zhanghu,jdbcType=VARCHAR},
+      </if>
+      <if test="kaihuhangname != null" >
+        kaihuhangName = #{kaihuhangname,jdbcType=VARCHAR},
+      </if>
+      <if test="yl1 != null" >
+        yl1 = #{yl1,jdbcType=VARCHAR},
+      </if>
+      <if test="yl2 != null" >
+        yl2 = #{yl2,jdbcType=VARCHAR},
+      </if>
+      <if test="yl3 != null" >
+        yl3 = #{yl3,jdbcType=VARCHAR},
+      </if>
+      <if test="yl4 != null" >
+        yl4 = #{yl4,jdbcType=VARCHAR},
+      </if>
+      <if test="companyid != null" >
+        companyid = #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="createby != null" >
+        createby = #{createby,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="create.model.hrm.SalaryDetail" >
+    update salarydetails
+    set StaffName = #{staffname,jdbcType=VARCHAR},
+      Position = #{position,jdbcType=VARCHAR},
+      hr = #{hr,jdbcType=INTEGER},
+      idNo = #{idno,jdbcType=VARCHAR},
+      entryDate = #{entrydate,jdbcType=DATE},
+      fullSalary = #{fullsalary,jdbcType=REAL},
+      fullSalaryDate = #{fullsalarydate,jdbcType=DATE},
+      paymentWage = #{paymentwage,jdbcType=REAL},
+      pcdeposit = #{pcdeposit,jdbcType=VARCHAR},
+      insuranceStatus = #{insurancestatus,jdbcType=VARCHAR},
+      payDay = #{payday,jdbcType=REAL},
+      ActualPayDay = #{actualpayday,jdbcType=REAL},
+      subsidyDebit = #{subsidydebit,jdbcType=REAL},
+      subsidyDebitExplain = #{subsidydebitexplain,jdbcType=VARCHAR},
+      reimbursement = #{reimbursement,jdbcType=REAL},
+      socialsecurity = #{socialsecurity,jdbcType=REAL},
+      AccumulationFund = #{accumulationfund,jdbcType=REAL},
+      wages = #{wages,jdbcType=REAL},
+      ActualWages = #{actualwages,jdbcType=REAL},
+      incometax = #{incometax,jdbcType=REAL},
+      selftax = #{selftax,jdbcType=REAL},
+      shifagongzi = #{shifagongzi,jdbcType=REAL},
+      yifa = #{yifa,jdbcType=REAL},
+      bufa = #{bufa,jdbcType=REAL},
+      zhanghu = #{zhanghu,jdbcType=VARCHAR},
+      kaihuhangName = #{kaihuhangname,jdbcType=VARCHAR},
+      yl1 = #{yl1,jdbcType=VARCHAR},
+      yl2 = #{yl2,jdbcType=VARCHAR},
+      yl3 = #{yl3,jdbcType=VARCHAR},
+      yl4 = #{yl4,jdbcType=VARCHAR},
+      companyid = #{companyid,jdbcType=INTEGER},
+      createby = #{createby,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

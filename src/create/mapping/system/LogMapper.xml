@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.system.LogMapper" >
+  <resultMap id="BaseResultMap" type="create.model.system.Log" >
+    <id column="log_id" property="logId" jdbcType="INTEGER" />
+    <result column="op_type" property="opType" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="tu_id" property="tuId" jdbcType="INTEGER" />
+    <result column="gen_time" property="genTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    log_id, op_type, content, tu_id, gen_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tlog
+    where log_id = #{logId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tlog
+    where log_id = #{logId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="create.model.system.Log" >
+    insert into tlog (log_id, op_type, content, 
+      tu_id, gen_time)
+    values (#{logId,jdbcType=INTEGER}, #{opType,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
+      #{tuId,jdbcType=INTEGER}, #{genTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="create.model.system.Log" >
+    insert into tlog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        log_id,
+      </if>
+      <if test="opType != null" >
+        op_type,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="tuId != null" >
+        tu_id,
+      </if>
+      <if test="genTime != null" >
+        gen_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        #{logId,jdbcType=INTEGER},
+      </if>
+      <if test="opType != null" >
+        #{opType,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="tuId != null" >
+        #{tuId,jdbcType=INTEGER},
+      </if>
+      <if test="genTime != null" >
+        #{genTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="create.model.system.Log" >
+    update tlog
+    <set >
+      <if test="opType != null" >
+        op_type = #{opType,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="tuId != null" >
+        tu_id = #{tuId,jdbcType=INTEGER},
+      </if>
+      <if test="genTime != null" >
+        gen_time = #{genTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where log_id = #{logId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="create.model.system.Log" >
+    update tlog
+    set op_type = #{opType,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      tu_id = #{tuId,jdbcType=INTEGER},
+      gen_time = #{genTime,jdbcType=TIMESTAMP}
+    where log_id = #{logId,jdbcType=INTEGER}
+  </update>
+</mapper>

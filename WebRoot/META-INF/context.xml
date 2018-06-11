@@ -1,0 +1,7 @@
+<Context>
+  <Resource name="mail/Dog" auth="Container"
+            type="javax.mail.Session"
+            mail.smtp.host="smtp.163.com" mail.smtp.auth="true"
+            mail.transport.protocol="smtp"
+            />
+</Context>

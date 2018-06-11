@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.waipai.CreateofferMapper" >
+  <resultMap id="BaseResultMap" type="create.model.waipai.Createoffer" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="syqgzbl" property="syqgzbl" jdbcType="REAL" />
+    <result column="syq" property="syq" jdbcType="INTEGER" />
+    <result column="sqgz" property="sqgz" jdbcType="INTEGER" />
+    <result column="rzlxr" property="rzlxr" jdbcType="INTEGER" />
+    <result column="rzstart_datetime" property="rzstartDatetime" jdbcType="TIMESTAMP" />
+    <result column="rzend_datetime" property="rzendDatetime" jdbcType="TIMESTAMP" />
+    <result column="gw" property="gw" jdbcType="INTEGER" />
+    <result column="rzbm" property="rzbm" jdbcType="INTEGER" />
+    <result column="offer_template" property="offerTemplate" jdbcType="INTEGER" />
+    <result column="ISDELETED" property="isdeleted" jdbcType="INTEGER" />
+    <result column="DELETEDBY" property="deletedby" jdbcType="INTEGER" />
+    <result column="DELETETIME" property="deletetime" jdbcType="TIMESTAMP" />
+    <result column="CREATEDBY" property="createdby" jdbcType="INTEGER" />
+    <result column="CREATETIME" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="LASTMODIFIEDBY" property="lastmodifiedby" jdbcType="INTEGER" />
+    <result column="LASTMODIFIEDTIME" property="lastmodifiedtime" jdbcType="TIMESTAMP" />
+    <result column="ATT1" property="att1" jdbcType="VARCHAR" />
+    <result column="ATT2" property="att2" jdbcType="VARCHAR" />
+    <result column="ATT3" property="att3" jdbcType="VARCHAR" />
+    <result column="ATT4" property="att4" jdbcType="VARCHAR" />
+    <result column="ATT5" property="att5" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, syqgzbl, syq, sqgz, rzlxr, rzstart_datetime, rzend_datetime, gw, rzbm, offer_template, 
+    ISDELETED, DELETEDBY, DELETETIME, CREATEDBY, CREATETIME, LASTMODIFIEDBY, LASTMODIFIEDTIME, 
+    ATT1, ATT2, ATT3, ATT4, ATT5
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from createoffer
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from createoffer
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="create.model.waipai.Createoffer" >
+    insert into createoffer (id, syqgzbl, syq, 
+      sqgz, rzlxr, rzstart_datetime, 
+      rzend_datetime, gw, rzbm, 
+      offer_template, ISDELETED, DELETEDBY, 
+      DELETETIME, CREATEDBY, CREATETIME, 
+      LASTMODIFIEDBY, LASTMODIFIEDTIME, ATT1, 
+      ATT2, ATT3, ATT4, ATT5
+      )
+    values (#{id,jdbcType=INTEGER}, #{syqgzbl,jdbcType=REAL}, #{syq,jdbcType=INTEGER}, 
+      #{sqgz,jdbcType=INTEGER}, #{rzlxr,jdbcType=INTEGER}, #{rzstartDatetime,jdbcType=TIMESTAMP}, 
+      #{rzendDatetime,jdbcType=TIMESTAMP}, #{gw,jdbcType=INTEGER}, #{rzbm,jdbcType=INTEGER}, 
+      #{offerTemplate,jdbcType=INTEGER}, #{isdeleted,jdbcType=INTEGER}, #{deletedby,jdbcType=INTEGER}, 
+      #{deletetime,jdbcType=TIMESTAMP}, #{createdby,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{lastmodifiedby,jdbcType=INTEGER}, #{lastmodifiedtime,jdbcType=TIMESTAMP}, #{att1,jdbcType=VARCHAR}, 
+      #{att2,jdbcType=VARCHAR}, #{att3,jdbcType=VARCHAR}, #{att4,jdbcType=VARCHAR}, #{att5,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="create.model.waipai.Createoffer" >
+    insert into createoffer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="syqgzbl != null" >
+        syqgzbl,
+      </if>
+      <if test="syq != null" >
+        syq,
+      </if>
+      <if test="sqgz != null" >
+        sqgz,
+      </if>
+      <if test="rzlxr != null" >
+        rzlxr,
+      </if>
+      <if test="rzstartDatetime != null" >
+        rzstart_datetime,
+      </if>
+      <if test="rzendDatetime != null" >
+        rzend_datetime,
+      </if>
+      <if test="gw != null" >
+        gw,
+      </if>
+      <if test="rzbm != null" >
+        rzbm,
+      </if>
+      <if test="offerTemplate != null" >
+        offer_template,
+      </if>
+      <if test="isdeleted != null" >
+        ISDELETED,
+      </if>
+      <if test="deletedby != null" >
+        DELETEDBY,
+      </if>
+      <if test="deletetime != null" >
+        DELETETIME,
+      </if>
+      <if test="createdby != null" >
+        CREATEDBY,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+      <if test="lastmodifiedby != null" >
+        LASTMODIFIEDBY,
+      </if>
+      <if test="lastmodifiedtime != null" >
+        LASTMODIFIEDTIME,
+      </if>
+      <if test="att1 != null" >
+        ATT1,
+      </if>
+      <if test="att2 != null" >
+        ATT2,
+      </if>
+      <if test="att3 != null" >
+        ATT3,
+      </if>
+      <if test="att4 != null" >
+        ATT4,
+      </if>
+      <if test="att5 != null" >
+        ATT5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="syqgzbl != null" >
+        #{syqgzbl,jdbcType=REAL},
+      </if>
+      <if test="syq != null" >
+        #{syq,jdbcType=INTEGER},
+      </if>
+      <if test="sqgz != null" >
+        #{sqgz,jdbcType=INTEGER},
+      </if>
+      <if test="rzlxr != null" >
+        #{rzlxr,jdbcType=INTEGER},
+      </if>
+      <if test="rzstartDatetime != null" >
+        #{rzstartDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rzendDatetime != null" >
+        #{rzendDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gw != null" >
+        #{gw,jdbcType=INTEGER},
+      </if>
+      <if test="rzbm != null" >
+        #{rzbm,jdbcType=INTEGER},
+      </if>
+      <if test="offerTemplate != null" >
+        #{offerTemplate,jdbcType=INTEGER},
+      </if>
+      <if test="isdeleted != null" >
+        #{isdeleted,jdbcType=INTEGER},
+      </if>
+      <if test="deletedby != null" >
+        #{deletedby,jdbcType=INTEGER},
+      </if>
+      <if test="deletetime != null" >
+        #{deletetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdby != null" >
+        #{createdby,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastmodifiedby != null" >
+        #{lastmodifiedby,jdbcType=INTEGER},
+      </if>
+      <if test="lastmodifiedtime != null" >
+        #{lastmodifiedtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="att1 != null" >
+        #{att1,jdbcType=VARCHAR},
+      </if>
+      <if test="att2 != null" >
+        #{att2,jdbcType=VARCHAR},
+      </if>
+      <if test="att3 != null" >
+        #{att3,jdbcType=VARCHAR},
+      </if>
+      <if test="att4 != null" >
+        #{att4,jdbcType=VARCHAR},
+      </if>
+      <if test="att5 != null" >
+        #{att5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="create.model.waipai.Createoffer" >
+    update createoffer
+    <set >
+      <if test="syqgzbl != null" >
+        syqgzbl = #{syqgzbl,jdbcType=REAL},
+      </if>
+      <if test="syq != null" >
+        syq = #{syq,jdbcType=INTEGER},
+      </if>
+      <if test="sqgz != null" >
+        sqgz = #{sqgz,jdbcType=INTEGER},
+      </if>
+      <if test="rzlxr != null" >
+        rzlxr = #{rzlxr,jdbcType=INTEGER},
+      </if>
+      <if test="rzstartDatetime != null" >
+        rzstart_datetime = #{rzstartDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rzendDatetime != null" >
+        rzend_datetime = #{rzendDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gw != null" >
+        gw = #{gw,jdbcType=INTEGER},
+      </if>
+      <if test="rzbm != null" >
+        rzbm = #{rzbm,jdbcType=INTEGER},
+      </if>
+      <if test="offerTemplate != null" >
+        offer_template = #{offerTemplate,jdbcType=INTEGER},
+      </if>
+      <if test="isdeleted != null" >
+        ISDELETED = #{isdeleted,jdbcType=INTEGER},
+      </if>
+      <if test="deletedby != null" >
+        DELETEDBY = #{deletedby,jdbcType=INTEGER},
+      </if>
+      <if test="deletetime != null" >
+        DELETETIME = #{deletetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdby != null" >
+        CREATEDBY = #{createdby,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastmodifiedby != null" >
+        LASTMODIFIEDBY = #{lastmodifiedby,jdbcType=INTEGER},
+      </if>
+      <if test="lastmodifiedtime != null" >
+        LASTMODIFIEDTIME = #{lastmodifiedtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="att1 != null" >
+        ATT1 = #{att1,jdbcType=VARCHAR},
+      </if>
+      <if test="att2 != null" >
+        ATT2 = #{att2,jdbcType=VARCHAR},
+      </if>
+      <if test="att3 != null" >
+        ATT3 = #{att3,jdbcType=VARCHAR},
+      </if>
+      <if test="att4 != null" >
+        ATT4 = #{att4,jdbcType=VARCHAR},
+      </if>
+      <if test="att5 != null" >
+        ATT5 = #{att5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="create.model.waipai.Createoffer" >
+    update createoffer
+    set syqgzbl = #{syqgzbl,jdbcType=REAL},
+      syq = #{syq,jdbcType=INTEGER},
+      sqgz = #{sqgz,jdbcType=INTEGER},
+      rzlxr = #{rzlxr,jdbcType=INTEGER},
+      rzstart_datetime = #{rzstartDatetime,jdbcType=TIMESTAMP},
+      rzend_datetime = #{rzendDatetime,jdbcType=TIMESTAMP},
+      gw = #{gw,jdbcType=INTEGER},
+      rzbm = #{rzbm,jdbcType=INTEGER},
+      offer_template = #{offerTemplate,jdbcType=INTEGER},
+      ISDELETED = #{isdeleted,jdbcType=INTEGER},
+      DELETEDBY = #{deletedby,jdbcType=INTEGER},
+      DELETETIME = #{deletetime,jdbcType=TIMESTAMP},
+      CREATEDBY = #{createdby,jdbcType=INTEGER},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      LASTMODIFIEDBY = #{lastmodifiedby,jdbcType=INTEGER},
+      LASTMODIFIEDTIME = #{lastmodifiedtime,jdbcType=TIMESTAMP},
+      ATT1 = #{att1,jdbcType=VARCHAR},
+      ATT2 = #{att2,jdbcType=VARCHAR},
+      ATT3 = #{att3,jdbcType=VARCHAR},
+      ATT4 = #{att4,jdbcType=VARCHAR},
+      ATT5 = #{att5,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

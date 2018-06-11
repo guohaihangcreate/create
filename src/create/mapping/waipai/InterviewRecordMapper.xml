@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.waipai.InterviewRecordMapper">
+	<resultMap id="BaseResultMap"
+		type="create.model.waipai.InterviewRecord">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="yqId" property="yqid" jdbcType="INTEGER" />
+		<result column="khId" property="khid" jdbcType="INTEGER" />
+		<result column="msjg" property="msjg" jdbcType="INTEGER" />
+		<result column="jiid" property="jiid" jdbcType="INTEGER" />
+		<result column="bz" property="bz" jdbcType="VARCHAR" />
+		<result column="ISDELETED" property="isdeleted"
+			jdbcType="INTEGER" />
+		<result column="DELETEDBY" property="deletedby"
+			jdbcType="INTEGER" />
+		<result column="DELETETIME" property="deletetime"
+			jdbcType="TIMESTAMP" />
+		<result column="CREATEDBY" property="createdby"
+			jdbcType="INTEGER" />
+		<result column="CREATETIME" property="createtime"
+			jdbcType="TIMESTAMP" />
+		<result column="LASTMODIFIEDBY" property="lastmodifiedby"
+			jdbcType="INTEGER" />
+		<result column="LASTMODIFIEDTIME" property="lastmodifiedtime"
+			jdbcType="TIMESTAMP" />
+		<result column="ATT1" property="att1" jdbcType="VARCHAR" />
+		<result column="ATT2" property="att2" jdbcType="VARCHAR" />
+		<result column="ATT3" property="att3" jdbcType="VARCHAR" />
+		<result column="ATT4" property="att4" jdbcType="VARCHAR" />
+		<result column="ATT5" property="att5" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, yqId, khId, msjg, jiid, bz, ISDELETED, DELETEDBY,
+		DELETETIME, CREATEDBY, CREATETIME, LASTMODIFIEDBY,
+		LASTMODIFIEDTIME, ATT1, ATT2, ATT3, ATT4, ATT5
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from interviewrecord where id = #{id,jdbcType=INTEGER}
+	</select>
+	<!--   //根据邀请id查询邀请详细-->
+	<select id="selectInterviewRecordsByYaoqingID"
+		resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from interviewrecord where yqid = #{yqid,jdbcType=INTEGER}
+	</select>
+	<select id="selectInterviewRecordsByParam" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from interviewrecord
+		<where>
+			<if test="yqid!=null">yqid = #{yqid,jdbcType=INTEGER}</if>
+			<if test="jiid!=null">
+				and jiid = #{jiid,jdbcType=INTEGER}
+			</if>
+			<if test="msjg!=null">
+				and msjg = #{msjg,jdbcType=INTEGER}
+			</if>
+		</where>
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from interviewrecord where yqid = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert"
+		parameterType="create.model.waipai.InterviewRecord">
+		insert into interviewrecord (id, yqId, khId, msjg, jiid, bz,
+		ISDELETED, DELETEDBY, DELETETIME, CREATEDBY, CREATETIME,
+		LASTMODIFIEDBY, LASTMODIFIEDTIME, ATT1, ATT2, ATT3, ATT4, ATT5)
+		values (#{id,jdbcType=INTEGER}, #{yqid,jdbcType=INTEGER},
+		#{khid,jdbcType=INTEGER}, #{msjg,jdbcType=INTEGER},
+		#{jiid,jdbcType=INTEGER}, #{bz,jdbcType=VARCHAR},
+		#{isdeleted,jdbcType=INTEGER}, #{deletedby,jdbcType=INTEGER},
+		#{deletetime,jdbcType=TIMESTAMP}, #{createdby,jdbcType=INTEGER},
+		#{createtime,jdbcType=TIMESTAMP},
+		#{lastmodifiedby,jdbcType=INTEGER},
+		#{lastmodifiedtime,jdbcType=TIMESTAMP},
+		#{att1,jdbcType=VARCHAR}, #{att2,jdbcType=VARCHAR},
+		#{att3,jdbcType=VARCHAR}, #{att4,jdbcType=VARCHAR},
+		#{att5,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="create.model.waipai.InterviewRecord">
+		insert into interviewrecord
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="yqid != null">yqId,</if>
+			<if test="khid != null">khId,</if>
+			<if test="msjg != null">msjg,</if>
+			<if test="jiid != null">jiid,</if>
+			<if test="bz != null">bz,</if>
+			<if test="isdeleted != null">ISDELETED,</if>
+			<if test="deletedby != null">DELETEDBY,</if>
+			<if test="deletetime != null">DELETETIME,</if>
+			<if test="createdby != null">CREATEDBY,</if>
+			<if test="createtime != null">CREATETIME,</if>
+			<if test="lastmodifiedby != null">LASTMODIFIEDBY,</if>
+			<if test="lastmodifiedtime != null">LASTMODIFIEDTIME,</if>
+			<if test="att1 != null">ATT1,</if>
+			<if test="att2 != null">ATT2,</if>
+			<if test="att3 != null">ATT3,</if>
+			<if test="att4 != null">ATT4,</if>
+			<if test="att5 != null">ATT5,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id,jdbcType=INTEGER},</if>
+			<if test="yqid != null">#{yqid,jdbcType=INTEGER},</if>
+			<if test="khid != null">#{khid,jdbcType=INTEGER},</if>
+			<if test="msjg != null">#{msjg,jdbcType=INTEGER},</if>
+			<if test="jiid != null">#{jiid,jdbcType=INTEGER},</if>
+			<if test="bz != null">#{bz,jdbcType=VARCHAR},</if>
+			<if test="isdeleted != null">
+				#{isdeleted,jdbcType=INTEGER},
+			</if>
+			<if test="deletedby != null">
+				#{deletedby,jdbcType=INTEGER},
+			</if>
+			<if test="deletetime != null">
+				#{deletetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdby != null">
+				#{createdby,jdbcType=INTEGER},
+			</if>
+			<if test="createtime != null">
+				#{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastmodifiedby != null">
+				#{lastmodifiedby,jdbcType=INTEGER},
+			</if>
+			<if test="lastmodifiedtime != null">
+				#{lastmodifiedtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="att1 != null">#{att1,jdbcType=VARCHAR},</if>
+			<if test="att2 != null">#{att2,jdbcType=VARCHAR},</if>
+			<if test="att3 != null">#{att3,jdbcType=VARCHAR},</if>
+			<if test="att4 != null">#{att4,jdbcType=VARCHAR},</if>
+			<if test="att5 != null">#{att5,jdbcType=VARCHAR},</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="create.model.waipai.InterviewRecord">
+		update interviewrecord
+		<set>
+			<if test="yqid != null">
+				yqId = #{yqid,jdbcType=INTEGER},
+			</if>
+			<if test="khid != null">
+				khId = #{khid,jdbcType=INTEGER},
+			</if>
+			<if test="msjg != null">
+				msjg = #{msjg,jdbcType=INTEGER},
+			</if>
+			<if test="jiid != null">
+				jiid = #{jiid,jdbcType=INTEGER},
+			</if>
+			<if test="bz != null">bz = #{bz,jdbcType=VARCHAR},</if>
+			<if test="isdeleted != null">
+				ISDELETED = #{isdeleted,jdbcType=INTEGER},
+			</if>
+			<if test="deletedby != null">
+				DELETEDBY = #{deletedby,jdbcType=INTEGER},
+			</if>
+			<if test="deletetime != null">
+				DELETETIME = #{deletetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdby != null">
+				CREATEDBY = #{createdby,jdbcType=INTEGER},
+			</if>
+			<if test="createtime != null">
+				CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastmodifiedby != null">
+				LASTMODIFIEDBY = #{lastmodifiedby,jdbcType=INTEGER},
+			</if>
+			<if test="lastmodifiedtime != null">
+				LASTMODIFIEDTIME =
+				#{lastmodifiedtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="att1 != null">
+				ATT1 = #{att1,jdbcType=VARCHAR},
+			</if>
+			<if test="att2 != null">
+				ATT2 = #{att2,jdbcType=VARCHAR},
+			</if>
+			<if test="att3 != null">
+				ATT3 = #{att3,jdbcType=VARCHAR},
+			</if>
+			<if test="att4 != null">
+				ATT4 = #{att4,jdbcType=VARCHAR},
+			</if>
+			<if test="att5 != null">
+				ATT5 = #{att5,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="create.model.waipai.InterviewRecord">
+		update interviewrecord set yqId = #{yqid,jdbcType=INTEGER}, khId
+		= #{khid,jdbcType=INTEGER}, msjg = #{msjg,jdbcType=INTEGER},
+		jiid = #{jiid,jdbcType=INTEGER}, bz = #{bz,jdbcType=VARCHAR},
+		ISDELETED = #{isdeleted,jdbcType=INTEGER}, DELETEDBY =
+		#{deletedby,jdbcType=INTEGER}, DELETETIME =
+		#{deletetime,jdbcType=TIMESTAMP}, CREATEDBY =
+		#{createdby,jdbcType=INTEGER}, CREATETIME =
+		#{createtime,jdbcType=TIMESTAMP}, LASTMODIFIEDBY =
+		#{lastmodifiedby,jdbcType=INTEGER}, LASTMODIFIEDTIME =
+		#{lastmodifiedtime,jdbcType=TIMESTAMP}, ATT1 =
+		#{att1,jdbcType=VARCHAR}, ATT2 = #{att2,jdbcType=VARCHAR}, ATT3
+		= #{att3,jdbcType=VARCHAR}, ATT4 = #{att4,jdbcType=VARCHAR},
+		ATT5 = #{att5,jdbcType=VARCHAR} where id =
+		#{id,jdbcType=INTEGER}
+	</update>
+</mapper>

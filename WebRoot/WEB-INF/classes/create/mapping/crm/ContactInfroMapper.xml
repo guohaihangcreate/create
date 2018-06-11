@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.crm.ContactInfroMapper">
+	<resultMap id="BaseResultMap"
+		type="create.model.crm.ContactInfro">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="customerId" property="customerid"
+			jdbcType="INTEGER" />
+		<result column="contactsname" property="contactsname"
+			jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="telephone" property="telephone"
+			jdbcType="VARCHAR" />
+		<result column="fax" property="fax" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="role" property="role" jdbcType="VARCHAR" />
+		<result column="brithday" property="brithday"
+			jdbcType="TIMESTAMP" />
+		<result column="qq" property="qq" jdbcType="VARCHAR" />
+		<result column="englishname" property="englishname"
+			jdbcType="VARCHAR" />
+		<result column="level" property="level" jdbcType="VARCHAR" />
+		<result column="msn" property="msn" jdbcType="VARCHAR" />
+		<result column="post" property="post" jdbcType="VARCHAR" />
+		<result column="dept" property="dept" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="INTEGER" />
+		<result column="isdeleted" property="isdeleted" jdbcType="CHAR" />
+		<result column="deletedby" property="deletedby"
+			jdbcType="VARCHAR" />
+		<result column="deletetime" property="deletetime"
+			jdbcType="TIMESTAMP" />
+		<result column="createdby" property="createdby"
+			jdbcType="VARCHAR" />
+		<result column="createtime" property="createtime"
+			jdbcType="TIMESTAMP" />
+		<result column="lastmodify" property="lastmodify"
+			jdbcType="VARCHAR" />
+		<result column="lastmodifytime" property="lastmodifytime"
+			jdbcType="TIMESTAMP" />
+		<result column="ATT1" property="att1" jdbcType="VARCHAR" />
+		<result column="ATT2" property="att2" jdbcType="VARCHAR" />
+		<result column="ATT3" property="att3" jdbcType="VARCHAR" />
+		<result column="ATT4" property="att4" jdbcType="VARCHAR" />
+		<result column="ATT5" property="att5" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, customerId, contactsname, phone, telephone, fax, email,
+		role, brithday, qq, englishname, level, msn, post, dept, sex,
+		isdeleted, deletedby, deletetime, createdby, createtime,
+		lastmodify, lastmodifytime, ATT1, ATT2, ATT3, ATT4, ATT5
+	</sql>
+	<select id="searchCustomerByProperty" resultMap="BaseResultMap"
+		parameterType="create.model.crm.ContactInfro">
+		select
+		<include refid="Base_Column_List" />
+		from contactinfro  
+		<where>
+			<if test="id != null">and id = #{id,jdbcType=INTEGER}</if>
+			<if test="customerid != null">
+				and customerid = #{customerid,jdbcType=INTEGER} 
+			</if>
+			and ATT1='0'
+		</where>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from contactinfro where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from contactinfro where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="create.model.crm.ContactInfro">
+		insert into contactinfro (id, customerId, contactsname, phone,
+		telephone, fax, email, role, brithday, qq, englishname, level,
+		msn, post, dept, sex, isdeleted, deletedby, deletetime,
+		createdby, createtime, lastmodify, lastmodifytime, ATT1, ATT2,
+		ATT3, ATT4, ATT5) values (#{id,jdbcType=INTEGER},
+		#{customerid,jdbcType=INTEGER},
+		#{contactsname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+		#{telephone,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR},
+		#{email,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR},
+		#{brithday,jdbcType=TIMESTAMP}, #{qq,jdbcType=VARCHAR},
+		#{englishname,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR},
+		#{msn,jdbcType=VARCHAR}, #{post,jdbcType=VARCHAR},
+		#{dept,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER},
+		#{isdeleted,jdbcType=CHAR}, #{deletedby,jdbcType=VARCHAR},
+		#{deletetime,jdbcType=TIMESTAMP}, #{createdby,jdbcType=VARCHAR},
+		#{createtime,jdbcType=TIMESTAMP},
+		#{lastmodify,jdbcType=VARCHAR},
+		#{lastmodifytime,jdbcType=TIMESTAMP}, #{att1,jdbcType=VARCHAR},
+		#{att2,jdbcType=VARCHAR}, #{att3,jdbcType=VARCHAR},
+		#{att4,jdbcType=VARCHAR}, #{att5,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="create.model.crm.ContactInfro">
+		insert into contactinfro
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="customerid != null">customerid,</if>
+			<if test="contactsname != null">contactsname,</if>
+			<if test="phone != null">phone,</if>
+			<if test="telephone != null">telephone,</if>
+			<if test="fax != null">fax,</if>
+			<if test="email != null">email,</if>
+			<if test="role != null">role,</if>
+			<if test="brithday != null">brithday,</if>
+			<if test="qq != null">qq,</if>
+			<if test="englishname != null">englishname,</if>
+			<if test="level != null">level,</if>
+			<if test="msn != null">msn,</if>
+			<if test="post != null">post,</if>
+			<if test="dept != null">dept,</if>
+			<if test="sex != null">sex,</if>
+			<if test="isdeleted != null">isdeleted,</if>
+			<if test="deletedby != null">deletedby,</if>
+			<if test="deletetime != null">deletetime,</if>
+			<if test="createdby != null">createdby,</if>
+			<if test="createtime != null">createtime,</if>
+			<if test="lastmodify != null">lastmodify,</if>
+			<if test="lastmodifytime != null">lastmodifytime,</if>
+			<if test="att1 != null">ATT1,</if>
+			<if test="att2 != null">ATT2,</if>
+			<if test="att3 != null">ATT3,</if>
+			<if test="att4 != null">ATT4,</if>
+			<if test="att5 != null">ATT5,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id,jdbcType=INTEGER},</if>
+			<if test="customerid != null">
+				#{customerid,jdbcType=INTEGER},
+			</if>
+			<if test="contactsname != null">
+				#{contactsname,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">#{phone,jdbcType=VARCHAR},</if>
+			<if test="telephone != null">
+				#{telephone,jdbcType=VARCHAR},
+			</if>
+			<if test="fax != null">#{fax,jdbcType=VARCHAR},</if>
+			<if test="email != null">#{email,jdbcType=VARCHAR},</if>
+			<if test="role != null">#{role,jdbcType=VARCHAR},</if>
+			<if test="brithday != null">
+				#{brithday,jdbcType=TIMESTAMP},
+			</if>
+			<if test="qq != null">#{qq,jdbcType=VARCHAR},</if>
+			<if test="englishname != null">
+				#{englishname,jdbcType=VARCHAR},
+			</if>
+			<if test="level != null">#{level,jdbcType=VARCHAR},</if>
+			<if test="msn != null">#{msn,jdbcType=VARCHAR},</if>
+			<if test="post != null">#{post,jdbcType=VARCHAR},</if>
+			<if test="dept != null">#{dept,jdbcType=VARCHAR},</if>
+			<if test="sex != null">#{sex,jdbcType=INTEGER},</if>
+			<if test="isdeleted != null">
+				#{isdeleted,jdbcType=CHAR},
+			</if>
+			<if test="deletedby != null">
+				#{deletedby,jdbcType=VARCHAR},
+			</if>
+			<if test="deletetime != null">
+				#{deletetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdby != null">
+				#{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				#{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastmodify != null">
+				#{lastmodify,jdbcType=VARCHAR},
+			</if>
+			<if test="lastmodifytime != null">
+				#{lastmodifytime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="att1 != null">#{att1,jdbcType=VARCHAR},</if>
+			<if test="att2 != null">#{att2,jdbcType=VARCHAR},</if>
+			<if test="att3 != null">#{att3,jdbcType=VARCHAR},</if>
+			<if test="att4 != null">#{att4,jdbcType=VARCHAR},</if>
+			<if test="att5 != null">#{att5,jdbcType=VARCHAR},</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="create.model.crm.ContactInfro">
+		update contactinfro
+		<set>
+			<if test="customerid != null">
+				customerId = #{customerid,jdbcType=INTEGER},
+			</if>
+			<if test="contactsname != null">
+				contactsname = #{contactsname,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="telephone != null">
+				telephone = #{telephone,jdbcType=VARCHAR},
+			</if>
+			<if test="fax != null">fax = #{fax,jdbcType=VARCHAR},</if>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="role != null">
+				role = #{role,jdbcType=VARCHAR},
+			</if>
+			<if test="brithday != null">
+				brithday = #{brithday,jdbcType=TIMESTAMP},
+			</if>
+			<if test="qq != null">qq = #{qq,jdbcType=VARCHAR},</if>
+			<if test="englishname != null">
+				englishname = #{englishname,jdbcType=VARCHAR},
+			</if>
+			<if test="level != null">
+				level = #{level,jdbcType=VARCHAR},
+			</if>
+			<if test="msn != null">msn = #{msn,jdbcType=VARCHAR},</if>
+			<if test="post != null">
+				post = #{post,jdbcType=VARCHAR},
+			</if>
+			<if test="dept != null">
+				dept = #{dept,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">sex = #{sex,jdbcType=INTEGER},</if>
+			<if test="isdeleted != null">
+				isdeleted = #{isdeleted,jdbcType=CHAR},
+			</if>
+			<if test="deletedby != null">
+				deletedby = #{deletedby,jdbcType=VARCHAR},
+			</if>
+			<if test="deletetime != null">
+				deletetime = #{deletetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdby != null">
+				createdby = #{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				createtime = #{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastmodify != null">
+				lastmodify = #{lastmodify,jdbcType=VARCHAR},
+			</if>
+			<if test="lastmodifytime != null">
+				lastmodifytime = #{lastmodifytime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="att1 != null">
+				ATT1 = #{att1,jdbcType=VARCHAR},
+			</if>
+			<if test="att2 != null">
+				ATT2 = #{att2,jdbcType=VARCHAR},
+			</if>
+			<if test="att3 != null">
+				ATT3 = #{att3,jdbcType=VARCHAR},
+			</if>
+			<if test="att4 != null">
+				ATT4 = #{att4,jdbcType=VARCHAR},
+			</if>
+			<if test="att5 != null">
+				ATT5 = #{att5,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="create.model.crm.ContactInfro">
+		update contactinfro set customerId =
+		#{customerid,jdbcType=INTEGER}, contactsname =
+		#{contactsname,jdbcType=VARCHAR}, phone =
+		#{phone,jdbcType=VARCHAR}, telephone =
+		#{telephone,jdbcType=VARCHAR}, fax = #{fax,jdbcType=VARCHAR},
+		email = #{email,jdbcType=VARCHAR}, role =
+		#{role,jdbcType=VARCHAR}, brithday =
+		#{brithday,jdbcType=TIMESTAMP}, qq = #{qq,jdbcType=VARCHAR},
+		englishname = #{englishname,jdbcType=VARCHAR}, level =
+		#{level,jdbcType=VARCHAR}, msn = #{msn,jdbcType=VARCHAR}, post =
+		#{post,jdbcType=VARCHAR}, dept = #{dept,jdbcType=VARCHAR}, sex =
+		#{sex,jdbcType=INTEGER}, isdeleted = #{isdeleted,jdbcType=CHAR},
+		deletedby = #{deletedby,jdbcType=VARCHAR}, deletetime =
+		#{deletetime,jdbcType=TIMESTAMP}, createdby =
+		#{createdby,jdbcType=VARCHAR}, createtime =
+		#{createtime,jdbcType=TIMESTAMP}, lastmodify =
+		#{lastmodify,jdbcType=VARCHAR}, lastmodifytime =
+		#{lastmodifytime,jdbcType=TIMESTAMP}, ATT1 =
+		#{att1,jdbcType=VARCHAR}, ATT2 = #{att2,jdbcType=VARCHAR}, ATT3
+		= #{att3,jdbcType=VARCHAR}, ATT4 = #{att4,jdbcType=VARCHAR},
+		ATT5 = #{att5,jdbcType=VARCHAR} where id =
+		#{id,jdbcType=INTEGER}
+	</update>
+</mapper>

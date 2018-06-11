@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.hrm.TreenodesMapper">
+	<resultMap id="BaseResultMap" type="create.model.hrm.Treenodes">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="pid" property="pid" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="target" property="target" jdbcType="VARCHAR" />
+		<result column="icon" property="icon" jdbcType="VARCHAR" />
+		<result column="sort" property="sort" jdbcType="INTEGER" />
+		<result column="fontStyleName" property="fontstylename"
+			jdbcType="VARCHAR" />
+		<result column="iconOpen" property="iconopen"
+			jdbcType="VARCHAR" />
+		<result column="open" property="open" jdbcType="BIT" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, pid, name, url, title, target, icon, sort, fontStyleName,
+		iconOpen, open, type
+	</sql>
+	<select id="isParent" parameterType="java.lang.Integer"
+		resultType="java.lang.Integer">
+		select count(1) counts from TREENODES where pid =
+		#{pid,jdbcType=INTEGER}
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from treenodes where id = #{id,jdbcType=INTEGER}
+	</select>
+	<!--  查询所有的菜单报表-->
+	<select id="selectByPrimaryKeyAndPid" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from treenodes where id = #{id,jdbcType=INTEGER} and pid=0 and
+		type=0;
+	</select>
+	<select id="selectTreeDateForList" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from treenodes
+	</select>
+	<select id="selectByPid" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from treenodes where pid = #{pid,jdbcType=INTEGER}
+	</select>
+
+
+	<select id="selectTreenodesByMap" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from treenodes where pid = #{pid,jdbcType=INTEGER}
+		<if test="roleId != null">
+			and id in (select treenodeId from roletreenoderelation 
+			where roleId=#{roleId,jdbcType=INTEGER})
+		</if>
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from treenodes where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="create.model.hrm.Treenodes">
+		insert into treenodes (id, pid, name, url, title, target, icon,
+		sort, fontStyleName, iconOpen, open, type) values
+		(#{id,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER},
+		#{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+		#{title,jdbcType=VARCHAR}, #{target,jdbcType=VARCHAR},
+		#{icon,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER},
+		#{fontstylename,jdbcType=VARCHAR}, #{iconopen,jdbcType=VARCHAR},
+		#{open,jdbcType=BIT}, #{type,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="create.model.hrm.Treenodes">
+		insert into treenodes
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id!= null">id,</if>
+			<if test="pid!= null">pid,</if>
+			<if test="name!= null">name,</if>
+			<if test="url!= null">url,</if>
+			<if test="title!= null">title,</if>
+			<if test="target!= null">target,</if>
+			<if test="icon!= null">icon,</if>
+			<if test="sort!= null">sort,</if>
+			<if test="fontstylename!= null">fontStyleName,</if>
+			<if test="iconopen!= null">iconOpen,</if>
+			<if test="open!= null">open,</if>
+			<if test="type!= null">type,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id !=null">#{id,jdbcType=INTEGER},</if>
+			<if test="pid !=null">#{pid,jdbcType=INTEGER},</if>
+			<if test="name !=null">#{name,jdbcType=VARCHAR},</if>
+			<if test="url!= null">#{url,jdbcType=VARCHAR},</if>
+			<if test="title!= null">#{title,jdbcType=VARCHAR},</if>
+			<if test="target!= null">#{target,jdbcType=VARCHAR},</if>
+			<if test="icon!= null">#{icon,jdbcType=VARCHAR},</if>
+			<if test="sort!= null">#{sort,jdbcType=INTEGER},</if>
+			<if test="fontstylename!= null">
+				#{fontstylename,jdbcType=VARCHAR},
+			</if>
+			<if test="iconopen!= null">
+				#{iconopen,jdbcType=VARCHAR},
+			</if>
+			<if test="open!= null">#{open,jdbcType=BIT},</if>
+			<if test="type!= null">#{type,jdbcType=INTEGER},</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="create.model.hrm.Treenodes">
+		update treenodes
+		<set>
+			<if test="pid != null">pid = #{pid,jdbcType=INTEGER},</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">url = #{url,jdbcType=VARCHAR},</if>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="target != null">
+				target = #{target,jdbcType=VARCHAR},
+			</if>
+			<if test="icon != null">
+				icon = #{icon,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				sort = #{sort,jdbcType=INTEGER},
+			</if>
+			<if test="fontstylename != null">
+				fontStyleName = #{fontstylename,jdbcType=VARCHAR},
+			</if>
+			<if test="iconopen != null">
+				iconOpen = #{iconopen,jdbcType=VARCHAR},
+			</if>
+			<if test="open != null">open = #{open,jdbcType=BIT},</if>
+			<if test="type != null">
+				open = #{type,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="create.model.hrm.Treenodes">
+		update treenodes set pid = #{pid,jdbcType=INTEGER}, name =
+		#{name,jdbcType=VARCHAR}, url = #{url,jdbcType=VARCHAR}, title =
+		#{title,jdbcType=VARCHAR}, target = #{target,jdbcType=VARCHAR},
+		icon = #{icon,jdbcType=VARCHAR}, sort =
+		#{sort,jdbcType=INTEGER}, fontStyleName =
+		#{fontstylename,jdbcType=VARCHAR}, iconOpen =
+		#{iconopen,jdbcType=VARCHAR}, open = #{open,jdbcType=BIT}, type
+		= #{type,jdbcType=INTEGER}, where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.hrm.DepartMapper">
+	<resultMap id="BaseResultMap" type="create.model.hrm.Depart">
+		<id column="dept_id" property="deptId" jdbcType="INTEGER" />
+		<result column="dept_mak" property="deptMak" jdbcType="VARCHAR" />
+		<result column="pdept_id" property="pdeptId" jdbcType="INTEGER" />
+		<result column="dept_name" property="deptName"
+			jdbcType="VARCHAR" />
+		<result column="dept_director" property="deptDirector"
+			jdbcType="INTEGER" />
+		<result column="create_time" property="createTime"
+			jdbcType="DATE" />
+		<result column="createby" property="createby"
+			jdbcType="INTEGER" />
+		<result column="flag" property="flag" jdbcType="INTEGER" />
+		<result column="yl1" property="yl1" jdbcType="VARCHAR" />
+		<result column="yl2" property="yl2" jdbcType="VARCHAR" />
+		<result column="dingtalkid" property="dingtalkId" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		dept_id, dept_mak, pdept_id, dept_name, dept_director,
+		create_time, createby, flag, yl1, yl2, dingtalkid
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from depart where dept_id = #{deptId,jdbcType=INTEGER}
+	</select>
+	<select id="searchDepartByProperty" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from depart where 1=1
+		<if test="deptId!=null">
+			and deptId = #{deptId,jdbcType=INTEGER}
+		</if>
+		<if test="deptMak != null">
+			and deptMak = #{deptMak,jdbcType=VARCHAR}
+		</if>
+		<if test="pdeptId!= null">
+			and pdeptId = #{pdeptId,jdbcType=INTEGER}
+		</if>
+		<if test="deptName !=null">
+			and deptName = #{deptName,jdbcType=VARCHAR}
+		</if>
+		<if test="deptDirector != null">
+			and deptDirector = #{deptDirector,jdbcType=INTEGER}
+		</if>
+		<if test="createTime != null">
+			and create_time = #{createTime,jdbcType=DATE}
+		</if>
+		<if test="createby != null">
+			and createby = #{createby,jdbcType=INTEGER}
+		</if>
+		<if test="flag != null">and flag = #{flag,jdbcType=INTEGER}</if>
+		<if test="yl1 !=null">and yl1 = #{yl1,jdbcType=VARCHAR}</if>
+		<if test="yl2 !=null">and yl2 = #{yl2,jdbcType=VARCHAR}</if>
+		<if test="dingtalkId !=null">and dingtalkid = #{yl2,jdbcType=VARCHAR}</if> 
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from depart where dept_id = #{deptId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="create.model.hrm.Depart">
+		insert into depart (dept_id, dept_mak, pdept_id, dept_name,
+		dept_director, create_time, createby, flag, yl1, yl2) values
+		(#{deptId,jdbcType=INTEGER}, #{deptMak,jdbcType=VARCHAR},
+		#{pdeptId,jdbcType=INTEGER}, #{deptName,jdbcType=VARCHAR},
+		#{deptDirector,jdbcType=INTEGER}, #{createTime,jdbcType=DATE},
+		#{createby,jdbcType=INTEGER}, #{flag,jdbcType=INTEGER},
+		#{yl1,jdbcType=VARCHAR}, #{yl2,jdbcType=VARCHAR}, #{dingtalkid,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="create.model.hrm.Depart">
+		insert into depart
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="deptId != null">dept_id,</if>
+			<if test="deptMak != null">dept_mak,</if>
+			<if test="pdeptId != null">pdept_id,</if>
+			<if test="deptName != null">dept_name,</if>
+			<if test="deptDirector != null">dept_director,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="createby != null">createby,</if>
+			<if test="flag != null">flag,</if>
+			<if test="yl1 != null">yl1,</if>
+			<if test="yl2 != null">yl2,</if>
+			<if test="dingtalkId != null">dingtalkid,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="deptId != null">#{deptId,jdbcType=INTEGER},</if>
+			<if test="deptMak != null">#{deptMak,jdbcType=VARCHAR},</if>
+			<if test="pdeptId != null">#{pdeptId,jdbcType=INTEGER},</if>
+			<if test="deptName != null">
+				#{deptName,jdbcType=VARCHAR},
+			</if>
+			<if test="deptDirector != null">
+				#{deptDirector,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=DATE},
+			</if>
+			<if test="createby != null">
+				#{createby,jdbcType=INTEGER},
+			</if>
+			<if test="flag != null">#{flag,jdbcType=INTEGER},</if>
+			<if test="yl1 != null">#{yl1,jdbcType=VARCHAR},</if>
+			<if test="yl2 != null">#{yl2,jdbcType=VARCHAR},</if>
+			<if test="dingtalkId != null">#{dingtalkId,jdbcType=VARCHAR},</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="create.model.hrm.Depart">
+		update depart
+		<set>
+			<if test="deptMak != null">
+				dept_mak = #{deptMak,jdbcType=VARCHAR},
+			</if>
+			<if test="pdeptId != null">
+				pdept_id = #{pdeptId,jdbcType=INTEGER},
+			</if>
+			<if test="deptName != null">
+				dept_name = #{deptName,jdbcType=VARCHAR},
+			</if>
+			<if test="deptDirector != null">
+				dept_director = #{deptDirector,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=DATE},
+			</if>
+			<if test="createby != null">
+				createby = #{createby,jdbcType=INTEGER},
+			</if>
+			<if test="flag != null">
+				flag = #{flag,jdbcType=INTEGER},
+			</if>
+			<if test="yl1 != null">yl1 = #{yl1,jdbcType=VARCHAR},</if>
+			<if test="yl2 != null">yl2 = #{yl2,jdbcType=VARCHAR},</if>
+			<if test="dingtalkId != null">dingtalkid=#{dingtalkId,jdbcType=VARCHAR},</if>
+		</set>
+		where dept_id = #{deptId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="create.model.hrm.Depart">
+		update depart set dept_mak = #{deptMak,jdbcType=VARCHAR},
+		pdept_id = #{pdeptId,jdbcType=INTEGER}, dept_name =
+		#{deptName,jdbcType=VARCHAR}, dept_director =
+		#{deptDirector,jdbcType=INTEGER}, create_time =
+		#{createTime,jdbcType=DATE}, createby =
+		#{createby,jdbcType=INTEGER}, flag = #{flag,jdbcType=INTEGER},
+		yl1 = #{yl1,jdbcType=VARCHAR}, yl2 = #{yl2,jdbcType=VARCHAR},dingtalkid=#{dingtalkId,jdbcType=VARCHAR}
+		where dept_id = #{deptId,jdbcType=INTEGER}
+	</update>
+</mapper>

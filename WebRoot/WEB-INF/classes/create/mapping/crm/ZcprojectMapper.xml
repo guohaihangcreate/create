@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.crm.ZcprojectMapper" >
+  <resultMap id="BaseResultMap" type="create.model.crm.Zcproject" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="projectName" property="projectname" jdbcType="VARCHAR" />
+    <result column="projectAdress" property="projectadress" jdbcType="VARCHAR" />
+    <result column="createBy" property="createby" jdbcType="INTEGER" />
+    <result column="modifyBy" property="modifyby" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="modifyTime" property="modifytime" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="yl1" property="yl1" jdbcType="VARCHAR" />
+    <result column="yl2" property="yl2" jdbcType="VARCHAR" />
+    <result column="yl3" property="yl3" jdbcType="VARCHAR" />
+    <result column="yl4" property="yl4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, cid, projectName, projectAdress, createBy, modifyBy, createTime, modifyTime, 
+    state, yl1, yl2, yl3, yl4
+  </sql>
+  <!-- 分页SQL语句 -->
+	<select id="selectZcprojectByParamMap" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from Zcproject 
+		<where>
+			  <if test="state != null" >
+		       and state =#{state,jdbcType=INTEGER}
+		      </if>
+		      <if test="state == null" >
+		       and state = 0
+		      </if>
+			  <if test="id != null" >
+		       and id =#{id,jdbcType=INTEGER}
+		      </if>
+		      <if test="cid != null" >
+		        and cid =#{cid,jdbcType=INTEGER}
+		      </if>
+		      <if test="projectname != null" >
+		       and projectName like concat('%',#{projectName,jdbcType=VARCHAR},'%')
+		      </if>
+		      <if test="projectadress != null" >
+		      	and projectAdress like concat('%',#{projectAdress,jdbcType=VARCHAR},'%')
+		      </if>
+		      <if test="yl1 != null" >
+		        and yl1 like concat('%',#{yl1,jdbcType=VARCHAR},'%')
+		      </if>
+		      <if test="yl2 != null" >
+		        and yl2 like concat('%',#{yl2,jdbcType=VARCHAR},'%')
+		      </if>
+		      <if test="yl3 != null" >
+		        and yl3 like concat('%',#{yl3,jdbcType=VARCHAR},'%')
+		      </if>
+		      <if test="yl4 != null" >
+		        and yl4 like concat('%',#{yl4,jdbcType=VARCHAR},'%')
+		      </if>
+		</where>
+	</select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from zcproject
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from zcproject
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="create.model.crm.Zcproject" >
+    insert into zcproject (id, cid, projectName, 
+      projectAdress, createBy, modifyBy, 
+      createTime, modifyTime, state, 
+      yl1, yl2, yl3, yl4
+      )
+    values (#{id,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}, #{projectname,jdbcType=VARCHAR}, 
+      #{projectadress,jdbcType=VARCHAR}, #{createby,jdbcType=INTEGER}, #{modifyby,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{modifytime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, 
+      #{yl1,jdbcType=VARCHAR}, #{yl2,jdbcType=VARCHAR}, #{yl3,jdbcType=VARCHAR}, #{yl4,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="create.model.crm.Zcproject" >
+    insert into zcproject
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="projectname != null" >
+        projectName,
+      </if>
+      <if test="projectadress != null" >
+        projectAdress,
+      </if>
+      <if test="createby != null" >
+        createBy,
+      </if>
+      <if test="modifyby != null" >
+        modifyBy,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="modifytime != null" >
+        modifyTime,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="yl1 != null" >
+        yl1,
+      </if>
+      <if test="yl2 != null" >
+        yl2,
+      </if>
+      <if test="yl3 != null" >
+        yl3,
+      </if>
+      <if test="yl4 != null" >
+        yl4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null" >
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="projectname != null" >
+        #{projectname,jdbcType=VARCHAR},
+      </if>
+      <if test="projectadress != null" >
+        #{projectadress,jdbcType=VARCHAR},
+      </if>
+      <if test="createby != null" >
+        #{createby,jdbcType=INTEGER},
+      </if>
+      <if test="modifyby != null" >
+        #{modifyby,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null" >
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="yl1 != null" >
+        #{yl1,jdbcType=VARCHAR},
+      </if>
+      <if test="yl2 != null" >
+        #{yl2,jdbcType=VARCHAR},
+      </if>
+      <if test="yl3 != null" >
+        #{yl3,jdbcType=VARCHAR},
+      </if>
+      <if test="yl4 != null" >
+        #{yl4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="create.model.crm.Zcproject" >
+    update zcproject
+    <set >
+      <if test="cid != null" >
+        cid = #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="projectname != null" >
+        projectName = #{projectname,jdbcType=VARCHAR},
+      </if>
+      <if test="projectadress != null" >
+        projectAdress = #{projectadress,jdbcType=VARCHAR},
+      </if>
+      <if test="createby != null" >
+        createBy = #{createby,jdbcType=INTEGER},
+      </if>
+      <if test="modifyby != null" >
+        modifyBy = #{modifyby,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null" >
+        modifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="yl1 != null" >
+        yl1 = #{yl1,jdbcType=VARCHAR},
+      </if>
+      <if test="yl2 != null" >
+        yl2 = #{yl2,jdbcType=VARCHAR},
+      </if>
+      <if test="yl3 != null" >
+        yl3 = #{yl3,jdbcType=VARCHAR},
+      </if>
+      <if test="yl4 != null" >
+        yl4 = #{yl4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="create.model.crm.Zcproject" >
+    update zcproject
+    set cid = #{cid,jdbcType=INTEGER},
+      projectName = #{projectname,jdbcType=VARCHAR},
+      projectAdress = #{projectadress,jdbcType=VARCHAR},
+      createBy = #{createby,jdbcType=INTEGER},
+      modifyBy = #{modifyby,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      modifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=INTEGER},
+      yl1 = #{yl1,jdbcType=VARCHAR},
+      yl2 = #{yl2,jdbcType=VARCHAR},
+      yl3 = #{yl3,jdbcType=VARCHAR},
+      yl4 = #{yl4,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

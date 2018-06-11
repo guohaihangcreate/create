@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.system.DictionarydataMapper">
+	<resultMap id="BaseResultMap"
+		type="create.model.system.Dictionarydata">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="dict_value" property="dictValue"
+			jdbcType="INTEGER" />
+		<result column="dictdata_name" property="dictdataName"
+			jdbcType="VARCHAR" />
+		<result column="dictdata_value" property="dictdataValue"
+			jdbcType="VARCHAR" />
+		<result column="isfixed" property="isfixed" jdbcType="INTEGER" />
+		<result column="DELETEDBY" property="deletedby"
+			jdbcType="VARCHAR" />
+		<result column="DELETETIME" property="deletetime"
+			jdbcType="TIMESTAMP" />
+		<result column="CREATEDBY" property="createdby"
+			jdbcType="VARCHAR" />
+		<result column="CREATETIME" property="createtime"
+			jdbcType="TIMESTAMP" />
+		<result column="LASTMODIFIEDBY" property="lastmodifiedby"
+			jdbcType="VARCHAR" />
+		<result column="LASTMODIFIEDTIME" property="lastmodifiedtime"
+			jdbcType="TIMESTAMP" />
+		<result column="ATT1" property="att1" jdbcType="VARCHAR" />
+		<result column="ATT2" property="att2" jdbcType="VARCHAR" />
+		<result column="ATT3" property="att3" jdbcType="VARCHAR" />
+		<result column="ATT4" property="att4" jdbcType="VARCHAR" />
+		<result column="ATT5" property="att5" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, dict_value, dictdata_name, dictdata_value, isfixed,
+		DELETEDBY, DELETETIME, CREATEDBY, CREATETIME, LASTMODIFIEDBY,
+		LASTMODIFIEDTIME, ATT1, ATT2, ATT3, ATT4, ATT5
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from dictionarydata where id = #{id,jdbcType=INTEGER} and isfixed=0
+	</select>
+	<!-- 取得记录的总数 -->
+	<select id="pageCounts" resultType="java.lang.Long">
+		SELECT COUNT(*) FROM dictionarydata where isfixed=0
+	</select>
+	<!-- 分页SQL语句 -->
+	<select id="pageListByParamMap" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from dictionarydata where isfixed=0
+		<if test="id != null">and Id = #{id,jdbcType=INTEGER}</if>
+		<if test="dictValue != null"> and dict_value = #{dictValue,jdbcType=INTEGER}</if>
+		<if test="dictdataName != null">and dictdataName = #{dictdataName,jdbcType=VARCHAR}</if>
+		<if test="dictdataValue != null">
+			and dictdata_value = #{dictdataValue,jdbcType=VARCHAR},
+		</if>
+		<if test="isfixed != null"> and isfixed = #{isfixed,jdbcType=INTEGER},</if>
+		<if test="isdeleted != null">
+			and isdeleted = #{isdeleted,jdbcType=CHAR}
+		</if>
+		<if test="deletedby != null">
+			and deletedby = #{deletedby,jdbcType=VARCHAR}
+		</if>
+		<if test="deletetime != null">
+			and deletetime = #{deletetime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="createdby != null">
+			and createdby = #{createdby,jdbcType=VARCHAR}
+		</if>
+		<if test="createtime != null">
+			and createtime = #{createtime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="lastmodify != null">
+			and lastmodify = #{lastmodify,jdbcType=VARCHAR}
+		</if>
+		<if test="lastmodifytime != null">
+			and lastmodifytime = #{lastmodifytime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="att1 != null">and att1 = #{att1,jdbcType=VARCHAR}</if>
+		<if test="att2 != null">and att2 = #{att2,jdbcType=VARCHAR}</if>
+		<if test="att3 != null">and att3 = #{att3,jdbcType=VARCHAR}</if>
+		<if test="att4 != null">and att4 = #{att4,jdbcType=VARCHAR}</if>
+		<if test="att5 != null">and att5 = #{att5,jdbcType=VARCHAR}</if>
+		limit #{startIndex},#{endIndex}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from dictionarydata where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert"
+		parameterType="create.model.system.Dictionarydata">
+		insert into dictionarydata (id, dict_value, dictdata_name,
+		dictdata_value, isfixed, DELETEDBY, DELETETIME, CREATEDBY,
+		CREATETIME, LASTMODIFIEDBY, LASTMODIFIEDTIME, ATT1, ATT2, ATT3,
+		ATT4, ATT5 ) values (#{id,jdbcType=INTEGER},
+		#{dictValue,jdbcType=INTEGER}, #{dictdataName,jdbcType=VARCHAR},
+		#{dictdataValue,jdbcType=VARCHAR}, #{isfixed,jdbcType=INTEGER},
+		#{deletedby,jdbcType=VARCHAR}, #{deletetime,jdbcType=TIMESTAMP},
+		#{createdby,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP},
+		#{lastmodifiedby,jdbcType=VARCHAR},
+		#{lastmodifiedtime,jdbcType=TIMESTAMP},
+		#{att1,jdbcType=VARCHAR}, #{att2,jdbcType=VARCHAR},
+		#{att3,jdbcType=VARCHAR}, #{att4,jdbcType=VARCHAR},
+		#{att5,jdbcType=VARCHAR} )
+	</insert>
+	<insert id="insertSelective"
+		parameterType="create.model.system.Dictionarydata">
+		insert into dictionarydata
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="dictValue != null">dict_value,</if>
+			<if test="dictdataName != null">dictdata_name,</if>
+			<if test="dictdataValue != null">dictdata_value,</if>
+			<if test="isfixed != null">isfixed,</if>
+			<if test="deletedby != null">DELETEDBY,</if>
+			<if test="deletetime != null">DELETETIME,</if>
+			<if test="createdby != null">CREATEDBY,</if>
+			<if test="createtime != null">CREATETIME,</if>
+			<if test="lastmodifiedby != null">LASTMODIFIEDBY,</if>
+			<if test="lastmodifiedtime != null">LASTMODIFIEDTIME,</if>
+			<if test="att1 != null">ATT1,</if>
+			<if test="att2 != null">ATT2,</if>
+			<if test="att3 != null">ATT3,</if>
+			<if test="att4 != null">ATT4,</if>
+			<if test="att5 != null">ATT5,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id,jdbcType=INTEGER},</if>
+			<if test="dictValue != null">
+				#{dictValue,jdbcType=INTEGER},
+			</if>
+			<if test="dictdataName != null">
+				#{dictdataName,jdbcType=VARCHAR},
+			</if>
+			<if test="dictdataValue != null">
+				#{dictdataValue,jdbcType=VARCHAR},
+			</if>
+			<if test="isfixed != null">#{isfixed,jdbcType=INTEGER},</if>
+			<if test="deletedby != null">
+				#{deletedby,jdbcType=VARCHAR},
+			</if>
+			<if test="deletetime != null">
+				#{deletetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdby != null">
+				#{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				#{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastmodifiedby != null">
+				#{lastmodifiedby,jdbcType=VARCHAR},
+			</if>
+			<if test="lastmodifiedtime != null">
+				#{lastmodifiedtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="att1 != null">#{att1,jdbcType=VARCHAR},</if>
+			<if test="att2 != null">#{att2,jdbcType=VARCHAR},</if>
+			<if test="att3 != null">#{att3,jdbcType=VARCHAR},</if>
+			<if test="att4 != null">#{att4,jdbcType=VARCHAR},</if>
+			<if test="att5 != null">#{att5,jdbcType=VARCHAR},</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="create.model.system.Dictionarydata">
+		update dictionarydata
+		<set>
+			<if test="dictValue != null">
+				dict_value = #{dictValue,jdbcType=INTEGER},
+			</if>
+			<if test="dictdataName != null">
+				dictdata_name = #{dictdataName,jdbcType=VARCHAR},
+			</if>
+			<if test="dictdataValue != null">
+				dictdata_value = #{dictdataValue,jdbcType=VARCHAR},
+			</if>
+			<if test="isfixed != null">
+				isfixed = #{isfixed,jdbcType=INTEGER},
+			</if>
+			<if test="deletedby != null">
+				DELETEDBY = #{deletedby,jdbcType=VARCHAR},
+			</if>
+			<if test="deletetime != null">
+				DELETETIME = #{deletetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdby != null">
+				CREATEDBY = #{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastmodifiedby != null">
+				LASTMODIFIEDBY = #{lastmodifiedby,jdbcType=VARCHAR},
+			</if>
+			<if test="lastmodifiedtime != null">
+				LASTMODIFIEDTIME =
+				#{lastmodifiedtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="att1 != null">
+				ATT1 = #{att1,jdbcType=VARCHAR},
+			</if>
+			<if test="att2 != null">
+				ATT2 = #{att2,jdbcType=VARCHAR},
+			</if>
+			<if test="att3 != null">
+				ATT3 = #{att3,jdbcType=VARCHAR},
+			</if>
+			<if test="att4 != null">
+				ATT4 = #{att4,jdbcType=VARCHAR},
+			</if>
+			<if test="att5 != null">
+				ATT5 = #{att5,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="create.model.system.Dictionarydata">
+		update dictionarydata set dict_value =
+		#{dictValue,jdbcType=INTEGER}, dictdata_name =
+		#{dictdataName,jdbcType=VARCHAR}, dictdata_value =
+		#{dictdataValue,jdbcType=VARCHAR}, isfixed =
+		#{isfixed,jdbcType=INTEGER}, DELETEDBY =
+		#{deletedby,jdbcType=VARCHAR}, DELETETIME =
+		#{deletetime,jdbcType=TIMESTAMP}, CREATEDBY =
+		#{createdby,jdbcType=VARCHAR}, CREATETIME =
+		#{createtime,jdbcType=TIMESTAMP}, LASTMODIFIEDBY =
+		#{lastmodifiedby,jdbcType=VARCHAR}, LASTMODIFIEDTIME =
+		#{lastmodifiedtime,jdbcType=TIMESTAMP}, ATT1 =
+		#{att1,jdbcType=VARCHAR}, ATT2 = #{att2,jdbcType=VARCHAR}, ATT3
+		= #{att3,jdbcType=VARCHAR}, ATT4 = #{att4,jdbcType=VARCHAR},
+		ATT5 = #{att5,jdbcType=VARCHAR} where id =
+		#{id,jdbcType=INTEGER}
+	</update>
+</mapper>

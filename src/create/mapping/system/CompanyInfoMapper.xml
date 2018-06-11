@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.system.CompanyInfoMapper">
+	<resultMap id="BaseResultMap"
+		type="create.model.system.CompanyInfo">
+		<id column="companyId" property="companyid" jdbcType="INTEGER" />
+		<result column="companyName" property="companyname"
+			jdbcType="VARCHAR" />
+		<result column="companyMark" property="companymark"
+			jdbcType="VARCHAR" />
+		<result column="registeredaddress" property="registeredaddress"
+			jdbcType="VARCHAR" />
+		<result column="businessscope" property="businessscope"
+			jdbcType="VARCHAR" />
+		<result column="yl1" property="yl1" jdbcType="VARCHAR" />
+		<result column="yl2" property="yl2" jdbcType="VARCHAR" />
+		<result column="yl3" property="yl3" jdbcType="VARCHAR" />
+		<result column="yl4" property="yl4" jdbcType="VARCHAR" />
+		<result column="createtime" property="createtime"
+			jdbcType="DATE" />
+		<result column="createby" property="createby"
+			jdbcType="INTEGER" />
+		<result column="modifyTime" property="modifytime"
+			jdbcType="DATE" />
+		<result column="modifyBy" property="modifyby"
+			jdbcType="INTEGER" />
+		<result column="deleteBy" property="deleteby"
+			jdbcType="INTEGER" />
+		<result column="deleteTime" property="deletetime"
+			jdbcType="DATE" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		companyId, companyName, companyMark, registeredaddress,
+		businessscope, yl1, yl2, yl3, yl4, createtime, createby,
+		modifyTime, modifyBy, deleteBy, deleteTime, state
+	</sql>
+	<select id="selectCompanyByPropterty" resultMap="BaseResultMap"
+		parameterType="create.model.system.CompanyInfo">
+		select
+		<include refid="Base_Column_List" />
+		from companyinfo where 1=1
+		<if test="companyid!=null">
+			and companyId = #{companyid,jdbcType=INTEGER}
+		</if>
+		<if test="companyname != null">
+			and companyname like
+			concat('%',#{companyname,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="companymark != null">
+			and companymark = #{companymark,jdbcType=VARCHAR}
+		</if>
+		<if test="companymark != null">
+			and registeredaddress = #{registeredaddress,jdbcType=VARCHAR}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from companyinfo where companyId = #{companyid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from companyinfo where companyId =
+		#{companyid,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert"
+		parameterType="create.model.system.CompanyInfo">
+		insert into companyinfo (companyId, companyName, companyMark,
+		registeredaddress, businessscope, yl1, yl2, yl3, yl4,
+		createtime, createby, modifyTime, modifyBy, deleteBy,
+		deleteTime, state ) values (#{companyid,jdbcType=INTEGER},
+		#{companyname,jdbcType=VARCHAR},
+		#{companymark,jdbcType=VARCHAR},
+		#{registeredaddress,jdbcType=VARCHAR},
+		#{businessscope,jdbcType=VARCHAR}, #{yl1,jdbcType=VARCHAR},
+		#{yl2,jdbcType=VARCHAR}, #{yl3,jdbcType=VARCHAR},
+		#{yl4,jdbcType=VARCHAR}, #{createtime,jdbcType=DATE},
+		#{createby,jdbcType=INTEGER}, #{modifytime,jdbcType=DATE},
+		#{modifyby,jdbcType=INTEGER}, #{deleteby,jdbcType=INTEGER},
+		#{deletetime,jdbcType=DATE}, #{state,jdbcType=INTEGER} )
+	</insert>
+	<insert id="insertSelective"
+		parameterType="create.model.system.CompanyInfo">
+		insert into companyinfo
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="companyid != null">companyId,</if>
+			<if test="companyname != null">companyName,</if>
+			<if test="companymark != null">companyMark,</if>
+			<if test="registeredaddress != null">registeredaddress,</if>
+			<if test="businessscope != null">businessscope,</if>
+			<if test="yl1 != null">yl1,</if>
+			<if test="yl2 != null">yl2,</if>
+			<if test="yl3 != null">yl3,</if>
+			<if test="yl4 != null">yl4,</if>
+			<if test="createtime != null">createtime,</if>
+			<if test="createby != null">createby,</if>
+			<if test="modifytime != null">modifyTime,</if>
+			<if test="modifyby != null">modifyBy,</if>
+			<if test="deleteby != null">deleteBy,</if>
+			<if test="deletetime != null">deleteTime,</if>
+			<if test="state != null">state,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="companyid != null">
+				#{companyid,jdbcType=INTEGER},
+			</if>
+			<if test="companyname != null">
+				#{companyname,jdbcType=VARCHAR},
+			</if>
+			<if test="companymark != null">
+				#{companymark,jdbcType=VARCHAR},
+			</if>
+			<if test="registeredaddress != null">
+				#{registeredaddress,jdbcType=VARCHAR},
+			</if>
+			<if test="businessscope != null">
+				#{businessscope,jdbcType=VARCHAR},
+			</if>
+			<if test="yl1 != null">#{yl1,jdbcType=VARCHAR},</if>
+			<if test="yl2 != null">#{yl2,jdbcType=VARCHAR},</if>
+			<if test="yl3 != null">#{yl3,jdbcType=VARCHAR},</if>
+			<if test="yl4 != null">#{yl4,jdbcType=VARCHAR},</if>
+			<if test="createtime != null">
+				#{createtime,jdbcType=DATE},
+			</if>
+			<if test="createby != null">
+				#{createby,jdbcType=INTEGER},
+			</if>
+			<if test="modifytime != null">
+				#{modifytime,jdbcType=DATE},
+			</if>
+			<if test="modifyby != null">
+				#{modifyby,jdbcType=INTEGER},
+			</if>
+			<if test="deleteby != null">
+				#{deleteby,jdbcType=INTEGER},
+			</if>
+			<if test="deletetime != null">
+				#{deletetime,jdbcType=DATE},
+			</if>
+			<if test="state != null">#{state,jdbcType=INTEGER},</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="create.model.system.CompanyInfo">
+		update companyinfo
+		<set>
+			<if test="companyname != null">
+				companyName = #{companyname,jdbcType=VARCHAR},
+			</if>
+			<if test="companymark != null">
+				companyMark = #{companymark,jdbcType=VARCHAR},
+			</if>
+			<if test="registeredaddress != null">
+				registeredaddress =
+				#{registeredaddress,jdbcType=VARCHAR},
+			</if>
+			<if test="businessscope != null">
+				businessscope = #{businessscope,jdbcType=VARCHAR},
+			</if>
+			<if test="yl1 != null">yl1 = #{yl1,jdbcType=VARCHAR},</if>
+			<if test="yl2 != null">yl2 = #{yl2,jdbcType=VARCHAR},</if>
+			<if test="yl3 != null">yl3 = #{yl3,jdbcType=VARCHAR},</if>
+			<if test="yl4 != null">yl4 = #{yl4,jdbcType=VARCHAR},</if>
+			<if test="createtime != null">
+				createtime = #{createtime,jdbcType=DATE},
+			</if>
+			<if test="createby != null">
+				createby = #{createby,jdbcType=INTEGER},
+			</if>
+			<if test="modifytime != null">
+				modifyTime = #{modifytime,jdbcType=DATE},
+			</if>
+			<if test="modifyby != null">
+				modifyBy = #{modifyby,jdbcType=INTEGER},
+			</if>
+			<if test="deleteby != null">
+				deleteBy = #{deleteby,jdbcType=INTEGER},
+			</if>
+			<if test="deletetime != null">
+				deleteTime = #{deletetime,jdbcType=DATE},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=INTEGER},
+			</if>
+		</set>
+		where companyId = #{companyid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="create.model.system.CompanyInfo">
+		update companyinfo set companyName =
+		#{companyname,jdbcType=VARCHAR}, companyMark =
+		#{companymark,jdbcType=VARCHAR}, registeredaddress =
+		#{registeredaddress,jdbcType=VARCHAR}, businessscope =
+		#{businessscope,jdbcType=VARCHAR}, yl1 =
+		#{yl1,jdbcType=VARCHAR}, yl2 = #{yl2,jdbcType=VARCHAR}, yl3 =
+		#{yl3,jdbcType=VARCHAR}, yl4 = #{yl4,jdbcType=VARCHAR},
+		createtime = #{createtime,jdbcType=DATE}, createby =
+		#{createby,jdbcType=INTEGER}, modifyTime =
+		#{modifytime,jdbcType=DATE}, modifyBy =
+		#{modifyby,jdbcType=INTEGER}, deleteBy =
+		#{deleteby,jdbcType=INTEGER}, deleteTime =
+		#{deletetime,jdbcType=DATE}, state = #{state,jdbcType=INTEGER}
+		where companyId = #{companyid,jdbcType=INTEGER}
+	</update>
+</mapper>

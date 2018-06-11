@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.system.RightMapper">
+	<resultMap id="BaseResultMap" type="create.model.system.Right">
+		<id column="tr_id" property="trId" jdbcType="INTEGER" />
+		<result column="tr_mark" property="trMark" jdbcType="VARCHAR" />
+		<result column="parent_tr_id" property="parentTrId"
+			jdbcType="INTEGER" />
+		<result column="gen_time" property="genTime" jdbcType="DATE" />
+		<result column="description" property="description"
+			jdbcType="VARCHAR" />
+		<result column="right_name" property="rightName"
+			jdbcType="VARCHAR" />
+		<result column="createby" property="createby"
+			jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		tr_id, tr_mark, parent_tr_id, gen_time, description, right_name,
+		createby
+	</sql>
+	<!-- 取得记录的总数 -->
+	<select id="pageCounts" resultType="java.lang.Long">
+		SELECT COUNT(*) FROM tright where 1=1
+		<if test="detail!= null">
+			and tr_mark is not null
+			<if test="parentTrId!= null">
+				and parent_tr_id = #{parentTrId,jdbcType=INTEGER}
+			</if>
+		</if>
+		<if test="detail== null">and tr_mark is null</if>
+		<if test="trId!=null">and tr_id = #{trId,jdbcType=INTEGER}</if>
+		<if test="rightName != null">
+			and right_name like
+			concat('%',#{rightName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="genTime != null">
+			and genTime = #{genTime,jdbcType=DATE}
+		</if>
+		<if test="description != null and description != ''">
+			and description like
+			concat('%',#{description,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="createby!= null">
+			and createby = #{createby,jdbcType=INTEGER}
+		</if>
+		<if test="trMark!=null">
+			and tr_mark like concat('%',#{tr_mark,jdbcType=VARCHAR},'%')
+		</if>
+	</select>
+
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from tright where tr_id = #{trId,jdbcType=INTEGER}
+	</select>
+
+	<select id="findByIdsMap" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tright where tr_id not in
+		<foreach item="item" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="parentTrId!= null">
+			and parent_tr_id = #{parentTrId,jdbcType=INTEGER}
+		</if>
+		<if test="parentTrId== null">and parent_tr_id !=-1</if>
+	</select>
+
+	<select id="selectByProperyByParamMap" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from tright
+		<where>
+			<if test="trId!=null">tr_id = #{trId,jdbcType=INTEGER}</if>
+			<if test="detail!= null">
+				and tr_mark is not null
+				<if test="parentTrId!= null">
+					and parent_tr_id = #{parentTrId,jdbcType=INTEGER}
+				</if>
+			</if>
+			<if test="detail== null">and tr_mark is null</if>
+			<if test="rightName != null">
+				and right_name like
+				concat('%',#{rightName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="genTime != null">
+				and genTime = #{genTime,jdbcType=DATE}
+			</if>
+			<!--		查询关联权限组下的相关权限集合  right_type=0表示没有被删除-->
+			<if test="right_type != null">
+				and tr_id in (select tgrouprightrelation.tr_id from
+				tgrouprightrelation
+				<where>
+<!--					right_type=#{right_type,jdbcType=INTEGER}-->
+					<if test="tg_id!= null">
+						 tg_id = #{tg_id,jdbcType=INTEGER}
+					</if>
+				</where>
+				)
+			</if>
+			<if test="description != null and description != ''">
+				and description like
+				concat('%',#{description,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="createby!= null">
+				and createby = #{createby,jdbcType=INTEGER}
+			</if>
+			<if test="trMark!=null">
+				and tr_mark like
+				concat('%',#{tr_mark,jdbcType=VARCHAR},'%')
+			</if>
+		</where>
+		ORDER BY parent_tr_id,gen_time limit
+		<if test="startIndex!= null">
+			#{startIndex,jdbcType=INTEGER},
+		</if>
+		<if test="startIndex== null">0,</if>
+		<if test="endIndex!=null">#{endIndex,jdbcType=INTEGER}</if>
+		<if test="endIndex==null">10000</if>
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tright where tr_id = #{trId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="create.model.system.Right">
+		insert into tright (tr_id, tr_mark, parent_tr_id, gen_time,
+		description, right_name, createby) values
+		(#{trId,jdbcType=INTEGER}, #{trMark,jdbcType=VARCHAR},
+		#{parentTrId,jdbcType=INTEGER}, #{genTime,jdbcType=DATE},
+		#{description,jdbcType=VARCHAR}, #{rightName,jdbcType=VARCHAR},
+		#{createby,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="create.model.system.Right">
+		insert into tright
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="trId != null">tr_id,</if>
+			<if test="trMark != null">tr_mark,</if>
+			<if test="parentTrId != null">parent_tr_id,</if>
+			<if test="genTime != null">gen_time,</if>
+			<if test="description != null">description,</if>
+			<if test="rightName != null">right_name,</if>
+			<if test="createby != null">createby,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="trId != null">#{trId,jdbcType=INTEGER},</if>
+			<if test="trMark != null">#{trMark,jdbcType=VARCHAR},</if>
+			<if test="parentTrId != null">
+				#{parentTrId,jdbcType=INTEGER},
+			</if>
+			<if test="genTime != null">#{genTime,jdbcType=DATE},</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="rightName != null">
+				#{rightName,jdbcType=VARCHAR},
+			</if>
+			<if test="createby != null">
+				#{createby,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="create.model.system.Right">
+		update tright
+		<set>
+			<if test="trMark != null">
+				tr_mark = #{trMark,jdbcType=VARCHAR},
+			</if>
+			<if test="parentTrId != null">
+				parent_tr_id = #{parentTrId,jdbcType=INTEGER},
+			</if>
+			<if test="genTime != null">
+				gen_time = #{genTime,jdbcType=DATE},
+			</if>
+			<if test="description != null">
+				description = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="rightName != null">
+				right_name = #{rightName,jdbcType=VARCHAR},
+			</if>
+			<if test="createby != null">
+				createby = #{createby,jdbcType=INTEGER},
+			</if>
+		</set>
+		where tr_id = #{trId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="create.model.system.Right">
+		update tright set tr_mark = #{trMark,jdbcType=VARCHAR},
+		parent_tr_id = #{parentTrId,jdbcType=INTEGER}, gen_time =
+		#{genTime,jdbcType=DATE}, description =
+		#{description,jdbcType=VARCHAR}, right_name =
+		#{rightName,jdbcType=VARCHAR}, createby =
+		#{createby,jdbcType=INTEGER} where tr_id =
+		#{trId,jdbcType=INTEGER}
+	</update>
+</mapper>

@@ -1,0 +1,653 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.hrm.AttendanceRercordAllMapper" >
+  <resultMap id="BaseResultMap" type="create.model.hrm.AttendanceRercordAll" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="groupId" property="groupid" jdbcType="VARCHAR" />
+    <result column="planID" property="planid" jdbcType="VARCHAR" />
+    <result column="workDate" property="workdate" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="VARCHAR" />
+    <result column="CheckType" property="checktype" jdbcType="VARCHAR" />
+    <result column="sourceType" property="sourcetype" jdbcType="VARCHAR" />
+    <result column="timeResult" property="timeresult" jdbcType="VARCHAR" />
+    <result column="locationResult" property="locationresult" jdbcType="VARCHAR" />
+    <result column="approveId" property="approveid" jdbcType="VARCHAR" />
+    <result column="procInstId" property="procinstid" jdbcType="VARCHAR" />
+    <result column="baseCheckTime" property="basechecktime" jdbcType="VARCHAR" />
+    <result column="userCheckTime" property="userchecktime" jdbcType="VARCHAR" />
+    <result column="isLegal" property="islegal" jdbcType="INTEGER" />
+    <result column="classId" property="classid" jdbcType="VARCHAR" />
+    <result column="locationMethod" property="locationmethod" jdbcType="VARCHAR" />
+    <result column="deviceId" property="deviceid" jdbcType="VARCHAR" />
+    <result column="userAddress" property="useraddress" jdbcType="VARCHAR" />
+    <result column="userLongitude" property="userlongitude" jdbcType="VARCHAR" />
+    <result column="userLatitude" property="userlatitude" jdbcType="VARCHAR" />
+    <result column="userAccuracy" property="useraccuracy" jdbcType="VARCHAR" />
+    <result column="userSsid" property="userssid" jdbcType="VARCHAR" />
+    <result column="userMacAddr" property="usermacaddr" jdbcType="VARCHAR" />
+    <result column="planCheckTime" property="planchecktime" jdbcType="VARCHAR" />
+    <result column="baseAddress" property="baseaddress" jdbcType="VARCHAR" />
+    <result column="baseLongitude" property="baselongitude" jdbcType="VARCHAR" />
+    <result column="baseLatitude" property="baselatitude" jdbcType="VARCHAR" />
+    <result column="baseAccuracy" property="baseaccuracy" jdbcType="VARCHAR" />
+    <result column="baseSsid" property="basessid" jdbcType="VARCHAR" />
+    <result column="baseMacAddr" property="basemacaddr" jdbcType="VARCHAR" />
+    <result column="gmtCreate" property="gmtcreate" jdbcType="VARCHAR" />
+    <result column="gmtModified" property="gmtmodified" jdbcType="VARCHAR" />
+    <result column="outsideRemark" property="outsideremark" jdbcType="VARCHAR" />
+    <result column="companyID" property="companyID" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, groupId, planID, workDate, userid, CheckType, sourceType, timeResult, locationResult, 
+    approveId, procInstId, baseCheckTime, userCheckTime, isLegal, classId, locationMethod, 
+    deviceId, userAddress, userLongitude, userLatitude, userAccuracy, userSsid, userMacAddr, 
+    planCheckTime, baseAddress, baseLongitude, baseLatitude, baseAccuracy, baseSsid, 
+    baseMacAddr, gmtCreate, gmtModified, outsideRemark,companyID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from attendancerercordall
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!-- 取得记录的总数 -->
+  <select id="pageCounts" resultType="java.lang.Long">
+		SELECT
+			COUNT(*)
+	FROM
+	attendancedayreport_tb
+	<where>
+		<if test="workDate!= null and workDate!= null">
+			DATE(workDate) = #{workDate,jdbcType=VARCHAR}
+		</if>
+		<if test="departName!= null and departName!= null">
+			and attendancedayreport_tb.departName like concat('%',#{departName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="userName!= null and userName!= null">
+			and attendancedayreport_tb.userName like concat('%',#{userName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="status!= null">
+			and status=#{status,jdbcType=INTEGER};
+		</if>
+	</where>
+  </select>
+   <select id="attendanceMonthlyReport" resultType="create.model.report.AttendanceMonthReport" parameterType="java.util.Map">
+	SELECT
+		attendancedayreport_tb.userid,
+	attendancedayreport_tb.userid_dingtalk,
+	attendancedayreport_tb.userName,
+	attendancedayreport_tb.departName,
+	attendancedayreport_tb.jobName,
+	attendancedayreport_tb.companyID,
+	attendancedayreport_tb.classId,
+	attendancedayreport_tb.classname,
+	attendancedayreport_tb.checkBeginTime,
+	attendancedayreport_tb.checkEndTime,
+	DATE(attendancedayreport_tb.workDate),
+	attendancedayreport_tb.mixUserCheckTime,
+	attendancedayreport_tb.maxuserCheckTime
+	FROM
+	attendancedayreport_tb
+	<where>
+		<if test="workDate!= null and workDate!= null">
+			DATE(workDate) = #{workDate,jdbcType=VARCHAR}
+		</if>
+		<if test="departName!= null and departName!= null">
+			and attendancedayreport_tb.departName like concat('%',#{departName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="userName!= null and userName!= null">
+			and attendancedayreport_tb.userName like concat('%',#{userName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="status!= null">
+			and status = #{status,jdbcType=INTEGER}
+		</if>
+	</where>
+	limit #{startIndex},#{endIndex}
+   </select>
+  <select id="attendanceMonthlyReport_" resultType="create.model.report.AttendanceMonthReport" parameterType="java.util.Map">
+	SELECT
+	attendanceMonthlyReport_.userid,
+	attendanceMonthlyReport_.userName,
+	attendanceMonthlyReport_.departName,
+	attendanceMonthlyReport_.jobName,
+	attendanceMonthlyReport_.companyID,
+	attendanceMonthlyReport_.classId,
+	attendanceMonthlyReport_.classname,
+	attendanceMonthlyReport_.rest_begin_time AS checkBeginTime,
+	attendanceMonthlyReport_.rest_end_time AS checkEndTime,
+	CAST(
+		attendanceMonthlyReport_.workDate AS date
+	) AS workDate,
+	MIN(
+		CAST(
+			attendanceMonthlyReport_.userCheckTime AS time
+		)
+	) AS mixUserCheckTime,
+	MAX(
+		CAST(
+			attendanceMonthlyReport_.userCheckTime AS time
+		)
+	) AS maxuserCheckTime
+	FROM
+	attendanceMonthlyReport_
+	<where>
+		<if test="workDate!= null and workDate!= null">
+			DATE(workDate) = #{workDate,jdbcType=VARCHAR}
+		</if>
+		<if test="departName!= null and departName!= null">
+			and departName like concat('%',#{departName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="userName!= null and userName!= null">
+			and userName like concat('%',#{userName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="status!= null">
+			and status = #{status,jdbcType=INTEGER}
+		</if>
+	</where>
+	GROUP BY
+	attendanceMonthlyReport_.userid,
+	CAST(
+		attendanceMonthlyReport_.workDate AS time
+	),
+	attendanceMonthlyReport_.workDate
+	ORDER BY
+	attendanceMonthlyReport_.companyID,
+	attendanceMonthlyReport_.departName
+  </select>
+  <select id="queryAttendanceRecordAllByPropertys" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from attendancerercordall
+  	<where>
+  	  <if test="workday_begin != null and workday_end != null">
+				and workdate BETWEEN  #{workday_begin,jdbcType=VARCHAR} and #{workday_end,jdbcType=VARCHAR}
+	   </if>
+	   <if test="workDate != null" >
+        DATE(workDate)=#{workDate,jdbcType=VARCHAR}
+      </if>
+  	  <if test="id != null" >
+        and id=#{id,jdbcType=INTEGER}
+      </if>
+      <if test="groupid != null" >
+        and groupid=#{groupid,jdbcType=VARCHAR}
+      </if>
+      <if test="planid != null" >
+        and planid=#{planid,jdbcType=VARCHAR}
+      </if>
+      <if test="userid != null" >
+        and userid=#{userid,jdbcType=VARCHAR}
+      </if>
+      <if test="checktype != null" >
+        and checktype=#{checktype,jdbcType=VARCHAR}
+      </if>
+      <if test="sourcetype != null" >
+       and sourcetype=#{sourcetype,jdbcType=VARCHAR}
+      </if>
+      <if test="timeresult != null" >
+        and timeresult=#{timeresult,jdbcType=VARCHAR}
+      </if>
+      <if test="locationresult != null" >
+        and locationresult=#{locationresult,jdbcType=VARCHAR}
+      </if>
+      <if test="approveid != null" >
+        and approveid=#{approveid,jdbcType=VARCHAR}
+      </if>
+      <if test="procinstid != null" >
+        and procinstid=#{procinstid,jdbcType=VARCHAR}
+      </if>
+      <if test="basechecktime != null" >
+        and basechecktime=#{basechecktime,jdbcType=VARCHAR}
+      </if>
+      <if test="userchecktime != null" >
+        and userchecktime=#{userchecktime,jdbcType=VARCHAR}
+      </if>
+      <if test="islegal != null" >
+        and islegal=#{islegal,jdbcType=INTEGER}
+      </if>
+      <if test="classid != null" >
+        and classid=#{classid,jdbcType=VARCHAR}
+      </if>
+      <if test="locationmethod != null" >
+        and locationmethod=#{locationmethod,jdbcType=VARCHAR}
+      </if>
+      <if test="deviceid != null" >
+        and deviceid=#{deviceid,jdbcType=VARCHAR}
+      </if>
+      <if test="useraddress != null" >
+        and useraddress=#{useraddress,jdbcType=VARCHAR}
+      </if>
+      <if test="userlongitude != null" >
+        and userlongitude=#{userlongitude,jdbcType=VARCHAR}
+      </if>
+      <if test="userlatitude != null" >
+        and userlatitude=#{userlatitude,jdbcType=VARCHAR}
+      </if>
+      <if test="useraccuracy != null" >
+        and useraccuracy=#{useraccuracy,jdbcType=VARCHAR}
+      </if>
+      <if test="userssid != null" >
+        and userssid=#{userssid,jdbcType=VARCHAR}
+      </if>
+      <if test="usermacaddr != null" >
+        and usermacaddr=#{usermacaddr,jdbcType=VARCHAR}
+      </if>
+      <if test="planchecktime != null" >
+       and planchecktime= #{planchecktime,jdbcType=VARCHAR}
+      </if>
+      <if test="baseaddress != null" >
+       and baseaddress= #{baseaddress,jdbcType=VARCHAR}
+      </if>
+      <if test="baselongitude != null" >
+        and baselongitude = #{baselongitude,jdbcType=VARCHAR}
+      </if>
+      <if test="baselatitude != null" >
+        and baselatitude=#{baselatitude,jdbcType=VARCHAR}
+      </if>
+      <if test="baseaccuracy != null" >
+       and baseaccuracy= #{baseaccuracy,jdbcType=VARCHAR}
+      </if>
+      <if test="basessid != null" >
+        and basessid=#{basessid,jdbcType=VARCHAR}
+      </if>
+      <if test="basemacaddr != null" >
+        and basemacaddr=#{basemacaddr,jdbcType=VARCHAR}
+      </if>
+      <if test="gmtcreate != null" >
+        and gmtcreate=#{gmtcreate,jdbcType=VARCHAR}
+      </if>
+      <if test="gmtmodified != null" >
+        and gmtmodified=#{gmtmodified,jdbcType=VARCHAR}
+      </if>
+      <if test="outsideremark != null" >
+       and outsideremark= #{outsideremark,jdbcType=VARCHAR}
+      </if>
+      <if test="companyID != null" >
+       and companyID= #{companyID,jdbcType=VARCHAR}
+      </if>
+  	</where>
+  	order by userid
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from attendancerercordall
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="create.model.hrm.AttendanceRercordAll" >
+    insert into attendancerercordall (id, groupId, planID, 
+      workDate, userid, CheckType, 
+      sourceType, timeResult, locationResult, 
+      approveId, procInstId, baseCheckTime, 
+      userCheckTime, isLegal, classId, 
+      locationMethod, deviceId, userAddress, 
+      userLongitude, userLatitude, userAccuracy, 
+      userSsid, userMacAddr, planCheckTime, 
+      baseAddress, baseLongitude, baseLatitude, 
+      baseAccuracy, baseSsid, baseMacAddr, 
+      gmtCreate, gmtModified, outsideRemark,companyID
+      )
+    values (#{id,jdbcType=INTEGER}, #{groupid,jdbcType=VARCHAR}, #{planid,jdbcType=VARCHAR}, 
+      #{workdate,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{checktype,jdbcType=VARCHAR}, 
+      #{sourcetype,jdbcType=VARCHAR}, #{timeresult,jdbcType=VARCHAR}, #{locationresult,jdbcType=VARCHAR}, 
+      #{approveid,jdbcType=VARCHAR}, #{procinstid,jdbcType=VARCHAR}, #{basechecktime,jdbcType=VARCHAR}, 
+      #{userchecktime,jdbcType=VARCHAR}, #{islegal,jdbcType=INTEGER}, #{classid,jdbcType=VARCHAR}, 
+      #{locationmethod,jdbcType=VARCHAR}, #{deviceid,jdbcType=VARCHAR}, #{useraddress,jdbcType=VARCHAR}, 
+      #{userlongitude,jdbcType=VARCHAR}, #{userlatitude,jdbcType=VARCHAR}, #{useraccuracy,jdbcType=VARCHAR}, 
+      #{userssid,jdbcType=VARCHAR}, #{usermacaddr,jdbcType=VARCHAR}, #{planchecktime,jdbcType=VARCHAR}, 
+      #{baseaddress,jdbcType=VARCHAR}, #{baselongitude,jdbcType=VARCHAR}, #{baselatitude,jdbcType=VARCHAR}, 
+      #{baseaccuracy,jdbcType=VARCHAR}, #{basessid,jdbcType=VARCHAR}, #{basemacaddr,jdbcType=VARCHAR}, 
+      #{gmtcreate,jdbcType=VARCHAR}, #{gmtmodified,jdbcType=VARCHAR}, #{outsideremark,jdbcType=VARCHAR}, #{companyID,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="create.model.hrm.AttendanceRercordAll" >
+    insert into attendancerercordall
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="groupid != null" >
+        groupId,
+      </if>
+      <if test="planid != null" >
+        planID,
+      </if>
+      <if test="workdate != null" >
+        workDate,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="checktype != null" >
+        CheckType,
+      </if>
+      <if test="sourcetype != null" >
+        sourceType,
+      </if>
+      <if test="timeresult != null" >
+        timeResult,
+      </if>
+      <if test="locationresult != null" >
+        locationResult,
+      </if>
+      <if test="approveid != null" >
+        approveId,
+      </if>
+      <if test="procinstid != null" >
+        procInstId,
+      </if>
+      <if test="basechecktime != null" >
+        baseCheckTime,
+      </if>
+      <if test="userchecktime != null" >
+        userCheckTime,
+      </if>
+      <if test="islegal != null" >
+        isLegal,
+      </if>
+      <if test="classid != null" >
+        classId,
+      </if>
+      <if test="locationmethod != null" >
+        locationMethod,
+      </if>
+      <if test="deviceid != null" >
+        deviceId,
+      </if>
+      <if test="useraddress != null" >
+        userAddress,
+      </if>
+      <if test="userlongitude != null" >
+        userLongitude,
+      </if>
+      <if test="userlatitude != null" >
+        userLatitude,
+      </if>
+      <if test="useraccuracy != null" >
+        userAccuracy,
+      </if>
+      <if test="userssid != null" >
+        userSsid,
+      </if>
+      <if test="usermacaddr != null" >
+        userMacAddr,
+      </if>
+      <if test="planchecktime != null" >
+        planCheckTime,
+      </if>
+      <if test="baseaddress != null" >
+        baseAddress,
+      </if>
+      <if test="baselongitude != null" >
+        baseLongitude,
+      </if>
+      <if test="baselatitude != null" >
+        baseLatitude,
+      </if>
+      <if test="baseaccuracy != null" >
+        baseAccuracy,
+      </if>
+      <if test="basessid != null" >
+        baseSsid,
+      </if>
+      <if test="basemacaddr != null" >
+        baseMacAddr,
+      </if>
+      <if test="gmtcreate != null" >
+        gmtCreate,
+      </if>
+      <if test="gmtmodified != null" >
+        gmtModified,
+      </if>
+      <if test="outsideremark != null" >
+        outsideRemark,
+      </if>
+      <if test="companyID != null" >
+        companyID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="groupid != null" >
+        #{groupid,jdbcType=VARCHAR},
+      </if>
+      <if test="planid != null" >
+        #{planid,jdbcType=VARCHAR},
+      </if>
+      <if test="workdate != null" >
+        #{workdate,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="checktype != null" >
+        #{checktype,jdbcType=VARCHAR},
+      </if>
+      <if test="sourcetype != null" >
+        #{sourcetype,jdbcType=VARCHAR},
+      </if>
+      <if test="timeresult != null" >
+        #{timeresult,jdbcType=VARCHAR},
+      </if>
+      <if test="locationresult != null" >
+        #{locationresult,jdbcType=VARCHAR},
+      </if>
+      <if test="approveid != null" >
+        #{approveid,jdbcType=VARCHAR},
+      </if>
+      <if test="procinstid != null" >
+        #{procinstid,jdbcType=VARCHAR},
+      </if>
+      <if test="basechecktime != null" >
+        #{basechecktime,jdbcType=VARCHAR},
+      </if>
+      <if test="userchecktime != null" >
+        #{userchecktime,jdbcType=VARCHAR},
+      </if>
+      <if test="islegal != null" >
+        #{islegal,jdbcType=INTEGER},
+      </if>
+      <if test="classid != null" >
+        #{classid,jdbcType=VARCHAR},
+      </if>
+      <if test="locationmethod != null" >
+        #{locationmethod,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceid != null" >
+        #{deviceid,jdbcType=VARCHAR},
+      </if>
+      <if test="useraddress != null" >
+        #{useraddress,jdbcType=VARCHAR},
+      </if>
+      <if test="userlongitude != null" >
+        #{userlongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="userlatitude != null" >
+        #{userlatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="useraccuracy != null" >
+        #{useraccuracy,jdbcType=VARCHAR},
+      </if>
+      <if test="userssid != null" >
+        #{userssid,jdbcType=VARCHAR},
+      </if>
+      <if test="usermacaddr != null" >
+        #{usermacaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="planchecktime != null" >
+        #{planchecktime,jdbcType=VARCHAR},
+      </if>
+      <if test="baseaddress != null" >
+        #{baseaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="baselongitude != null" >
+        #{baselongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="baselatitude != null" >
+        #{baselatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="baseaccuracy != null" >
+        #{baseaccuracy,jdbcType=VARCHAR},
+      </if>
+      <if test="basessid != null" >
+        #{basessid,jdbcType=VARCHAR},
+      </if>
+      <if test="basemacaddr != null" >
+        #{basemacaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtcreate != null" >
+        #{gmtcreate,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtmodified != null" >
+        #{gmtmodified,jdbcType=VARCHAR},
+      </if>
+      <if test="outsideremark != null" >
+        #{outsideremark,jdbcType=VARCHAR},
+      </if>
+      <if test="companyID != null" >
+        #{companyID,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="create.model.hrm.AttendanceRercordAll" >
+    update attendancerercordall
+    <set >
+      <if test="groupid != null" >
+        groupId = #{groupid,jdbcType=VARCHAR},
+      </if>
+      <if test="planid != null" >
+        planID = #{planid,jdbcType=VARCHAR},
+      </if>
+      <if test="workdate != null" >
+        workDate = #{workdate,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="checktype != null" >
+        CheckType = #{checktype,jdbcType=VARCHAR},
+      </if>
+      <if test="sourcetype != null" >
+        sourceType = #{sourcetype,jdbcType=VARCHAR},
+      </if>
+      <if test="timeresult != null" >
+        timeResult = #{timeresult,jdbcType=VARCHAR},
+      </if>
+      <if test="locationresult != null" >
+        locationResult = #{locationresult,jdbcType=VARCHAR},
+      </if>
+      <if test="approveid != null" >
+        approveId = #{approveid,jdbcType=VARCHAR},
+      </if>
+      <if test="procinstid != null" >
+        procInstId = #{procinstid,jdbcType=VARCHAR},
+      </if>
+      <if test="basechecktime != null" >
+        baseCheckTime = #{basechecktime,jdbcType=VARCHAR},
+      </if>
+      <if test="userchecktime != null" >
+        userCheckTime = #{userchecktime,jdbcType=VARCHAR},
+      </if>
+      <if test="islegal != null" >
+        isLegal = #{islegal,jdbcType=INTEGER},
+      </if>
+      <if test="classid != null" >
+        classId = #{classid,jdbcType=VARCHAR},
+      </if>
+      <if test="locationmethod != null" >
+        locationMethod = #{locationmethod,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceid != null" >
+        deviceId = #{deviceid,jdbcType=VARCHAR},
+      </if>
+      <if test="useraddress != null" >
+        userAddress = #{useraddress,jdbcType=VARCHAR},
+      </if>
+      <if test="userlongitude != null" >
+        userLongitude = #{userlongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="userlatitude != null" >
+        userLatitude = #{userlatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="useraccuracy != null" >
+        userAccuracy = #{useraccuracy,jdbcType=VARCHAR},
+      </if>
+      <if test="userssid != null" >
+        userSsid = #{userssid,jdbcType=VARCHAR},
+      </if>
+      <if test="usermacaddr != null" >
+        userMacAddr = #{usermacaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="planchecktime != null" >
+        planCheckTime = #{planchecktime,jdbcType=VARCHAR},
+      </if>
+      <if test="baseaddress != null" >
+        baseAddress = #{baseaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="baselongitude != null" >
+        baseLongitude = #{baselongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="baselatitude != null" >
+        baseLatitude = #{baselatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="baseaccuracy != null" >
+        baseAccuracy = #{baseaccuracy,jdbcType=VARCHAR},
+      </if>
+      <if test="basessid != null" >
+        baseSsid = #{basessid,jdbcType=VARCHAR},
+      </if>
+      <if test="basemacaddr != null" >
+        baseMacAddr = #{basemacaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtcreate != null" >
+        gmtCreate = #{gmtcreate,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtmodified != null" >
+        gmtModified = #{gmtmodified,jdbcType=VARCHAR},
+      </if>
+      <if test="outsideremark != null" >
+        outsideRemark = #{outsideremark,jdbcType=VARCHAR},
+      </if>
+       <if test="companyID != null" >
+        companyID = #{companyID,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="create.model.hrm.AttendanceRercordAll" >
+    update attendancerercordall
+    set groupId = #{groupid,jdbcType=VARCHAR},
+      planID = #{planid,jdbcType=VARCHAR},
+      workDate = #{workdate,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=VARCHAR},
+      CheckType = #{checktype,jdbcType=VARCHAR},
+      sourceType = #{sourcetype,jdbcType=VARCHAR},
+      timeResult = #{timeresult,jdbcType=VARCHAR},
+      locationResult = #{locationresult,jdbcType=VARCHAR},
+      approveId = #{approveid,jdbcType=VARCHAR},
+      procInstId = #{procinstid,jdbcType=VARCHAR},
+      baseCheckTime = #{basechecktime,jdbcType=VARCHAR},
+      userCheckTime = #{userchecktime,jdbcType=VARCHAR},
+      isLegal = #{islegal,jdbcType=INTEGER},
+      classId = #{classid,jdbcType=VARCHAR},
+      locationMethod = #{locationmethod,jdbcType=VARCHAR},
+      deviceId = #{deviceid,jdbcType=VARCHAR},
+      userAddress = #{useraddress,jdbcType=VARCHAR},
+      userLongitude = #{userlongitude,jdbcType=VARCHAR},
+      userLatitude = #{userlatitude,jdbcType=VARCHAR},
+      userAccuracy = #{useraccuracy,jdbcType=VARCHAR},
+      userSsid = #{userssid,jdbcType=VARCHAR},
+      userMacAddr = #{usermacaddr,jdbcType=VARCHAR},
+      planCheckTime = #{planchecktime,jdbcType=VARCHAR},
+      baseAddress = #{baseaddress,jdbcType=VARCHAR},
+      baseLongitude = #{baselongitude,jdbcType=VARCHAR},
+      baseLatitude = #{baselatitude,jdbcType=VARCHAR},
+      baseAccuracy = #{baseaccuracy,jdbcType=VARCHAR},
+      baseSsid = #{basessid,jdbcType=VARCHAR},
+      baseMacAddr = #{basemacaddr,jdbcType=VARCHAR},
+      gmtCreate = #{gmtcreate,jdbcType=VARCHAR},
+      gmtModified = #{gmtmodified,jdbcType=VARCHAR},
+      outsideRemark = #{outsideremark,jdbcType=VARCHAR},
+      companyID = #{companyID,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

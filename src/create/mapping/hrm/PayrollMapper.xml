@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.hrm.PayrollMapper" >
+  <resultMap id="BaseResultMap" type="create.model.hrm.Payroll" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="periodwage" property="periodwage" jdbcType="REAL" />
+    <result column="wage" property="wage" jdbcType="REAL" />
+    <result column="enterDate" property="enterdate" jdbcType="DATE" />
+    <result column="zzDate" property="zzdate" jdbcType="DATE" />
+    <result column="yl" property="yl" jdbcType="VARCHAR" />
+    <result column="yl1" property="yl1" jdbcType="REAL" />
+    <result column="Yl2" property="yl2" jdbcType="VARCHAR" />
+  </resultMap>
+  <!-- 客户表属性映射属性名和数据库列名映射 -->
+  <resultMap id="customerResultMap" type="create.model.crm.CustomerInfo">
+    <id column="id" property="id" jdbcType="INTEGER" />
+		<result column="area" property="area" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="sale" property="sale" jdbcType="VARCHAR" />
+		<result column="website" property="website" jdbcType="VARCHAR" />
+		<result column="creditrating" property="creditrating"
+			jdbcType="INTEGER" />
+		<result column="customrate" property="customrate"
+			jdbcType="INTEGER" />
+		<result column="customerproperty" property="customerproperty"
+			jdbcType="INTEGER" />
+		<result column="business" property="business"
+			jdbcType="VARCHAR" />
+		<result column="needproducts" property="needproducts"
+			jdbcType="VARCHAR" />
+		<result column="industry" property="industry"
+			jdbcType="VARCHAR" />
+		<result column="customername" property="customername"
+			jdbcType="VARCHAR" />
+		<result column="isdeleted" property="isdeleted" jdbcType="CHAR" />
+		<result column="deletedby" property="deletedby"
+			jdbcType="VARCHAR" />
+		<result column="deletetime" property="deletetime"
+			jdbcType="TIMESTAMP" />
+		<result column="createdby" property="createdby"
+			jdbcType="VARCHAR" />
+		<result column="createtime" property="createtime"
+			jdbcType="TIMESTAMP" />
+		<result column="lastmodify" property="lastmodify"
+			jdbcType="VARCHAR" />
+		<result column="lastmodifytime" property="lastmodifytime"
+			jdbcType="TIMESTAMP" />
+		<result column="ATT1" property="att1" jdbcType="VARCHAR" />
+		<result column="ATT2" property="att2" jdbcType="VARCHAR" />
+		<result column="ATT3" property="att3" jdbcType="VARCHAR" />
+		<result column="ATT4" property="att4" jdbcType="VARCHAR" />
+		<result column="ATT5" property="att5" jdbcType="VARCHAR" />
+  </resultMap>
+   <!-- User join Zcproject进行联合查询  --> 
+  <resultMap id="zcprojectResultMap" type="create.model.crm.Zcproject" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="projectName" property="projectname" jdbcType="VARCHAR" />
+    <result column="projectAdress" property="projectadress" jdbcType="VARCHAR" />
+    <result column="createBy" property="createby" jdbcType="INTEGER" />
+    <result column="modifyBy" property="modifyby" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="modifyTime" property="modifytime" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="yl1" property="yl1" jdbcType="VARCHAR" />
+    <result column="yl2" property="yl2" jdbcType="VARCHAR" />
+    <result column="yl3" property="yl3" jdbcType="VARCHAR" />
+    <result column="yl4" property="yl4" jdbcType="VARCHAR" />
+  </resultMap>
+    <!-- User join payroll进行联合查询  --> 
+  <resultMap id="userResultMap" type="create.model.hrm.User">
+		<id column="Id" property="id" jdbcType="INTEGER" />
+		<result column="loginid" property="loginid" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="username" property="username"
+			jdbcType="VARCHAR" />
+		<result column="password" property="password"
+			jdbcType="VARCHAR" />
+		<result column="salt" property="salt" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="roleId" property="roleid" jdbcType="INTEGER" />
+		<result column="sex" property="sex" jdbcType="INTEGER" />
+		<result column="mobile0" property="mobile0" jdbcType="VARCHAR" />
+		<result column="mobile1" property="mobile1" jdbcType="VARCHAR" />
+		<result column="telephone" property="telephone"
+			jdbcType="VARCHAR" />
+		<result column="jobName" property="jobName" jdbcType="VARCHAR" />
+		<result column="companyId" property="companyId"
+			jdbcType="INTEGER" />
+		<result column="companyName" property="companyName"
+			jdbcType="VARCHAR" />
+		<result column="departid" property="departid"
+			jdbcType="INTEGER" />
+		<result column="departName" property="departName"
+			jdbcType="VARCHAR" />
+		<result column="jobid" property="jobid" jdbcType="INTEGER" />
+		<result column="idno" property="idno" jdbcType="VARCHAR" />
+		<result column="brithday" property="brithday" jdbcType="DATE" />
+		<result column="createtime" property="createtime"
+			jdbcType="DATE" />
+		<result column="modifytime" property="modifytime"
+			jdbcType="DATE" />
+		<result column="createby" property="createby"
+			jdbcType="INTEGER" />
+		<result column="internalstaff" property="internalstaff"
+			jdbcType="INTEGER" />
+		<result column="rsfzr" property="rsfzr"
+			jdbcType="VARCHAR" />
+	</resultMap>
+   <!-- User join payroll进行联合查询  -->    
+   <resultMap id="payrollReportResultMap" type="create.model.hrm.Payroll">
+        <id column="ID" property="id" jdbcType="INTEGER" />
+	    <result column="userId" property="userid" jdbcType="INTEGER" />
+	    <result column="periodwage" property="periodwage" jdbcType="REAL" />
+	    <result column="wage" property="wage" jdbcType="REAL" />
+	    <result column="enterDate" property="enterdate" jdbcType="DATE" />
+	    <result column="zzDate" property="zzdate" jdbcType="DATE" />
+	    <result column="yl" property="yl" jdbcType="VARCHAR" />
+	    <result column="yl1" property="yl1" jdbcType="REAL" />
+	    <result column="Yl2" property="yl2" jdbcType="VARCHAR" />
+        <association property="user" javaType="create.model.hrm.User" resultMap="userResultMap"/>  
+        <association property="customerInfo" javaType="create.model.crm.CustomerInfo" resultMap="customerResultMap"/>  
+        <association property="zcproject" javaType="create.model.crm.Zcproject" resultMap="zcprojectResultMap"/>  
+   </resultMap>
+     <resultMap id="payrollResultMap" type="create.model.hrm.Payroll">
+        <id column="ID" property="id" jdbcType="INTEGER" />
+	    <result column="userId" property="userid" jdbcType="INTEGER" />
+	    <result column="periodwage" property="periodwage" jdbcType="REAL" />
+	    <result column="wage" property="wage" jdbcType="REAL" />
+	    <result column="enterDate" property="enterdate" jdbcType="DATE" />
+	    <result column="zzDate" property="zzdate" jdbcType="DATE" />
+	    <result column="yl" property="yl" jdbcType="VARCHAR" />
+	    <result column="yl1" property="yl1" jdbcType="REAL" />
+	    <result column="Yl2" property="yl2" jdbcType="VARCHAR" />
+        <association property="user" javaType="create.model.hrm.User" resultMap="userResultMap"/>  
+   </resultMap>
+   <!--查询考情情况的报表-->
+   <select id="pagePayrollReprotList" resultMap="payrollReportResultMap">
+		select c.customername,u.username,u.id,p.wage,p.enterDate,p.zzDate,z.projectname from `user` u LEFT JOIN  customerinfo c 
+ 		on c.id=u.internalstaff LEFT JOIN payroll p on p.userId=u.Id LEFT JOIN zcproject z ON z.id=u.zcprojectId    
+		<where>
+			u.`status`=0 and u.username!='系统管理员'  ORDER BY u.id,c.customername,z.projectname
+		</where> 
+	</select>
+  <sql id="Base_Column_List" >
+    ID, userId, periodwage, wage, enterDate, zzDate, yl, yl1, Yl2
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="payrollReportResultMap" parameterType="java.lang.Integer" >
+    select * 
+    from payroll p LEFT JOIN `user` u on p.userId=u.Id
+    where p.ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from payroll
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <!-- 取得记录的总数 -->
+	<select id="pageCounts" resultType="java.lang.Long">
+		SELECT COUNT(*) FROM  payroll p left join `user` u on u.id=p.userId 
+		<where>
+			  <if test="status != null" >
+		        u.`status` = #{status,jdbcType=INTEGER}
+		      </if>
+			  <if test="username != null" >
+		        and u.username = #{username,jdbcType=VARCHAR}
+		      </if>
+			  <if test="userid != null" >
+		        and userId = #{userid,jdbcType=INTEGER}
+		      </if>
+		      <if test="periodwage != null" >
+		        and periodwage = #{periodwage,jdbcType=REAL}
+		      </if>
+		      <if test="wage != null" >
+		        and wage = #{wage,jdbcType=REAL}
+		      </if>
+		      <if test="enterdate != null" >
+		        and enterDate = #{enterdate,jdbcType=DATE}
+		      </if>
+		      <if test="zzdate != null" >
+		        and zzDate = #{zzdate,jdbcType=DATE}
+		      </if>
+		      <if test="yl != null" >
+		        and yl = #{yl,jdbcType=VARCHAR}
+		      </if>
+		      <if test="yl1 != null" >
+		        and yl1 = #{yl1,jdbcType=REAL}
+		      </if>
+		      <if test="yl2 != null" >
+		        and Yl2 = #{yl2,jdbcType=VARCHAR}
+		      </if>
+		</where> 
+	</select>
+  <select id="pagePayrollListByParamMap" resultMap="payrollResultMap">
+		select
+		u.username,p.* 
+		from payroll p left join `user` u on u.id=p.userId
+		<where>
+			  <if test="status != null" >
+		        u.`status` = #{status,jdbcType=INTEGER}
+		      </if>
+			  <if test="username != null" >
+		        and u.username  like
+			     concat('%',#{username,jdbcType=VARCHAR},'%')
+		      </if>
+			  <if test="userid != null" >
+		        and userId = #{userid,jdbcType=INTEGER}
+		      </if>
+		      <if test="periodwage != null" >
+		        and periodwage = #{periodwage,jdbcType=REAL}
+		      </if>
+		      <if test="wage != null" >
+		        and wage = #{wage,jdbcType=REAL}
+		      </if>
+		      <if test="enterdate != null" >
+		        and enterDate = #{enterdate,jdbcType=DATE}
+		      </if>
+		      <if test="zzdate != null" >
+		        and zzDate = #{zzdate,jdbcType=DATE}
+		      </if>
+		      <if test="yl != null" >
+		        and yl = #{yl,jdbcType=VARCHAR}
+		      </if>
+		      <if test="yl1 != null" >
+		        and yl1 = #{yl1,jdbcType=REAL}
+		      </if>
+		      <if test="yl2 != null" >
+		        and Yl2 = #{yl2,jdbcType=VARCHAR}
+		      </if>
+		</where> 
+		 limit #{startIndex},#{endIndex}
+	</select>
+  <insert id="insert" parameterType="create.model.hrm.Payroll" >
+    insert into payroll (ID, userId, periodwage, 
+      wage, enterDate, zzDate, yl, 
+      yl1, Yl2)
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{periodwage,jdbcType=REAL}, 
+      #{wage,jdbcType=REAL}, #{enterdate,jdbcType=DATE}, #{zzdate,jdbcType=DATE}, #{yl,jdbcType=VARCHAR}, 
+      #{yl1,jdbcType=REAL}, #{yl2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="create.model.hrm.Payroll" >
+    insert into payroll
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="periodwage != null" >
+        periodwage,
+      </if>
+      <if test="wage != null" >
+        wage,
+      </if>
+      <if test="enterdate != null" >
+        enterDate,
+      </if>
+      <if test="zzdate != null" >
+        zzDate,
+      </if>
+      <if test="yl != null" >
+        yl,
+      </if>
+      <if test="yl1 != null" >
+        yl1,
+      </if>
+      <if test="yl2 != null" >
+        Yl2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="periodwage != null" >
+        #{periodwage,jdbcType=REAL},
+      </if>
+      <if test="wage != null" >
+        #{wage,jdbcType=REAL},
+      </if>
+      <if test="enterdate != null" >
+        #{enterdate,jdbcType=DATE},
+      </if>
+      <if test="zzdate != null" >
+        #{zzdate,jdbcType=DATE},
+      </if>
+      <if test="yl != null" >
+        #{yl,jdbcType=VARCHAR},
+      </if>
+      <if test="yl1 != null" >
+        #{yl1,jdbcType=REAL},
+      </if>
+      <if test="yl2 != null" >
+        #{yl2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="create.model.hrm.Payroll" >
+    update payroll
+    <set >
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="periodwage != null" >
+        periodwage = #{periodwage,jdbcType=REAL},
+      </if>
+      <if test="wage != null" >
+        wage = #{wage,jdbcType=REAL},
+      </if>
+      <if test="enterdate != null" >
+        enterDate = #{enterdate,jdbcType=DATE},
+      </if>
+      <if test="zzdate != null" >
+        zzDate = #{zzdate,jdbcType=DATE},
+      </if>
+      <if test="yl != null" >
+        yl = #{yl,jdbcType=VARCHAR},
+      </if>
+      <if test="yl1 != null" >
+        yl1 = #{yl1,jdbcType=REAL},
+      </if>
+      <if test="yl2 != null" >
+        Yl2 = #{yl2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="create.model.hrm.Payroll" >
+    update payroll
+    set userId = #{userid,jdbcType=INTEGER},
+      periodwage = #{periodwage,jdbcType=REAL},
+      wage = #{wage,jdbcType=REAL},
+      enterDate = #{enterdate,jdbcType=DATE},
+      zzDate = #{zzdate,jdbcType=DATE},
+      yl = #{yl,jdbcType=VARCHAR},
+      yl1 = #{yl1,jdbcType=REAL},
+      Yl2 = #{yl2,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.system.UserTreeNodeRelationMapper" >
+  <resultMap id="BaseResultMap" type="create.model.system.UserTreeNodeRelation" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="treenodeId" property="treenodeid" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="desc" property="desc" jdbcType="VARCHAR" />
+    <result column="ISDELETED" property="isdeleted" jdbcType="CHAR" />
+    <result column="DELETEDBY" property="deletedby" jdbcType="VARCHAR" />
+    <result column="DELETETIME" property="deletetime" jdbcType="TIMESTAMP" />
+    <result column="CREATEDBY" property="createdby" jdbcType="VARCHAR" />
+    <result column="CREATETIME" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="LASTMODIFIEDBY" property="lastmodifiedby" jdbcType="VARCHAR" />
+    <result column="LASTMODIFIEDTIME" property="lastmodifiedtime" jdbcType="TIMESTAMP" />
+    <result column="ATT1" property="att1" jdbcType="VARCHAR" />
+    <result column="ATT2" property="att2" jdbcType="VARCHAR" />
+    <result column="ATT3" property="att3" jdbcType="VARCHAR" />
+    <result column="ATT4" property="att4" jdbcType="VARCHAR" />
+    <result column="ATT5" property="att5" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, treenodeId, userId, desc, ISDELETED, DELETEDBY, DELETETIME, CREATEDBY, CREATETIME, 
+    LASTMODIFIEDBY, LASTMODIFIEDTIME, ATT1, ATT2, ATT3, ATT4, ATT5
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from usertreenoderelation
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from usertreenoderelation
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="create.model.system.UserTreeNodeRelation" >
+    insert into usertreenoderelation (id, treenodeId, userId, 
+      desc, ISDELETED, DELETEDBY, 
+      DELETETIME, CREATEDBY, CREATETIME, 
+      LASTMODIFIEDBY, LASTMODIFIEDTIME, ATT1, 
+      ATT2, ATT3, ATT4, ATT5
+      )
+    values (#{id,jdbcType=INTEGER}, #{treenodeid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
+      #{desc,jdbcType=VARCHAR}, #{isdeleted,jdbcType=CHAR}, #{deletedby,jdbcType=VARCHAR}, 
+      #{deletetime,jdbcType=TIMESTAMP}, #{createdby,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{lastmodifiedby,jdbcType=VARCHAR}, #{lastmodifiedtime,jdbcType=TIMESTAMP}, #{att1,jdbcType=VARCHAR}, 
+      #{att2,jdbcType=VARCHAR}, #{att3,jdbcType=VARCHAR}, #{att4,jdbcType=VARCHAR}, #{att5,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="create.model.system.UserTreeNodeRelation" >
+    insert into usertreenoderelation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="treenodeid != null" >
+        treenodeId,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="desc != null" >
+        desc,
+      </if>
+      <if test="isdeleted != null" >
+        ISDELETED,
+      </if>
+      <if test="deletedby != null" >
+        DELETEDBY,
+      </if>
+      <if test="deletetime != null" >
+        DELETETIME,
+      </if>
+      <if test="createdby != null" >
+        CREATEDBY,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+      <if test="lastmodifiedby != null" >
+        LASTMODIFIEDBY,
+      </if>
+      <if test="lastmodifiedtime != null" >
+        LASTMODIFIEDTIME,
+      </if>
+      <if test="att1 != null" >
+        ATT1,
+      </if>
+      <if test="att2 != null" >
+        ATT2,
+      </if>
+      <if test="att3 != null" >
+        ATT3,
+      </if>
+      <if test="att4 != null" >
+        ATT4,
+      </if>
+      <if test="att5 != null" >
+        ATT5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="treenodeid != null" >
+        #{treenodeid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="desc != null" >
+        #{desc,jdbcType=VARCHAR},
+      </if>
+      <if test="isdeleted != null" >
+        #{isdeleted,jdbcType=CHAR},
+      </if>
+      <if test="deletedby != null" >
+        #{deletedby,jdbcType=VARCHAR},
+      </if>
+      <if test="deletetime != null" >
+        #{deletetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdby != null" >
+        #{createdby,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastmodifiedby != null" >
+        #{lastmodifiedby,jdbcType=VARCHAR},
+      </if>
+      <if test="lastmodifiedtime != null" >
+        #{lastmodifiedtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="att1 != null" >
+        #{att1,jdbcType=VARCHAR},
+      </if>
+      <if test="att2 != null" >
+        #{att2,jdbcType=VARCHAR},
+      </if>
+      <if test="att3 != null" >
+        #{att3,jdbcType=VARCHAR},
+      </if>
+      <if test="att4 != null" >
+        #{att4,jdbcType=VARCHAR},
+      </if>
+      <if test="att5 != null" >
+        #{att5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="create.model.system.UserTreeNodeRelation" >
+    update usertreenoderelation
+    <set >
+      <if test="treenodeid != null" >
+        treenodeId = #{treenodeid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="desc != null" >
+        desc = #{desc,jdbcType=VARCHAR},
+      </if>
+      <if test="isdeleted != null" >
+        ISDELETED = #{isdeleted,jdbcType=CHAR},
+      </if>
+      <if test="deletedby != null" >
+        DELETEDBY = #{deletedby,jdbcType=VARCHAR},
+      </if>
+      <if test="deletetime != null" >
+        DELETETIME = #{deletetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdby != null" >
+        CREATEDBY = #{createdby,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastmodifiedby != null" >
+        LASTMODIFIEDBY = #{lastmodifiedby,jdbcType=VARCHAR},
+      </if>
+      <if test="lastmodifiedtime != null" >
+        LASTMODIFIEDTIME = #{lastmodifiedtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="att1 != null" >
+        ATT1 = #{att1,jdbcType=VARCHAR},
+      </if>
+      <if test="att2 != null" >
+        ATT2 = #{att2,jdbcType=VARCHAR},
+      </if>
+      <if test="att3 != null" >
+        ATT3 = #{att3,jdbcType=VARCHAR},
+      </if>
+      <if test="att4 != null" >
+        ATT4 = #{att4,jdbcType=VARCHAR},
+      </if>
+      <if test="att5 != null" >
+        ATT5 = #{att5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="create.model.system.UserTreeNodeRelation" >
+    update usertreenoderelation
+    set treenodeId = #{treenodeid,jdbcType=INTEGER},
+      userId = #{userid,jdbcType=INTEGER},
+      desc = #{desc,jdbcType=VARCHAR},
+      ISDELETED = #{isdeleted,jdbcType=CHAR},
+      DELETEDBY = #{deletedby,jdbcType=VARCHAR},
+      DELETETIME = #{deletetime,jdbcType=TIMESTAMP},
+      CREATEDBY = #{createdby,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      LASTMODIFIEDBY = #{lastmodifiedby,jdbcType=VARCHAR},
+      LASTMODIFIEDTIME = #{lastmodifiedtime,jdbcType=TIMESTAMP},
+      ATT1 = #{att1,jdbcType=VARCHAR},
+      ATT2 = #{att2,jdbcType=VARCHAR},
+      ATT3 = #{att3,jdbcType=VARCHAR},
+      ATT4 = #{att4,jdbcType=VARCHAR},
+      ATT5 = #{att5,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

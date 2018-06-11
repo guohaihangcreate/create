@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.hrm.UserMapper">
+	<resultMap id="BaseResultMap" type="create.model.hrm.User">
+		<id column="Id" property="id" jdbcType="INTEGER" />
+		<result column="loginid" property="loginid" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="username" property="username"
+			jdbcType="VARCHAR" />
+		<result column="password" property="password"
+			jdbcType="VARCHAR" />
+		<result column="salt" property="salt" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="roleId" property="roleid" jdbcType="INTEGER" />
+		<result column="sex" property="sex" jdbcType="INTEGER" />
+		<result column="mobile0" property="mobile0" jdbcType="VARCHAR" />
+		<result column="mobile1" property="mobile1" jdbcType="VARCHAR" />
+		<result column="telephone" property="telephone"
+			jdbcType="VARCHAR" />
+		<result column="jobName" property="jobName" jdbcType="VARCHAR" />
+		<result column="companyId" property="companyId"
+			jdbcType="INTEGER" />
+		<result column="companyName" property="companyName"
+			jdbcType="VARCHAR" />
+		<result column="departid" property="departid"
+			jdbcType="INTEGER" />
+		<result column="departName" property="departName"
+			jdbcType="VARCHAR" />
+		<result column="jobid" property="jobid" jdbcType="INTEGER" />
+		<result column="idno" property="idno" jdbcType="VARCHAR" />
+		<result column="brithday" property="brithday" jdbcType="DATE" />
+		<result column="createtime" property="createtime"
+			jdbcType="DATE" />
+		<result column="modifytime" property="modifytime"
+			jdbcType="DATE" />
+		<result column="createby" property="createby"
+			jdbcType="INTEGER" />
+		<result column="internalstaff" property="internalstaff"
+			jdbcType="INTEGER" />
+		<result column="rsfzr" property="rsfzr"
+			jdbcType="VARCHAR" />
+		<result column="zcprojectId" property="zcprojectId"
+			jdbcType="INTEGER" />
+		<result column="dingtalkId" property="dingtalkId"
+			jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		Id, loginid, status, username, password, salt, email, roleId,
+		sex, telephone,mobile0 ,mobile1,departid,departName,jobid,
+		jobName,companyId,companyName,idno, brithday, createtime,
+		createby,internalstaff,modifytime,rsfzr,zcprojectId,dingtalkId
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from user where Id = #{id,jdbcType=INTEGER}
+	</select>
+	<!-- 取得记录的总数 -->
+	<select id="pageCounts" resultType="java.lang.Long">
+		SELECT COUNT(*) FROM user where status=0
+		<if test="status!=null">
+			and status = #{status,jdbcType=INTEGER}
+		</if>
+		<if test="loginid != null">
+			and loginid = #{loginid,jdbcType=VARCHAR}
+		</if>
+		<if test="username!= null">
+			and username = #{username,jdbcType=VARCHAR}
+		</if>
+		<if test="password != null">
+			and password = #{password,jdbcType=VARCHAR}
+		</if>
+		<if test="salt!= null">and salt = #{salt,jdbcType=VARCHAR}</if>
+		<if test="email != null">
+			and email = #{email,jdbcType=VARCHAR}
+		</if>
+		<if test="roleid!= null">
+			and roleId = #{roleid,jdbcType=INTEGER}
+		</if>
+		<if test="sex!=null">and sex = #{sex,jdbcType=INTEGER}</if>
+		<if test="telephone != null">
+			and telephone = #{telephone,jdbcType=VARCHAR}
+		</if>
+		<if test="departid!= null">
+			and departid = #{departid,jdbcType=INTEGER}
+		</if>
+		<if test="jobid !=null">
+			and jobid = #{jobid,jdbcType=INTEGER}
+		</if>
+		<if test="idno != null">and idno = #{idno,jdbcType=INTEGER}</if>
+		<if test="brithday != null">
+			and brithday = #{idno,jdbcType=DATE}
+		</if>
+		<if test="createtime != null">
+			and createtime = #{createtime,jdbcType=DATE}
+		</if>
+		<if test="createby != null">
+			and createby = #{createby,jdbcType=INTEGER}
+		</if>
+		<if test="internalstaff != null">
+			and internalstaff = #{internalstaff,jdbcType=INTEGER}
+		</if>
+		<if test="modifytime != null">
+			and modifytime = #{modifytime,jdbcType=modifytime}
+		</if>
+		<if test="companyId != null">
+			 and companyId = #{companyId,jdbcType=INTEGER}
+			</if>
+		<if test="rsfzr != null">
+			and rsfzr = #{rsfzr,jdbcType=VARCHAR}
+		</if>
+		<if test="dingtalkId != null">
+			and dingtalkId = #{dingtalkId,jdbcType=VARCHAR}
+		</if>
+	</select>
+	<select id="pageListByParamMap" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from user
+		<where>
+			<if test="id!=null">Id = #{id,jdbcType=INTEGER}</if>
+			<if test="yl3 != null">
+					and id in (#{yl3,jdbcType=VARCHAR})
+			</if>
+			<if test="status!=null">
+				and status = #{status,jdbcType=INTEGER}
+			</if>
+			<if test="loginid != null">
+				and loginid = #{loginid,jdbcType=VARCHAR}
+			</if>
+			<if test="username!= null and username!=''">
+				and username like concat('%',#{username,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="departName!= null and departName!=''">
+				and departName like concat('%',#{departName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="password != null">
+				and password = #{password,jdbcType=VARCHAR}
+			</if>
+			<if test="salt!= null">and salt = #{salt,jdbcType=VARCHAR}</if>
+			<if test="email != null">
+				and email = #{email,jdbcType=VARCHAR}
+			</if>
+			<if test="roleid!= null">
+				and roleId = #{roleid,jdbcType=INTEGER}
+			</if>
+			<if test="sex!=null">and sex = #{sex,jdbcType=INTEGER}</if>
+			<if test="telephone != null">
+				and telephone = #{telephone,jdbcType=VARCHAR}
+			</if>
+			<if test="departid!= null">
+				and departid = #{departid,jdbcType=INTEGER}
+			</if>
+			<if test="jobid !=null">
+				and jobid = #{jobid,jdbcType=INTEGER}
+			</if>
+			<if test="companyId != null">
+			 and companyId = #{companyId,jdbcType=INTEGER}
+			</if>
+			<if test="idno != null">and idno = #{idno,jdbcType=INTEGER}</if>
+			<if test="brithday != null">
+				and brithday = #{idno,jdbcType=DATE}
+			</if>
+			<if test="createtime != null">
+				and createtime = #{createtime,jdbcType=DATE}
+			</if>
+			<if test="createby != null">
+				and createby = #{createby,jdbcType=INTEGER}
+			</if>
+			<if test="internalstaff != null">
+				and internalstaff = #{internalstaff,jdbcType=INTEGER}
+			</if>
+			<if test="startIndex != null and endIndex != null">
+				limit #{startIndex},#{endIndex}
+			</if>
+			<if test="rsfzr != null">
+				and rsfzr = #{rsfzr,jdbcType=VARCHAR}
+			</if>
+			<if test="zcprojectId != null">
+				and zcprojectId = #{zcprojectId,jdbcType=INTEGER}
+			</if>
+			<if test="dingtalkId != null">
+			    and dingtalkId = #{dingtalkId,jdbcType=VARCHAR}
+			</if>
+		</where> 
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from user where Id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert"  parameterType="create.model.hrm.User">
+		<selectKey resultType="java.lang.Short" order="AFTER" keyProperty="Id">
+			SELECT LAST_INSERT_ID() AS Id
+		</selectKey>
+		insert into user (Id, loginid, status, username, password, salt,
+		email, roleId, sex, telephone, departid, jobid, idno, brithday,
+		createtime, createby,modifytime,rsfzr,zcprojectId) values (#{id,jdbcType=INTEGER},
+		#{loginid,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+		#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+		#{salt,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+		#{roleid,jdbcType=INTEGER}, #{sex,jdbcType=INTEGER},
+		#{telephone,jdbcType=VARCHAR}, #{departid,jdbcType=INTEGER},
+		#{jobid,jdbcType=INTEGER}, #{idno,jdbcType=VARCHAR},
+		#{brithday,jdbcType=DATE}, #{createtime,jdbcType=DATE},
+		#{createby,jdbcType=INTEGER}),
+		#{internalstaff,jdbcType=INTEGER},#{modifytime,jdbcType=DATE},#{rsfzr,jdbcType=VARCHAR},
+		#{zcprojectId,jdbcType=INTEGER},#{dingtalkId,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="create.model.hrm.User">
+		 <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+          SELECT LAST_INSERT_ID()
+        </selectKey>
+		insert into user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">Id,</if>
+			<if test="loginid != null">loginid,</if>
+			<if test="status != null">status,</if>
+			<if test="username != null">username,</if>
+			<if test="password != null">password,</if>
+			<if test="salt != null">salt,</if>
+			<if test="email != null">email,</if>
+			<if test="roleid != null">roleId,</if>
+			<if test="sex != null">sex,</if>
+			<if test="jobName != null">jobName,</if>
+			<if test="telephone != null">telephone,</if>
+			<if test="mobile0 != null">mobile0,</if>
+			<if test="mobile1 != null">mobile1,</if>
+			<if test="departid != null">departid,</if>
+			<if test="departName != null">departName,</if>
+			<if test="jobid != null">jobid,</if>
+			<if test="companyId != null">companyId,</if>
+			<if test="companyName != null">companyName,</if>
+			<if test="idno != null">idno,</if>
+			<if test="brithday != null">brithday,</if>
+			<if test="createtime != null">createtime,</if>
+			<if test="createby != null">createby,</if>
+			<if test="internalstaff != null">internalstaff,</if>
+			<if test="modifytime != null">modifytime,</if>
+			<if test="rsfzr != null">rsfzr,</if>
+			<if test="zcprojectId != null">zcprojectId,</if>
+			<if test="dingtalkId != null">dingtalkId,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id,jdbcType=INTEGER},</if>
+			<if test="loginid != null">#{loginid,jdbcType=VARCHAR},</if>
+			<if test="status != null">#{status,jdbcType=INTEGER},</if>
+			<if test="username != null">
+				#{username,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="salt != null">#{salt,jdbcType=VARCHAR},</if>
+			<if test="email != null">#{email,jdbcType=VARCHAR},</if>
+			<if test="roleid != null">#{roleid,jdbcType=INTEGER},</if>
+			<if test="sex != null">#{sex,jdbcType=INTEGER},</if>
+			<if test="jobName != null">#{jobName,jdbcType=VARCHAR},</if>
+			<if test="telephone != null">
+				#{telephone,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile0 != null">#{mobile0,jdbcType=VARCHAR},</if>
+			<if test="mobile1 != null">#{mobile1,jdbcType=VARCHAR},</if>
+			<if test="departid != null">
+				#{departid,jdbcType=INTEGER},
+			</if>
+			<if test="departName != null">
+				#{departName,jdbcType=VARCHAR},
+			</if>
+			<if test="jobid != null">#{jobid,jdbcType=INTEGER},</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=INTEGER},
+			</if>
+			<if test="companyName != null">
+				#{companyName,jdbcType=VARCHAR},
+			</if>
+			<if test="idno != null">#{idno,jdbcType=VARCHAR},</if>
+			<if test="brithday != null">#{brithday,jdbcType=DATE},</if>
+			<if test="createtime != null">
+				#{createtime,jdbcType=DATE},
+			</if>
+			<if test="createby != null">
+				#{createby,jdbcType=INTEGER},
+			</if>
+			<if test="internalstaff != null">
+				#{internalstaff,jdbcType=INTEGER},
+			</if>
+			<if test="modifytime != null">
+				#{modifytime,jdbcType=DATE},
+			</if>
+			<if test="rsfzr != null">#{rsfzr,jdbcType=VARCHAR},</if>
+			<if test="zcprojectId != null">
+				#{zcprojectId,jdbcType=INTEGER},
+			</if>
+			<if test="dingtalkId != null">
+				#{dingtalkId,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="create.model.hrm.User">
+		update user
+		<set>
+			<if test="loginid != null">
+				loginid = #{loginid,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="username != null">
+				username = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				password = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="salt != null">
+				salt = #{salt,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="roleid != null">
+				roleId = #{roleid,jdbcType=INTEGER},
+			</if>
+			<if test="sex != null">sex = #{sex,jdbcType=INTEGER},</if>
+			<if test="jobName != null">
+				jobName = #{jobName,jdbcType=VARCHAR},
+			</if>
+			<if test="telephone != null">
+				telephone = #{telephone,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile0 != null">
+				mobile0 = #{mobile0,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile1 != null">
+				mobile1 = #{mobile1,jdbcType=VARCHAR},
+			</if>
+			<if test="departid != null">
+				departid = #{departid,jdbcType=INTEGER},
+			</if>
+			<if test="jobid != null">
+				jobid = #{jobid,jdbcType=INTEGER},
+			</if>
+			<if test="idno != null">
+				idno = #{idno,jdbcType=VARCHAR},
+			</if>
+			<if test="brithday != null">
+				brithday = #{brithday,jdbcType=DATE},
+			</if>
+			<if test="createtime != null">
+				createtime = #{createtime,jdbcType=DATE},
+			</if>
+			<if test="departName != null">
+				departName = #{departName,jdbcType=VARCHAR},
+			</if>
+			<if test="createby != null">
+				createby = #{createby,jdbcType=INTEGER},
+			</if>
+			<if test="companyId != null">
+				companyId = #{companyId,jdbcType=INTEGER},
+			</if>
+			<if test="companyName != null">
+				companyName = #{companyName,jdbcType=VARCHAR},
+			</if>
+			<if test="internalstaff != null">
+				internalstaff = #{internalstaff,jdbcType=INTEGER},
+			</if>
+			<if test="modifytime != null">
+				modifytime = #{modifytime,jdbcType=DATE},
+			</if>
+			<if test="rsfzr != null">
+				rsfzr = #{rsfzr,jdbcType=VARCHAR},
+			</if>
+			<if test="zcprojectId != null">
+				zcprojectId = #{zcprojectId,jdbcType=INTEGER},
+			</if>
+			<if test="dingtalkId != null">
+				dingtalkId = #{dingtalkId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where Id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="create.model.hrm.User">
+		update user set loginid = #{loginid,jdbcType=VARCHAR}, status =
+		#{status,jdbcType=INTEGER}, username =
+		#{username,jdbcType=VARCHAR}, password =
+		#{password,jdbcType=VARCHAR}, salt = #{salt,jdbcType=VARCHAR},
+		email = #{email,jdbcType=VARCHAR}, roleId =
+		#{roleid,jdbcType=INTEGER}, sex = #{sex,jdbcType=INTEGER},
+		telephone = #{telephone,jdbcType=VARCHAR}, departid =
+		#{departid,jdbcType=INTEGER}, jobid = #{jobid,jdbcType=INTEGER},
+		idno = #{idno,jdbcType=VARCHAR}, brithday =
+		#{brithday,jdbcType=DATE}, createtime =
+		#{createtime,jdbcType=DATE}, createby =
+		#{createby,jdbcType=INTEGER} , internalstaff =
+		#{internalstaff,jdbcType=INTEGER} , modifytime =
+		#{modifytime,jdbcType=DATE} ,
+		rsfzr = #{rsfzr,jdbcType=DATE}, zcprojectId =
+		#{zcprojectId,jdbcType=INTEGER},
+		dingtalkId = #{dingtalkId,jdbcType=VARCHAR}
+		where Id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

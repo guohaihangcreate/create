@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.hrm.AttendanceGroupMapper" >
+  <resultMap id="BaseResultMap" type="create.model.hrm.AttendanceGroup" >
+    <id column="group_id" property="groupId" jdbcType="INTEGER" />
+    <result column="is_default" property="isDefault" jdbcType="INTEGER" />
+    <result column="group_name" property="groupName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="yl1" property="yl1" jdbcType="VARCHAR" />
+    <result column="yl2" property="yl2" jdbcType="VARCHAR" />
+    <result column="yl3" property="yl3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    group_id, is_default, group_name, type,yl1, yl2, yl3
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from attendance_group
+    where group_id = #{groupId,jdbcType=INTEGER}
+  </select>
+  <select id="serachAttendanceGroupsByProperty" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from attendance_group
+    <where>
+    	 <if test="groupId != null" >
+           and group_id = #{groupId,jdbcType=INTEGER}
+      	 </if>
+	      <if test="isDefault != null" >
+	        and isDefault = #{isDefault,jdbcType=INTEGER}
+	      </if>
+	       <if test="type != null" >
+	        and type = like
+			concat('%',#{type,jdbcType=VARCHAR},'%')
+	      </if>
+	      <if test="groupName != null" >
+	        and group_name like
+			concat('%',#{groupName,jdbcType=VARCHAR},'%')
+	      </if>
+	      <if test="yl1 != null" >
+	      	and yl1 like
+			concat('%',#{yl1,jdbcType=VARCHAR},'%')
+	      </if>
+	      <if test="yl2 != null" >
+	        and yl2 like
+			concat('%',#{yl2,jdbcType=VARCHAR},'%')
+	      </if>
+	      <if test="yl3 != null" >
+	         and yl3 = like
+			concat('%',#{yl2,jdbcType=VARCHAR},'%')
+	      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from attendance_group
+    where group_id = #{groupId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="create.model.hrm.AttendanceGroup" >
+    insert into attendance_group (group_id, is_default, group_name,type, 
+      yl1, yl2, yl3)
+    values (#{groupId,jdbcType=INTEGER}, #{isDefault,jdbcType=INTEGER}, #{groupName,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
+      #{yl1,jdbcType=VARCHAR}, #{yl2,jdbcType=VARCHAR}, #{yl3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="create.model.hrm.AttendanceGroup" >
+    insert into attendance_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="groupId != null" >
+        group_id,
+      </if>
+      <if test="isDefault != null" >
+        is_default,
+      </if>
+      <if test="groupName != null" >
+        group_name,
+      </if>
+       <if test="type != null" >
+        type,
+      </if>
+      <if test="yl1 != null" >
+        yl1,
+      </if>
+      <if test="yl2 != null" >
+        yl2,
+      </if>
+      <if test="yl3 != null" >
+        yl3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="groupId != null" >
+        #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="isDefault != null" >
+        #{isDefault,jdbcType=INTEGER},
+      </if>
+      <if test="groupName != null" >
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="yl1 != null" >
+        #{yl1,jdbcType=VARCHAR},
+      </if>
+      <if test="yl2 != null" >
+        #{yl2,jdbcType=VARCHAR},
+      </if>
+      <if test="yl3 != null" >
+        #{yl3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="create.model.hrm.AttendanceGroup" >
+    update attendance_group
+    <set >
+      <if test="isDefault != null" >
+        is_default = #{isDefault,jdbcType=INTEGER},
+      </if>
+      <if test="groupName != null" >
+        group_name = #{groupName,jdbcType=VARCHAR},
+      </if>
+       <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="yl1 != null" >
+        yl1 = #{yl1,jdbcType=VARCHAR},
+      </if>
+      <if test="yl2 != null" >
+        yl2 = #{yl2,jdbcType=VARCHAR},
+      </if>
+      <if test="yl3 != null" >
+        yl3 = #{yl3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where group_id = #{groupId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="create.model.hrm.AttendanceGroup" >
+    update attendance_group
+    set is_default = #{isDefault,jdbcType=INTEGER},
+      group_name = #{groupName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      yl1 = #{yl1,jdbcType=VARCHAR},
+      yl2 = #{yl2,jdbcType=VARCHAR},
+      yl3 = #{yl3,jdbcType=VARCHAR}
+    where group_id = #{groupId,jdbcType=INTEGER}
+  </update>
+</mapper>

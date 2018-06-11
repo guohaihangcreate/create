@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.hrm.AttendanceClassTimesMapper" >
+  <resultMap id="BaseResultMap" type="create.model.hrm.AttendanceClassTimes" >
+  	<id column="id" property="id" jdbcType="INTEGER" />
+    <id column="class_id" property="classId" jdbcType="INTEGER" />
+    <result column="plan_check_time" property="planCheckTime" jdbcType="TIMESTAMP" />
+    <result column="check_type" property="checkType" jdbcType="VARCHAR" />
+    <result column="rest_begin_time" property="restBeginTime" jdbcType="TIMESTAMP" />
+    <result column="rest_end_time" property="restEndTime" jdbcType="TIMESTAMP" />
+    <result column="permit_late_minutes" property="permitLateMinutes" jdbcType="INTEGER" />
+    <result column="work_time_minutes" property="workTimeMinutes" jdbcType="INTEGER" />
+    <result column="absenteeism_late_minutes" property="absenteeismLateMinutes" jdbcType="INTEGER" />
+    <result column="late_minutes_serious_lage_minutes" property="lateMinutesSeriousLageMinutes" jdbcType="INTEGER" />
+    <result column="class_name" property="className" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="classes_list" property="classesList" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id,class_id, plan_check_time, check_type, rest_begin_time, rest_end_time, permit_late_minutes, 
+    work_time_minutes, absenteeism_late_minutes, late_minutes_serious_lage_minutes, class_name, 
+    type, classes_list
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from attendance_classtimes
+    where class_id = #{classId,jdbcType=INTEGER}
+  </select>
+  <select id="serachAttendanceClassTimesByProperty" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from attendance_classtimes
+    <where>
+    	<if test="classId != null" >
+	        class_id = #{classId,jdbcType=INTEGER}
+	      </if>
+	      <if test="planCheckTime != null" >
+	        plan_check_time = #{planCheckTime,jdbcType=TIMESTAMP}
+	      </if>
+	      <if test="checkType != null" >
+	        check_type = #{checkType,jdbcType=VARCHAR}
+	      </if>
+	      <if test="restBeginTime != null" >
+	        rest_begin_time = #{restBeginTime,jdbcType=TIMESTAMP}
+	      </if>
+	      <if test="restEndTime != null" >
+	        rest_end_time = #{restEndTime,jdbcType=TIMESTAMP}
+	      </if>
+	      <if test="permitLateMinutes != null" >
+	        permit_late_minutes = #{permitLateMinutes,jdbcType=INTEGER}
+	      </if>
+	      <if test="workTimeMinutes != null" >
+	        work_time_minutes = #{workTimeMinutes,jdbcType=INTEGER}
+	      </if>
+	      <if test="absenteeismLateMinutes != null" >
+	        absenteeism_late_minutes = #{absenteeismLateMinutes,jdbcType=INTEGER}
+	      </if>
+	      <if test="lateMinutesSeriousLageMinutes != null" >
+	        late_minutes_serious_lage_minutes = #{lateMinutesSeriousLageMinutes,jdbcType=INTEGER}
+	      </if>
+	      <if test="className != null" >
+	        class_name like concat('%',#{className,jdbcType=VARCHAR},'%')
+	      </if>
+	      <if test="type != null" >
+	        type like concat('%',#{type,jdbcType=VARCHAR},'%')
+	      </if>
+	      <if test="classesList != null" >
+	        classes_list like concat('%',#{classesList,jdbcType=VARCHAR},'%')
+	      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from attendance_classtimes
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="create.model.hrm.AttendanceClass" >
+    insert into attendance_classtimes (id,class_id, plan_check_time, check_type, 
+      rest_begin_time, rest_end_time, permit_late_minutes, 
+      work_time_minutes, absenteeism_late_minutes, 
+      late_minutes_serious_lage_minutes, class_name, 
+      type, classes_list)
+    values (#{id,jdbcType=INTEGER},#{classId,jdbcType=INTEGER}, #{planCheckTime,jdbcType=TIMESTAMP}, #{checkType,jdbcType=VARCHAR}, 
+      #{restBeginTime,jdbcType=TIMESTAMP}, #{restEndTime,jdbcType=TIMESTAMP}, #{permitLateMinutes,jdbcType=INTEGER}, 
+      #{workTimeMinutes,jdbcType=INTEGER}, #{absenteeismLateMinutes,jdbcType=INTEGER}, 
+      #{lateMinutesSeriousLageMinutes,jdbcType=INTEGER}, #{className,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{classesList,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="create.model.hrm.AttendanceClass" >
+    insert into attendance_classtimes
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="classId != null" >
+        id,
+      </if>
+      <if test="classId != null" >
+        class_id,
+      </if>
+      <if test="planCheckTime != null" >
+        plan_check_time,
+      </if>
+      <if test="checkType != null" >
+        check_type,
+      </if>
+      <if test="restBeginTime != null" >
+        rest_begin_time,
+      </if>
+      <if test="restEndTime != null" >
+        rest_end_time,
+      </if>
+      <if test="permitLateMinutes != null" >
+        permit_late_minutes,
+      </if>
+      <if test="workTimeMinutes != null" >
+        work_time_minutes,
+      </if>
+      <if test="absenteeismLateMinutes != null" >
+        absenteeism_late_minutes,
+      </if>
+      <if test="lateMinutesSeriousLageMinutes != null" >
+        late_minutes_serious_lage_minutes,
+      </if>
+      <if test="className != null" >
+        class_name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="classesList != null" >
+        classes_list,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+    	<if test="classId != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="classId != null" >
+        #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="planCheckTime != null" >
+        #{planCheckTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkType != null" >
+        #{checkType,jdbcType=VARCHAR},
+      </if>
+      <if test="restBeginTime != null" >
+        #{restBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="restEndTime != null" >
+        #{restEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="permitLateMinutes != null" >
+        #{permitLateMinutes,jdbcType=INTEGER},
+      </if>
+      <if test="workTimeMinutes != null" >
+        #{workTimeMinutes,jdbcType=INTEGER},
+      </if>
+      <if test="absenteeismLateMinutes != null" >
+        #{absenteeismLateMinutes,jdbcType=INTEGER},
+      </if>
+      <if test="lateMinutesSeriousLageMinutes != null" >
+        #{lateMinutesSeriousLageMinutes,jdbcType=INTEGER},
+      </if>
+      <if test="className != null" >
+        #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="classesList != null" >
+        #{classesList,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="create.model.hrm.AttendanceClass" >
+    update attendance_classtimes
+    <set >
+     <if test="classId != null" >
+        class_id = #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="planCheckTime != null" >
+        plan_check_time = #{planCheckTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkType != null" >
+        check_type = #{checkType,jdbcType=VARCHAR},
+      </if>
+      <if test="restBeginTime != null" >
+        rest_begin_time = #{restBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="restEndTime != null" >
+        rest_end_time = #{restEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="permitLateMinutes != null" >
+        permit_late_minutes = #{permitLateMinutes,jdbcType=INTEGER},
+      </if>
+      <if test="workTimeMinutes != null" >
+        work_time_minutes = #{workTimeMinutes,jdbcType=INTEGER},
+      </if>
+      <if test="absenteeismLateMinutes != null" >
+        absenteeism_late_minutes = #{absenteeismLateMinutes,jdbcType=INTEGER},
+      </if>
+      <if test="lateMinutesSeriousLageMinutes != null" >
+        late_minutes_serious_lage_minutes = #{lateMinutesSeriousLageMinutes,jdbcType=INTEGER},
+      </if>
+      <if test="className != null" >
+        class_name = #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="classesList != null" >
+        classes_list = #{classesList,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="create.model.hrm.AttendanceClass" >
+    update attendance_classtimes
+    set class_id = #{classId,jdbcType=INTEGER}, 
+      plan_check_time = #{planCheckTime,jdbcType=TIMESTAMP},
+      check_type = #{checkType,jdbcType=VARCHAR},
+      rest_begin_time = #{restBeginTime,jdbcType=TIMESTAMP},
+      rest_end_time = #{restEndTime,jdbcType=TIMESTAMP},
+      permit_late_minutes = #{permitLateMinutes,jdbcType=INTEGER},
+      work_time_minutes = #{workTimeMinutes,jdbcType=INTEGER},
+      absenteeism_late_minutes = #{absenteeismLateMinutes,jdbcType=INTEGER},
+      late_minutes_serious_lage_minutes = #{lateMinutesSeriousLageMinutes,jdbcType=INTEGER},
+      class_name = #{className,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      classes_list = #{classesList,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

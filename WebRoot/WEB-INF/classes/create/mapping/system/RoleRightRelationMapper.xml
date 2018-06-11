@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.system.RoleRightRelationMapper">
+	<resultMap id="BaseResultMap"
+		type="create.model.system.RoleRightRelation">
+		<id column="trr_id" property="trrId" jdbcType="INTEGER" />
+		<result column="right_id" property="rightId" jdbcType="INTEGER" />
+		<result column="role_id" property="roleId" jdbcType="INTEGER" />
+		<result column="right_type" property="rightType"
+			jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		trr_id, right_id, role_id, right_type
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from trolerightrelation where trr_id = #{trrId,jdbcType=INTEGER}
+	</select>
+
+
+	<select id="selectByRoleRightRelationByParamMap"
+		resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from trolerightrelation
+		<where>
+			<if test="trrId != null">
+				and trr_id = #{trrId,jdbcType=INTEGER}
+			</if>
+			<if test="rightId != null">
+				and trr_id = #{rightId,jdbcType=INTEGER}
+			</if>
+			<if test="roleId != null">
+				and role_id = #{roleId,jdbcType=INTEGER}
+			</if>
+			<if test="rightType != null">
+				and right_type = #{rightType,jdbcType=INTEGER}
+			</if>
+		</where>
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from trolerightrelation where trr_id =
+		#{trrId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByRoleID" parameterType="java.lang.Integer">
+		delete from trolerightrelation where role_id =
+		#{roleId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert"
+		parameterType="create.model.system.RoleRightRelation">
+		insert into trolerightrelation (trr_id, right_id, role_id,
+		right_type) values (#{trrId,jdbcType=INTEGER},
+		#{rightId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER},
+		#{rightType,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="create.model.system.RoleRightRelation">
+		insert into trolerightrelation
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="trrId != null">trr_id,</if>
+			<if test="rightId != null">right_id,</if>
+			<if test="roleId != null">role_id,</if>
+			<if test="rightType != null">right_type,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="trrId != null">#{trrId,jdbcType=INTEGER},</if>
+			<if test="rightId != null">#{rightId,jdbcType=INTEGER},</if>
+			<if test="roleId != null">#{roleId,jdbcType=INTEGER},</if>
+			<if test="rightType != null">
+				#{rightType,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="create.model.system.RoleRightRelation">
+		update trolerightrelation
+		<set>
+			<if test="rightId != null">
+				right_id = #{rightId,jdbcType=INTEGER},
+			</if>
+			<if test="roleId != null">
+				role_id = #{roleId,jdbcType=INTEGER},
+			</if>
+			<if test="rightType != null">
+				right_type = #{rightType,jdbcType=INTEGER},
+			</if>
+		</set>
+		where trr_id = #{trrId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="create.model.system.RoleRightRelation">
+		update trolerightrelation set right_id =
+		#{rightId,jdbcType=INTEGER}, role_id =
+		#{roleId,jdbcType=INTEGER}, right_type =
+		#{rightType,jdbcType=INTEGER} where trr_id =
+		#{trrId,jdbcType=INTEGER}
+	</update>
+</mapper>

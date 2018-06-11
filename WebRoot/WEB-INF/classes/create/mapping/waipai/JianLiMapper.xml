@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.waipai.JianLiMapper">
+	<resultMap id="BaseResultMap" type="create.model.waipai.JianLi">
+		<id column="p_id" property="pId" jdbcType="INTEGER" />
+		<result column="jianli_name" property="jianliName"
+			jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime"
+			jdbcType="DATE" />
+		<result column="create_by" property="createBy"
+			jdbcType="INTEGER" />
+		<result column="jishu_lx" property="jishuLx" jdbcType="INTEGER" />
+		<result column="gz_nx" property="gznx" jdbcType="INTEGER" />
+		<result column="jianli_ly" property="jianliLy"
+			jdbcType="INTEGER" />
+		<result column="jianli_path" property="jianliPath"
+			jdbcType="VARCHAR" />
+		<result column="beizhu" property="beizhu" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		p_id, jianli_name, create_time, create_by, jishu_lx,
+		gz_nx,jianli_ly, jianli_path, beizhu
+	</sql>
+	<!-- 分页SQL语句 -->
+	<select id="selectJianLisByPage" resultMap="BaseResultMap"
+		parameterType="create.model.waipai.JianLi">
+		select
+		<include refid="Base_Column_List" />
+		from jianli WHERE 1=1 limit #{startPos},#{pageSize}
+	</select>
+	<!-- 取得记录的总数 -->
+	<select id="getJianLisCount" resultType="java.lang.Long">
+		SELECT COUNT(*) FROM jianli
+	</select>
+
+	<!-- 分页SQL语句 -->
+	<select id="pageList" resultMap="BaseResultMap"
+		parameterType="create.model.waipai.JianLi">
+		select
+		<include refid="Base_Column_List" />
+		from jianli WHERE 1=1
+		<if test="pId != null">and pId = #{pId,jdbcType=INTEGER}</if>
+		<if test="jianliName != null and jianliName != ''">
+			and jianli_name like concat('%',#{jianli_name,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="jishuLx != null">
+			and jishu_lx = #{jishuLx,jdbcType=INTEGER}
+		</if>
+		<if test="gznx != null">
+			and gz_nx = #{gznx,jdbcType=INTEGER}
+		</if>
+		<if test="jianliLy != null">
+			and jianli_ly = #{jianliLy,jdbcType=INTEGER}
+		</if>
+		<if test="jianliPath != null">
+			and jianliPath = #{jianliPath,jdbcType=VARCHAR}
+		</if>
+		<if test="beizhu != null">
+			and beizhu = #{beizhu,jdbcType=VARCHAR}
+		</if>
+		limit #{startIndex},#{endIndex}
+	</select>
+	<!-- 分页SQL语句 -->
+	<select id="pageListByParamMap" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from jianli
+		<where>
+			<if test="jianliName != null and jianliName != ''">
+				and jianli_name like concat('%',#{jianliName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="jishuLx != null">
+				and jishu_lx = #{jishuLx,jdbcType=INTEGER}
+			</if>
+			<if test="gznx != null">
+				and gz_nx = #{gznx,jdbcType=INTEGER}
+			</if>
+			<if test="createBy != null">
+					and create_by = #{createBy,jdbcType=INTEGER}
+			</if>
+		</where>
+	</select>
+	<select id="pageDataBySqlParamMap" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from jianli where jianli.p_id in (select
+		interviewinvitation.jl_pid from interviewinvitation
+		<where>
+			<if test="yl3 != null">
+				and yl3 like concat('%',#{yl3,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="start != null">
+				and (InterviewDate &gt;= #{start,jdbcType=VARCHAR}
+			</if>
+			<if test="end != null">
+				<!--<或者<于号要用转义字符或者标记		<![CDATA[ and InterviewDate>=#{jintian,jdbcType=VARCHAR} ]]> -->
+				and InterviewDate &lt;=#{end,jdbcType=VARCHAR})
+			</if>
+			<if test="msstart != null">
+				or (InvitationDate &lt;= #{msstart,jdbcType=VARCHAR}
+			</if>
+			<if test="msend != null">
+				and InvitationDate &gt;= #{msend,jdbcType=VARCHAR})
+			</if>
+			)
+		</where>
+		limit #{startIndex},#{endIndex}
+	</select>
+	<!--	通过拼接sql查询简历数据总量-->
+	<select id="pageCountsBySqlParamMap" resultType="java.lang.Long">
+		select COUNT(*) from jianli where jianli.p_id in (select
+		interviewinvitation.jl_pid from interviewinvitation where 1=1
+		<if test="start != null">
+			and (InterviewDate &gt;= #{start,jdbcType=VARCHAR}
+		</if>
+		<if test="end != null">
+			<!--<或者<于号要用转义字符或者标记		<![CDATA[ and InterviewDate>=#{jintian,jdbcType=VARCHAR} ]]> -->
+			and InterviewDate &lt;=#{end,jdbcType=VARCHAR})
+		</if>
+		<if test="msstart != null">
+			or (InvitationDate &lt;= #{msstart,jdbcType=VARCHAR}
+		</if>
+		<if test="msend != null">
+			and InvitationDate &gt;= #{msend,jdbcType=VARCHAR}))
+		</if>
+		<if test="jishuLx != null">
+			and jishu_lx = #{jishuLx,jdbcType=INTEGER}
+		</if>
+	</select>
+	<!-- 取得记录的总数 -->
+	<select id="pageCounts" resultType="java.lang.Long">
+		SELECT COUNT(*) FROM jianli where 1=1
+		<if test="jianliName != null and jianliName != ''">
+			and jianli_name like concat('%',#{jianli_name,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="jishuLx != null">
+			and jishu_lx = #{jishuLx,jdbcType=INTEGER}
+		</if>
+		<if test="gznx != null">
+			and gz_nx = #{gznx,jdbcType=INTEGER}
+		</if>
+	</select>
+
+	<select id="selectByPropery" resultMap="BaseResultMap"
+		parameterType="create.model.waipai.JianLi">
+		select
+		<include refid="Base_Column_List" />
+		from jianli where 1=1
+		<if test="pId != null">and pId = #{pId,jdbcType=INTEGER}</if>
+		<if test="jianliName != null and jianliName != ''">
+			and jianli_name like concat('%',#{jianli_name,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="jishuLx != null">
+			and jishu_lx = #{jishuLx,jdbcType=INTEGER}
+		</if>
+		<if test="gznx != null">
+			and gz_nx = #{gznx,jdbcType=INTEGER}
+		</if>
+		<if test="jianliLy != null">
+			and jianli_ly = #{jianliLy,jdbcType=INTEGER}
+		</if>
+		<if test="jianliPath != null">
+			and jianliPath = #{jianliPath,jdbcType=VARCHAR}
+		</if>
+		<if test="beizhu != null">
+			and beizhu = #{beizhu,jdbcType=VARCHAR}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from jianli where p_id = #{pId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from jianli where p_id = #{pId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="create.model.waipai.JianLi">
+		insert into jianli (p_id, jianli_name, create_time, create_by,
+		jishu_lx, gz_nx,jianli_ly, jianli_path, beizhu) values
+		(#{pId,jdbcType=INTEGER}, #{jianliName,jdbcType=VARCHAR},
+		#{createTime,jdbcType=DATE}, #{createBy,jdbcType=INTEGER},
+		#{jishuLx,jdbcType=INTEGER},
+		#{gznx,jdbcType=INTEGER},#{jianliLy,jdbcType=INTEGER},
+		#{jianliPath,jdbcType=VARCHAR}, #{beizhu,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="create.model.waipai.JianLi">
+		insert into jianli
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="pId != null">p_id,</if>
+			<if test="jianliName != null">jianli_name,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="createBy != null">create_by,</if>
+			<if test="jishuLx != null">jishu_lx,</if>
+			<if test="gznx != null">gznx,</if>
+			<if test="jianliLy != null">jianli_ly,</if>
+			<if test="jianliPath != null">jianli_path,</if>
+			<if test="beizhu != null">beizhu,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="pId != null">#{pId,jdbcType=INTEGER},</if>
+			<if test="jianliName != null">
+				#{jianliName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=DATE},
+			</if>
+			<if test="createBy != null">
+				#{createBy,jdbcType=INTEGER},
+			</if>
+			<if test="jishuLx != null">#{jishuLx,jdbcType=INTEGER},</if>
+			<if test="gznx != null">#{gznx,jdbcType=INTEGER},</if>
+			<if test="jianliLy != null">
+				#{jianliLy,jdbcType=INTEGER},
+			</if>
+			<if test="jianliPath != null">
+				#{jianliPath,jdbcType=VARCHAR},
+			</if>
+			<if test="beizhu != null">#{beizhu,jdbcType=VARCHAR},</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="create.model.waipai.JianLi">
+		update jianli
+		<set>
+			<if test="jianliName != null">
+				jianli_name = #{jianliName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=DATE},
+			</if>
+			<if test="createBy != null">
+				create_by = #{createBy,jdbcType=INTEGER},
+			</if>
+			<if test="jishuLx != null">
+				jishu_lx = #{jishuLx,jdbcType=INTEGER},
+			</if>
+			<if test="gznx != null">
+				gz_nx = #{gznx,jdbcType=INTEGER},
+			</if>
+			<if test="jianliLy != null">
+				jianli_ly = #{jianliLy,jdbcType=INTEGER},
+			</if>
+			<if test="jianliPath != null">
+				jianli_path = #{jianliPath,jdbcType=VARCHAR},
+			</if>
+			<if test="beizhu != null">
+				beizhu = #{beizhu,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where p_id = #{pId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="create.model.waipai.JianLi">
+		update jianli set jianli_name = #{jianliName,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=DATE}, create_by =
+		#{createBy,jdbcType=INTEGER}, jishu_lx =
+		#{jishuLx,jdbcType=INTEGER}, gz_nx = #{gznx,jdbcType=INTEGER},
+		jianli_ly = #{jianliLy,jdbcType=INTEGER}, jianli_path =
+		#{jianliPath,jdbcType=VARCHAR}, beizhu =
+		#{beizhu,jdbcType=VARCHAR} where p_id = #{pId,jdbcType=INTEGER}
+	</update>
+</mapper>

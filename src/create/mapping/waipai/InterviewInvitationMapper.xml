@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.waipai.InterviewInvitationMapper">
+	<resultMap id="BaseResultMap"
+		type="create.model.waipai.InterviewInvitation">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="InterviewDate" property="interviewdate"
+			jdbcType="DATE" />
+		<result column="InvitationDate" property="invitationdate"
+			jdbcType="TIMESTAMP" />
+		<result column="customer" property="customer"
+			jdbcType="INTEGER" />
+		<result column="djfzr" property="djfzr" jdbcType="INTEGER" />
+		<result column="gtbz" property="gtbz" jdbcType="VARCHAR" />
+		<result column="yl" property="yl" jdbcType="VARCHAR" />
+		<result column="yl1" property="yl1" jdbcType="VARCHAR" />
+		<result column="yl2" property="yl2" jdbcType="INTEGER" />
+		<result column="yl3" property="yl3" jdbcType="VARCHAR" />
+		<result column="yl4" property="yl4" jdbcType="INTEGER" />
+		<result column="jl_pid" property="jlPid" jdbcType="INTEGER" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, InterviewDate, InvitationDate, customer, djfzr, gtbz, yl,
+		yl1, yl2, yl3, yl4, jl_pid, state
+	</sql>
+
+	<!-- 分页SQL语句 -->
+	<select id="pageListByParamMap" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from interviewinvitation WHERE 1=1
+		<if test="jlPid != null">
+			and jl_pid = #{jlPid,jdbcType=INTEGER}
+		</if>
+		limit #{startIndex},#{endIndex}
+	</select>
+	<!-- 取得记录的总数 -->
+	<select id="pageCounts" resultType="java.lang.Long">
+		SELECT COUNT(*) FROM interviewinvitation where 1=1
+		<if test="jlPid != null">
+			and jl_pid = #{jlPid,jdbcType=INTEGER}
+		</if>
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from interviewinvitation where id = #{id,jdbcType=INTEGER}
+	</select>
+	<!--	统计报表-->
+	<select id="mianshiInterviewReport"
+		resultType="create.model.report.MianshiInterviewReportModel">
+		SELECT interviewinvitation.InterviewDate AS interviewDate,
+		interviewinvitation.InvitationDate AS invitationDate,
+		jianli.jianli_name AS jianli_name, customerinfo.customername AS
+		customername, interviewinvitation.gtbz AS gtbz, jianli.jishu_lx
+		AS jishu_lx, jianli.gz_nx AS gznx, `user`.username as zpren from
+		interviewinvitation,jianli,customerinfo,`user` where
+		jianli.p_id=interviewinvitation.jl_pid and
+		customerinfo.id=interviewinvitation.customer and
+		`user`.Id=interviewinvitation.yl3
+
+
+		<if
+			test="query_interviewDate_start != null and  query_interviewDate_start !=''">
+			and (interviewinvitation.InterviewDate &gt;=
+			#{query_interviewDate_start,jdbcType=VARCHAR}
+		</if>
+		<if
+			test="query_interviewDate_end != null and  query_interviewDate_end !=''">
+			and interviewinvitation.InterviewDate
+			&lt;=#{query_interviewDate_end,jdbcType=VARCHAR})
+		</if>
+		<if
+			test="query_invitationDate_start != null and  query_invitationDate_start !=''">
+			and (interviewinvitation.InvitationDate &gt;=
+			#{query_invitationDate_start,jdbcType=VARCHAR}
+		</if>
+		<if
+			test="query_invitationDate_end != null and  query_invitationDate_end !=''">
+			and interviewinvitation.InvitationDate &lt;=
+			#{query_invitationDate_end,jdbcType=VARCHAR})
+		</if>
+		<if test="userID != null and userID != ''">
+			and interviewinvitation.yl3 = #{userID,jdbcType=VARCHAR}
+		</if>
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from interviewinvitation where id =
+		#{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert"
+		parameterType="create.model.waipai.InterviewInvitation">
+		insert into interviewinvitation (id, InterviewDate,
+		InvitationDate, customer, djfzr, gtbz, yl, yl1, yl2, yl3, yl4,
+		jl_pid, state) values (#{id,jdbcType=INTEGER},
+		#{interviewdate,jdbcType=DATE},
+		#{invitationdate,jdbcType=TIMESTAMP},
+		#{customer,jdbcType=INTEGER}, #{djfzr,jdbcType=INTEGER},
+		#{gtbz,jdbcType=VARCHAR}, #{yl,jdbcType=VARCHAR},
+		#{yl1,jdbcType=VARCHAR}, #{yl2,jdbcType=INTEGER},
+		#{yl3,jdbcType=VARCHAR}, #{yl4,jdbcType=INTEGER},
+		#{jlPid,jdbcType=INTEGER}, #{state,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="create.model.waipai.InterviewInvitation">
+		insert into interviewinvitation
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="interviewdate != null">InterviewDate,</if>
+			<if test="invitationdate != null">InvitationDate,</if>
+			<if test="customer != null">customer,</if>
+			<if test="djfzr != null">djfzr,</if>
+			<if test="gtbz != null">gtbz,</if>
+			<if test="yl != null">yl,</if>
+			<if test="yl1 != null">yl1,</if>
+			<if test="yl2 != null">yl2,</if>
+			<if test="yl3 != null">yl3,</if>
+			<if test="yl4 != null">yl4,</if>
+			<if test="jlPid != null">jl_pid,</if>
+			<if test="state != null">state,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id,jdbcType=INTEGER},</if>
+			<if test="interviewdate != null">
+				#{interviewdate,jdbcType=DATE},
+			</if>
+			<if test="invitationdate != null">
+				#{invitationdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="customer != null">
+				#{customer,jdbcType=INTEGER},
+			</if>
+			<if test="djfzr != null">#{djfzr,jdbcType=INTEGER},</if>
+			<if test="gtbz != null">#{gtbz,jdbcType=VARCHAR},</if>
+			<if test="yl != null">#{yl,jdbcType=VARCHAR},</if>
+			<if test="yl1 != null">#{yl1,jdbcType=VARCHAR},</if>
+			<if test="yl2 != null">#{yl2,jdbcType=INTEGER},</if>
+			<if test="yl3 != null">#{yl3,jdbcType=VARCHAR},</if>
+			<if test="yl4 != null">#{yl4,jdbcType=INTEGER},</if>
+			<if test="jlPid != null">#{jlPid,jdbcType=INTEGER},</if>
+			<if test="state != null">#{state,jdbcType=INTEGER},</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="create.model.waipai.InterviewInvitation">
+		update interviewinvitation
+		<set>
+			<if test="interviewdate != null">
+				InterviewDate = #{interviewdate,jdbcType=DATE},
+			</if>
+			<if test="invitationdate != null">
+				InvitationDate = #{invitationdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="customer != null">
+				customer = #{customer,jdbcType=INTEGER},
+			</if>
+			<if test="djfzr != null">
+				djfzr = #{djfzr,jdbcType=INTEGER},
+			</if>
+			<if test="gtbz != null">
+				gtbz = #{gtbz,jdbcType=VARCHAR},
+			</if>
+			<if test="yl != null">yl = #{yl,jdbcType=VARCHAR},</if>
+			<if test="yl1 != null">yl1 = #{yl1,jdbcType=VARCHAR},</if>
+			<if test="yl2 != null">yl2 = #{yl2,jdbcType=INTEGER},</if>
+			<if test="yl3 != null">yl3 = #{yl3,jdbcType=VARCHAR},</if>
+			<if test="yl4 != null">yl4 = #{yl4,jdbcType=INTEGER},</if>
+			<if test="jlPid != null">
+				jl_pid = #{jlPid,jdbcType=INTEGER},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="create.model.waipai.InterviewInvitation">
+		update interviewinvitation set InterviewDate =
+		#{interviewdate,jdbcType=Date}, InvitationDate =
+		#{invitationdate,jdbcType=TIMESTAMP}, customer =
+		#{customer,jdbcType=INTEGER}, djfzr = #{djfzr,jdbcType=INTEGER},
+		gtbz = #{gtbz,jdbcType=VARCHAR}, yl = #{yl,jdbcType=VARCHAR},
+		yl1 = #{yl1,jdbcType=VARCHAR}, yl2 = #{yl2,jdbcType=INTEGER},
+		yl3 = #{yl3,jdbcType=VARCHAR}, yl4 = #{yl4,jdbcType=INTEGER},
+		jl_pid = #{jlPid,jdbcType=INTEGER}, state =
+		#{state,jdbcType=INTEGER} where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

@@ -1,0 +1,40 @@
+[{
+	"id":1,
+	"text":"公司组织结构",
+	"children":[{
+		"id":11,
+		"text":"柯锐特信息技术",
+		"state":"closed",
+		"children":[{
+			"id":111,
+			"text":"人力资源&招聘部"
+		},{
+			"id":112,
+			"text":"销售部"
+		},{
+			"id":113,
+			"text":"项目部"
+		}]
+	},{
+		"id":12,
+		"text":"柯锐特互动",
+		"children":[{
+			"id":121,
+			"text":"视觉研发部"
+		},{
+			"id":122,
+			"text":"微信市场推广部",
+			"attributes":{
+				"p1":"Custom Attribute1",
+				"p2":"Custom Attribute2"
+			}
+		},{
+			"id":123,
+			"text":"销售部"
+		},{
+			"id":124,
+			"text":"人事部",
+			"checked":true
+		}]
+	}]
+}]

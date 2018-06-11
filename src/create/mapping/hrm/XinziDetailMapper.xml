@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.hrm.XinziDetailMapper" >
+  <resultMap id="BaseResultMap" type="create.model.hrm.XinziDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="sfxz" property="sfxz" jdbcType="REAL" />
+    <result column="yfxz" property="yfxz" jdbcType="REAL" />
+    <result column="bfxz" property="bfxz" jdbcType="REAL" />
+    <result column="jiabxz" property="jiabxz" jdbcType="REAL" />
+    <result column="qtxz" property="qtxz" jdbcType="REAL" />
+    <result column="qtxzsm" property="qtxzsm" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="modifyTime" property="modifytime" jdbcType="TIMESTAMP" />
+    <result column="deleteBy" property="deleteby" jdbcType="INTEGER" />
+    <result column="createBy" property="createby" jdbcType="INTEGER" />
+    <result column="yl1" property="yl1" jdbcType="INTEGER" />
+    <result column="yl2" property="yl2" jdbcType="VARCHAR" />
+    <result column="yl3" property="yl3" jdbcType="REAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, userId, sfxz, yfxz, bfxz, jiabxz, qtxz, qtxzsm, createTime, modifyTime, deleteBy, 
+    createBy, yl1, yl2, yl3
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from xinzidetail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from xinzidetail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="create.model.hrm.XinziDetail" >
+    insert into xinzidetail (id, userId, sfxz, 
+      yfxz, bfxz, jiabxz, qtxz, 
+      qtxzsm, createTime, modifyTime, 
+      deleteBy, createBy, yl1, 
+      yl2, yl3)
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{sfxz,jdbcType=REAL}, 
+      #{yfxz,jdbcType=REAL}, #{bfxz,jdbcType=REAL}, #{jiabxz,jdbcType=REAL}, #{qtxz,jdbcType=REAL}, 
+      #{qtxzsm,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{modifytime,jdbcType=TIMESTAMP}, 
+      #{deleteby,jdbcType=INTEGER}, #{createby,jdbcType=INTEGER}, #{yl1,jdbcType=INTEGER}, 
+      #{yl2,jdbcType=VARCHAR}, #{yl3,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="create.model.hrm.XinziDetail" >
+    insert into xinzidetail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="sfxz != null" >
+        sfxz,
+      </if>
+      <if test="yfxz != null" >
+        yfxz,
+      </if>
+      <if test="bfxz != null" >
+        bfxz,
+      </if>
+      <if test="jiabxz != null" >
+        jiabxz,
+      </if>
+      <if test="qtxz != null" >
+        qtxz,
+      </if>
+      <if test="qtxzsm != null" >
+        qtxzsm,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="modifytime != null" >
+        modifyTime,
+      </if>
+      <if test="deleteby != null" >
+        deleteBy,
+      </if>
+      <if test="createby != null" >
+        createBy,
+      </if>
+      <if test="yl1 != null" >
+        yl1,
+      </if>
+      <if test="yl2 != null" >
+        yl2,
+      </if>
+      <if test="yl3 != null" >
+        yl3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="sfxz != null" >
+        #{sfxz,jdbcType=REAL},
+      </if>
+      <if test="yfxz != null" >
+        #{yfxz,jdbcType=REAL},
+      </if>
+      <if test="bfxz != null" >
+        #{bfxz,jdbcType=REAL},
+      </if>
+      <if test="jiabxz != null" >
+        #{jiabxz,jdbcType=REAL},
+      </if>
+      <if test="qtxz != null" >
+        #{qtxz,jdbcType=REAL},
+      </if>
+      <if test="qtxzsm != null" >
+        #{qtxzsm,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null" >
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteby != null" >
+        #{deleteby,jdbcType=INTEGER},
+      </if>
+      <if test="createby != null" >
+        #{createby,jdbcType=INTEGER},
+      </if>
+      <if test="yl1 != null" >
+        #{yl1,jdbcType=INTEGER},
+      </if>
+      <if test="yl2 != null" >
+        #{yl2,jdbcType=VARCHAR},
+      </if>
+      <if test="yl3 != null" >
+        #{yl3,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="create.model.hrm.XinziDetail" >
+    update xinzidetail
+    <set >
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="sfxz != null" >
+        sfxz = #{sfxz,jdbcType=REAL},
+      </if>
+      <if test="yfxz != null" >
+        yfxz = #{yfxz,jdbcType=REAL},
+      </if>
+      <if test="bfxz != null" >
+        bfxz = #{bfxz,jdbcType=REAL},
+      </if>
+      <if test="jiabxz != null" >
+        jiabxz = #{jiabxz,jdbcType=REAL},
+      </if>
+      <if test="qtxz != null" >
+        qtxz = #{qtxz,jdbcType=REAL},
+      </if>
+      <if test="qtxzsm != null" >
+        qtxzsm = #{qtxzsm,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null" >
+        modifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteby != null" >
+        deleteBy = #{deleteby,jdbcType=INTEGER},
+      </if>
+      <if test="createby != null" >
+        createBy = #{createby,jdbcType=INTEGER},
+      </if>
+      <if test="yl1 != null" >
+        yl1 = #{yl1,jdbcType=INTEGER},
+      </if>
+      <if test="yl2 != null" >
+        yl2 = #{yl2,jdbcType=VARCHAR},
+      </if>
+      <if test="yl3 != null" >
+        yl3 = #{yl3,jdbcType=REAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="create.model.hrm.XinziDetail" >
+    update xinzidetail
+    set userId = #{userid,jdbcType=INTEGER},
+      sfxz = #{sfxz,jdbcType=REAL},
+      yfxz = #{yfxz,jdbcType=REAL},
+      bfxz = #{bfxz,jdbcType=REAL},
+      jiabxz = #{jiabxz,jdbcType=REAL},
+      qtxz = #{qtxz,jdbcType=REAL},
+      qtxzsm = #{qtxzsm,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      modifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      deleteBy = #{deleteby,jdbcType=INTEGER},
+      createBy = #{createby,jdbcType=INTEGER},
+      yl1 = #{yl1,jdbcType=INTEGER},
+      yl2 = #{yl2,jdbcType=VARCHAR},
+      yl3 = #{yl3,jdbcType=REAL}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.crm.CustomerInfoMapper">
+	<resultMap id="BaseResultMap"
+		type="create.model.crm.CustomerInfo">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="area" property="area" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="sale" property="sale" jdbcType="VARCHAR" />
+		<result column="website" property="website" jdbcType="VARCHAR" />
+		<result column="creditrating" property="creditrating"
+			jdbcType="INTEGER" />
+		<result column="customrate" property="customrate"
+			jdbcType="INTEGER" />
+		<result column="customerproperty" property="customerproperty"
+			jdbcType="INTEGER" />
+		<result column="business" property="business"
+			jdbcType="VARCHAR" />
+		<result column="needproducts" property="needproducts"
+			jdbcType="VARCHAR" />
+		<result column="industry" property="industry"
+			jdbcType="VARCHAR" />
+		<result column="customername" property="customername"
+			jdbcType="VARCHAR" />
+		<result column="isdeleted" property="isdeleted" jdbcType="CHAR" />
+		<result column="deletedby" property="deletedby"
+			jdbcType="VARCHAR" />
+		<result column="deletetime" property="deletetime"
+			jdbcType="TIMESTAMP" />
+		<result column="createdby" property="createdby"
+			jdbcType="VARCHAR" />
+		<result column="createtime" property="createtime"
+			jdbcType="TIMESTAMP" />
+		<result column="lastmodify" property="lastmodify"
+			jdbcType="VARCHAR" />
+		<result column="lastmodifytime" property="lastmodifytime"
+			jdbcType="TIMESTAMP" />
+		<result column="ATT1" property="att1" jdbcType="VARCHAR" />
+		<result column="ATT2" property="att2" jdbcType="VARCHAR" />
+		<result column="ATT3" property="att3" jdbcType="VARCHAR" />
+		<result column="ATT4" property="att4" jdbcType="VARCHAR" />
+		<result column="ATT5" property="att5" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, area, address, address,website, creditrating, customrate,
+		customerproperty, business, needproducts, industry,
+		customername, isdeleted, deletedby, deletetime, createdby,
+		createtime, lastmodify, lastmodifytime, ATT1, ATT2, ATT3, ATT4,
+		ATT5
+	</sql>
+	<select id="selectCustomerEngener"
+		resultType="create.model.crm.QueryCustomerInfo_model">
+		SELECT distinct jianli.p_id as jiliId,jianli.jianli_name as
+		jianli_name, interviewrecord.msjg as state,
+		customerinfo.customername as customername,interviewrecord.id as
+		interviewId,customerinfo.id as customerId FROM interviewrecord ,
+		jianli , customerinfo , contactinfro where 1 = 1
+		<if test="msjg != null">
+			and interviewrecord.msjg = #{msjg,jdbcType=VARCHAR}
+		</if>
+		<if test="customerid != null">
+			and interviewrecord.khId = #{customerid,jdbcType=VARCHAR}
+		</if>
+		and jianli.p_id=interviewrecord.jiid and
+		customerinfo.id=interviewrecord.khId
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from customerinfo where id = #{id,jdbcType=INTEGER}
+	</select>
+	<!-- 取得记录的总数 -->
+	<select id="pageCounts" resultType="java.lang.Long">
+		SELECT COUNT(*) FROM customerinfo where isdeleted = 0
+		<if test="customername != null">
+			and customername like
+			concat('%',#{customername,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="sale != null">
+			and sale like concat('%',#{sale,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="customerproperty != null">
+			and customerproperty = #{customerproperty,jdbcType=INTEGER}
+		</if>
+		<if test="needproducts != null">
+			and needproducts like
+			concat('%',#{needproducts,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="address != null">
+			and address like concat('%',#{address,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="sale != null">
+			and sale like concat('%',#{sale,jdbcType=VARCHAR},'%')
+		</if>
+	</select>
+	<select id="pageListByValidite" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from customerinfo 
+		<where>
+			<if test="customername != null">
+				customername = #{customername,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+	<!-- 分页SQL语句 -->
+	<select id="pageListByParamMap" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from customerinfo where isdeleted = 0
+		<if test="id != null">and Id = #{id,jdbcType=INTEGER}</if>
+		<if test="area != null">and area = #{area,jdbcType=VARCHAR}</if>
+		<if test="address != null">
+			and address like concat('%',#{address,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="sale != null">
+			and sale like concat('%',#{sale,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="website != null">
+			and website = #{website,jdbcType=VARCHAR}
+		</if>
+		<if test="creditrating != null">
+			and creditrating = #{creditrating,jdbcType=INTEGER}
+		</if>
+		<if test="customrate != null">
+			and customrate = #{customrate,jdbcType=INTEGER}
+		</if>
+		<if test="customerproperty != null">
+			and customerproperty = #{customerproperty,jdbcType=INTEGER}
+		</if>
+		<if test="business != null">
+			and business = #{business,jdbcType=VARCHAR}
+		</if>
+		<if test="needproducts != null">
+			and needproducts like
+			concat('%',#{needproducts,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="industry != null">
+			and industry = #{industry,jdbcType=VARCHAR}
+		</if>
+		<if test="customername != null">
+			and customername like
+			concat('%',#{customername,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="isdeleted != null">
+			and isdeleted = #{isdeleted,jdbcType=CHAR}
+		</if>
+		<if test="deletedby != null">
+			and deletedby = #{deletedby,jdbcType=VARCHAR}
+		</if>
+		<if test="deletetime != null">
+			and deletetime = #{deletetime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="createdby != null">
+			and createdby = #{createdby,jdbcType=VARCHAR}
+		</if>
+		<if test="createtime != null">
+			and createtime = #{createtime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="lastmodify != null">
+			and lastmodify = #{lastmodify,jdbcType=VARCHAR}
+		</if>
+		<if test="lastmodifytime != null">
+			and lastmodifytime = #{lastmodifytime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="att1 != null">and att1 = #{att1,jdbcType=VARCHAR}</if>
+		<if test="att2 != null">and att2 = #{att2,jdbcType=VARCHAR}</if>
+		<if test="att3 != null">and att3 = #{att3,jdbcType=VARCHAR}</if>
+		<if test="att4 != null">and att4 = #{att4,jdbcType=VARCHAR}</if>
+		<if test="att5 != null">and att5 = #{att5,jdbcType=VARCHAR}</if>
+		limit #{startIndex},#{endIndex}
+	</select>
+	<!--	不分页-->
+	<select id="queryListByParamMap" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from customerinfo where 1=1
+		<if test="id != null">and Id = #{id,jdbcType=INTEGER}</if>
+		<if test="area != null">and area = #{area,jdbcType=VARCHAR}</if>
+		<if test="address != null">
+			and address like concat('%',#{address,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="sale != null">
+			and sale in (sale)
+		</if>
+		<if test="website != null">
+			and website = #{website,jdbcType=VARCHAR}
+		</if>
+		<if test="creditrating != null">
+			and creditrating = #{creditrating,jdbcType=INTEGER}
+		</if>
+		<if test="customrate != null">
+			and customrate = #{customrate,jdbcType=INTEGER}
+		</if>
+		<if test="customerproperty != null">
+			and customerproperty = #{customerproperty,jdbcType=INTEGER}
+		</if>
+		<if test="business != null">
+			and business = #{business,jdbcType=VARCHAR}
+		</if>
+		<if test="needproducts != null">
+			and needproducts like
+			concat('%',#{needproducts,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="industry != null">
+			and industry = #{industry,jdbcType=VARCHAR}
+		</if>
+		<if test="customername != null">
+			and customername like
+			concat('%',#{customername,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="isdeleted != null">
+			and isdeleted = #{isdeleted,jdbcType=CHAR}
+		</if>
+		<if test="deletedby != null">
+			and deletedby = #{deletedby,jdbcType=VARCHAR}
+		</if>
+		<if test="deletetime != null">
+			and deletetime = #{deletetime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="createdby != null">
+			and createdby = #{createdby,jdbcType=VARCHAR}
+		</if>
+		<if test="createtime != null">
+			and createtime = #{createtime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="lastmodify != null">
+			and lastmodify = #{lastmodify,jdbcType=VARCHAR}
+		</if>
+		<if test="lastmodifytime != null">
+			and lastmodifytime = #{lastmodifytime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="att1 != null">and att1 = #{att1,jdbcType=VARCHAR}</if>
+		<if test="att2 != null">and att2 = #{att2,jdbcType=VARCHAR}</if>
+		<if test="att3 != null">and att3 = #{att3,jdbcType=VARCHAR}</if>
+		<if test="att4 != null">and att4 = #{att4,jdbcType=VARCHAR}</if>
+		<if test="att5 != null">and att5 = #{att5,jdbcType=VARCHAR}</if>
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from customerinfo where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="create.model.crm.CustomerInfo">
+		insert into customerinfo (id, area, address, sale,website,
+		creditrating, customrate, customerproperty, business,
+		needproducts, industry, customername, isdeleted, deletedby,
+		deletetime, createdby, createtime, lastmodify, lastmodifytime,
+		ATT1, ATT2, ATT3, ATT4, ATT5) values (#{id,jdbcType=INTEGER},
+		#{area,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},#{sale,jdbcType=VARCHAR},
+		#{website,jdbcType=VARCHAR}, #{creditrating,jdbcType=INTEGER},
+		#{customrate,jdbcType=INTEGER},
+		#{customerproperty,jdbcType=INTEGER},
+		#{business,jdbcType=VARCHAR}, #{needproducts,jdbcType=VARCHAR},
+		#{industry,jdbcType=VARCHAR}, #{customername,jdbcType=VARCHAR},
+		#{isdeleted,jdbcType=CHAR}, #{deletedby,jdbcType=VARCHAR},
+		#{deletetime,jdbcType=TIMESTAMP}, #{createdby,jdbcType=VARCHAR},
+		#{createtime,jdbcType=TIMESTAMP},
+		#{lastmodify,jdbcType=VARCHAR},
+		#{lastmodifytime,jdbcType=TIMESTAMP}, #{att1,jdbcType=VARCHAR},
+		#{att2,jdbcType=VARCHAR}, #{att3,jdbcType=VARCHAR},
+		#{att4,jdbcType=VARCHAR}, #{att5,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="create.model.crm.CustomerInfo" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into customerinfo
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="area != null">area,</if>
+			<if test="address != null">address,</if>
+			<if test="sale != null">sale,</if>
+			<if test="website != null">website,</if>
+			<if test="creditrating != null">creditrating,</if>
+			<if test="customrate != null">customrate,</if>
+			<if test="customerproperty != null">customerproperty,</if>
+			<if test="business != null">business,</if>
+			<if test="needproducts != null">needproducts,</if>
+			<if test="industry != null">industry,</if>
+			<if test="customername != null">customername,</if>
+			<if test="isdeleted != null">isdeleted,</if>
+			<if test="deletedby != null">deletedby,</if>
+			<if test="deletetime != null">deletetime,</if>
+			<if test="createdby != null">createdby,</if>
+			<if test="createtime != null">createtime,</if>
+			<if test="lastmodify != null">lastmodify,</if>
+			<if test="lastmodifytime != null">lastmodifytime,</if>
+			<if test="att1 != null">ATT1,</if>
+			<if test="att2 != null">ATT2,</if>
+			<if test="att3 != null">ATT3,</if>
+			<if test="att4 != null">ATT4,</if>
+			<if test="att5 != null">ATT5,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id,jdbcType=INTEGER},</if>
+			<if test="area != null">#{area,jdbcType=VARCHAR},</if>
+			<if test="address != null">#{address,jdbcType=VARCHAR},</if>
+			<if test="sale != null">#{sale,jdbcType=VARCHAR},</if>
+			<if test="website != null">#{website,jdbcType=VARCHAR},</if>
+			<if test="creditrating != null">
+				#{creditrating,jdbcType=INTEGER},
+			</if>
+			<if test="customrate != null">
+				#{customrate,jdbcType=INTEGER},
+			</if>
+			<if test="customerproperty != null">
+				#{customerproperty,jdbcType=INTEGER},
+			</if>
+			<if test="business != null">
+				#{business,jdbcType=VARCHAR},
+			</if>
+			<if test="needproducts != null">
+				#{needproducts,jdbcType=VARCHAR},
+			</if>
+			<if test="industry != null">
+				#{industry,jdbcType=VARCHAR},
+			</if>
+			<if test="customername != null">
+				#{customername,jdbcType=VARCHAR},
+			</if>
+			<if test="isdeleted != null">
+				#{isdeleted,jdbcType=CHAR},
+			</if>
+			<if test="deletedby != null">
+				#{deletedby,jdbcType=VARCHAR},
+			</if>
+			<if test="deletetime != null">
+				#{deletetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdby != null">
+				#{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				#{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastmodify != null">
+				#{lastmodify,jdbcType=VARCHAR},
+			</if>
+			<if test="lastmodifytime != null">
+				#{lastmodifytime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="att1 != null">#{att1,jdbcType=VARCHAR},</if>
+			<if test="att2 != null">#{att2,jdbcType=VARCHAR},</if>
+			<if test="att3 != null">#{att3,jdbcType=VARCHAR},</if>
+			<if test="att4 != null">#{att4,jdbcType=VARCHAR},</if>
+			<if test="att5 != null">#{att5,jdbcType=VARCHAR},</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="create.model.crm.CustomerInfo">
+		update customerinfo
+		<set>
+			<if test="area != null">
+				area = #{area,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="sale != null">
+				sale = #{sale,jdbcType=VARCHAR},
+			</if>
+			<if test="website != null">
+				website = #{website,jdbcType=VARCHAR},
+			</if>
+			<if test="creditrating != null">
+				creditrating = #{creditrating,jdbcType=INTEGER},
+			</if>
+			<if test="customrate != null">
+				customrate = #{customrate,jdbcType=INTEGER},
+			</if>
+			<if test="customerproperty != null">
+				customerproperty = #{customerproperty,jdbcType=INTEGER},
+			</if>
+			<if test="business != null">
+				business = #{business,jdbcType=VARCHAR},
+			</if>
+			<if test="needproducts != null">
+				needproducts = #{needproducts,jdbcType=VARCHAR},
+			</if>
+			<if test="industry != null">
+				industry = #{industry,jdbcType=VARCHAR},
+			</if>
+			<if test="customername != null">
+				customername = #{customername,jdbcType=VARCHAR},
+			</if>
+			<if test="isdeleted != null">
+				isdeleted = #{isdeleted,jdbcType=CHAR},
+			</if>
+			<if test="deletedby != null">
+				deletedby = #{deletedby,jdbcType=VARCHAR},
+			</if>
+			<if test="deletetime != null">
+				deletetime = #{deletetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdby != null">
+				createdby = #{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				createtime = #{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastmodify != null">
+				lastmodify = #{lastmodify,jdbcType=VARCHAR},
+			</if>
+			<if test="lastmodifytime != null">
+				lastmodifytime = #{lastmodifytime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="att1 != null">
+				ATT1 = #{att1,jdbcType=VARCHAR},
+			</if>
+			<if test="att2 != null">
+				ATT2 = #{att2,jdbcType=VARCHAR},
+			</if>
+			<if test="att3 != null">
+				ATT3 = #{att3,jdbcType=VARCHAR},
+			</if>
+			<if test="att4 != null">
+				ATT4 = #{att4,jdbcType=VARCHAR},
+			</if>
+			<if test="att5 != null">
+				ATT5 = #{att5,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="create.model.crm.CustomerInfo">
+		update customerinfo set area = #{area,jdbcType=VARCHAR}, address
+		= #{address,jdbcType=VARCHAR}, sale
+		= #{sale,jdbcType=VARCHAR},website =
+		#{website,jdbcType=VARCHAR}, creditrating =
+		#{creditrating,jdbcType=INTEGER}, customrate =
+		#{customrate,jdbcType=INTEGER}, customerproperty =
+		#{customerproperty,jdbcType=INTEGER}, business =
+		#{business,jdbcType=VARCHAR}, needproducts =
+		#{needproducts,jdbcType=VARCHAR},s industry =
+		#{industry,jdbcType=VARCHAR}, customername =
+		#{customername,jdbcType=VARCHAR}, isdeleted =
+		#{isdeleted,jdbcType=CHAR}, deletedby =
+		#{deletedby,jdbcType=VARCHAR}, deletetime =
+		#{deletetime,jdbcType=TIMESTAMP}, createdby =
+		#{createdby,jdbcType=VARCHAR}, createtime =
+		#{createtime,jdbcType=TIMESTAMP}, lastmodify =
+		#{lastmodify,jdbcType=VARCHAR}, lastmodifytime =
+		#{lastmodifytime,jdbcType=TIMESTAMP}, ATT1 =
+		#{att1,jdbcType=VARCHAR}, ATT2 = #{att2,jdbcType=VARCHAR}, ATT3
+		= #{att3,jdbcType=VARCHAR}, ATT4 = #{att4,jdbcType=VARCHAR},
+		ATT5 = #{att5,jdbcType=VARCHAR} where id =
+		#{id,jdbcType=INTEGER}
+	</update>
+</mapper>

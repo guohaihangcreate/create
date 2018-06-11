@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.hrm.AttendanceClassMapper" >
+  <resultMap id="BaseResultMap" type="create.model.hrm.AttendanceClass" >
+    <id column="classid" property="classid" jdbcType="VARCHAR" />
+    <result column="classname" property="classname" jdbcType="VARCHAR" />
+    <result column="groupid" property="groupid" jdbcType="VARCHAR" />
+    <result column="yl1" property="yl1" jdbcType="VARCHAR" />
+    <result column="yl2" property="yl2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    classid, classname, groupid, yl1, yl2
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from attendance_class
+    where classid = #{classid,jdbcType=VARCHAR}
+  </select>
+  <select id="serachAttendanceClasssByProperty" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from attendance_class
+    <where>
+    	 <if test="classid != null" >
+	        and classid =  #{classid,jdbcType=VARCHAR}
+	     </if>
+	      <if test="classname != null" >
+	        and classname = #{classname,jdbcType=VARCHAR}
+	      </if>
+	      <if test="yl1 != null" >
+	        and yl1  like concat('%',#{yl1,jdbcType=VARCHAR},'%')
+	      </if>
+	      <if test="yl1 != null" >
+	        and yl1  like concat('%',#{yl1,jdbcType=VARCHAR},'%')
+	      </if>
+	      <if test="yl2 != null" >
+	        and yl2  like concat('%',#{yl2,jdbcType=VARCHAR},'%')
+	      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from attendance_class
+    where classid = #{classid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="create.model.hrm.AttendanceClass" >
+    insert into attendance_class (classid, classname, groupid, 
+      yl1, yl2)
+    values (#{classid,jdbcType=VARCHAR}, #{classname,jdbcType=VARCHAR}, #{groupid,jdbcType=VARCHAR}, 
+      #{yl1,jdbcType=VARCHAR}, #{yl2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="create.model.hrm.AttendanceClass" >
+    insert into attendance_class
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="classid != null" >
+        classid,
+      </if>
+      <if test="classname != null" >
+        classname,
+      </if>
+      <if test="groupid != null" >
+        groupid,
+      </if>
+      <if test="yl1 != null" >
+        yl1,
+      </if>
+      <if test="yl2 != null" >
+        yl2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="classid != null" >
+        #{classid,jdbcType=VARCHAR},
+      </if>
+      <if test="classname != null" >
+        #{classname,jdbcType=VARCHAR},
+      </if>
+      <if test="groupid != null" >
+        #{groupid,jdbcType=VARCHAR},
+      </if>
+      <if test="yl1 != null" >
+        #{yl1,jdbcType=VARCHAR},
+      </if>
+      <if test="yl2 != null" >
+        #{yl2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="create.model.hrm.AttendanceClass" >
+    update attendance_class
+    <set >
+      <if test="classname != null" >
+        classname = #{classname,jdbcType=VARCHAR},
+      </if>
+      <if test="groupid != null" >
+        groupid = #{groupid,jdbcType=VARCHAR},
+      </if>
+      <if test="yl1 != null" >
+        yl1 = #{yl1,jdbcType=VARCHAR},
+      </if>
+      <if test="yl2 != null" >
+        yl2 = #{yl2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where classid = #{classid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="create.model.hrm.AttendanceClass" >
+    update attendance_class
+    set classname = #{classname,jdbcType=VARCHAR},
+      groupid = #{groupid,jdbcType=VARCHAR},
+      yl1 = #{yl1,jdbcType=VARCHAR},
+      yl2 = #{yl2,jdbcType=VARCHAR}
+    where classid = #{classid,jdbcType=VARCHAR}
+  </update>
+</mapper>

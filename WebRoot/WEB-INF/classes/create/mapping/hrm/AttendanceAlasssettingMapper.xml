@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.hrm.AttendanceAlasssettingMapper" >
+  <resultMap id="BaseResultMap" type="create.model.hrm.AttendanceAlasssetting" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="class_id" property="classId" jdbcType="VARCHAR" />
+    <result column="class_setting_id" property="classSettingId" jdbcType="VARCHAR" />
+    <result column="absenteeism_late_minutes" property="absenteeismLateMinutes" jdbcType="INTEGER" />
+    <result column="is_off_duty_free_check" property="isOffDutyFreeCheck" jdbcType="VARCHAR" />
+    <result column="permit_late_minutes" property="permitLateMinutes" jdbcType="INTEGER" />
+    <result column="serious_late_minutes" property="seriousLateMinutes" jdbcType="INTEGER" />
+    <result column="work_time_minutes" property="workTimeMinutes" jdbcType="INTEGER" />
+    <result column="yl1" property="yl1" jdbcType="VARCHAR" />
+    <result column="yl2" property="yl2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, class_id, class_setting_id, absenteeism_late_minutes, is_off_duty_free_check, 
+    permit_late_minutes, serious_late_minutes, work_time_minutes, yl1, yl2
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from attendance_classsetting
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="serachAttendanceAlasssettingsByProperty" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from attendance_classsetting
+    <where>
+    	  <if test="classId != null" >
+	        and class_id = #{classId,jdbcType=VARCHAR}
+	      </if>
+	      <if test="classSettingId != null" >
+	        and class_setting_id = #{classSettingId,jdbcType=VARCHAR}
+	      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from attendance_classsetting
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="create.model.hrm.AttendanceAlasssetting" >
+    insert into attendance_classsetting (id, class_id, class_setting_id, 
+      absenteeism_late_minutes, is_off_duty_free_check, 
+      permit_late_minutes, serious_late_minutes, 
+      work_time_minutes, yl1, yl2
+      )
+    values (#{id,jdbcType=INTEGER}, #{classId,jdbcType=VARCHAR}, #{classSettingId,jdbcType=VARCHAR}, 
+      #{absenteeismLateMinutes,jdbcType=INTEGER}, #{isOffDutyFreeCheck,jdbcType=VARCHAR}, 
+      #{permitLateMinutes,jdbcType=INTEGER}, #{seriousLateMinutes,jdbcType=INTEGER}, 
+      #{workTimeMinutes,jdbcType=INTEGER}, #{yl1,jdbcType=VARCHAR}, #{yl2,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="create.model.hrm.AttendanceAlasssetting" >
+    insert into attendance_classsetting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="classId != null" >
+        class_id,
+      </if>
+      <if test="classSettingId != null" >
+        class_setting_id,
+      </if>
+      <if test="absenteeismLateMinutes != null" >
+        absenteeism_late_minutes,
+      </if>
+      <if test="isOffDutyFreeCheck != null" >
+        is_off_duty_free_check,
+      </if>
+      <if test="permitLateMinutes != null" >
+        permit_late_minutes,
+      </if>
+      <if test="seriousLateMinutes != null" >
+        serious_late_minutes,
+      </if>
+      <if test="workTimeMinutes != null" >
+        work_time_minutes,
+      </if>
+      <if test="yl1 != null" >
+        yl1,
+      </if>
+      <if test="yl2 != null" >
+        yl2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="classId != null" >
+        #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="classSettingId != null" >
+        #{classSettingId,jdbcType=VARCHAR},
+      </if>
+      <if test="absenteeismLateMinutes != null" >
+        #{absenteeismLateMinutes,jdbcType=INTEGER},
+      </if>
+      <if test="isOffDutyFreeCheck != null" >
+        #{isOffDutyFreeCheck,jdbcType=VARCHAR},
+      </if>
+      <if test="permitLateMinutes != null" >
+        #{permitLateMinutes,jdbcType=INTEGER},
+      </if>
+      <if test="seriousLateMinutes != null" >
+        #{seriousLateMinutes,jdbcType=INTEGER},
+      </if>
+      <if test="workTimeMinutes != null" >
+        #{workTimeMinutes,jdbcType=INTEGER},
+      </if>
+      <if test="yl1 != null" >
+        #{yl1,jdbcType=VARCHAR},
+      </if>
+      <if test="yl2 != null" >
+        #{yl2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="create.model.hrm.AttendanceAlasssetting" >
+    update attendance_classsetting
+    <set >
+      <if test="classId != null" >
+        class_id = #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="classSettingId != null" >
+        class_setting_id = #{classSettingId,jdbcType=VARCHAR},
+      </if>
+      <if test="absenteeismLateMinutes != null" >
+        absenteeism_late_minutes = #{absenteeismLateMinutes,jdbcType=INTEGER},
+      </if>
+      <if test="isOffDutyFreeCheck != null" >
+        is_off_duty_free_check = #{isOffDutyFreeCheck,jdbcType=VARCHAR},
+      </if>
+      <if test="permitLateMinutes != null" >
+        permit_late_minutes = #{permitLateMinutes,jdbcType=INTEGER},
+      </if>
+      <if test="seriousLateMinutes != null" >
+        serious_late_minutes = #{seriousLateMinutes,jdbcType=INTEGER},
+      </if>
+      <if test="workTimeMinutes != null" >
+        work_time_minutes = #{workTimeMinutes,jdbcType=INTEGER},
+      </if>
+      <if test="yl1 != null" >
+        yl1 = #{yl1,jdbcType=VARCHAR},
+      </if>
+      <if test="yl2 != null" >
+        yl2 = #{yl2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="create.model.hrm.AttendanceAlasssetting" >
+    update attendance_classsetting
+    set class_id = #{classId,jdbcType=VARCHAR},
+      class_setting_id = #{classSettingId,jdbcType=VARCHAR},
+      absenteeism_late_minutes = #{absenteeismLateMinutes,jdbcType=INTEGER},
+      is_off_duty_free_check = #{isOffDutyFreeCheck,jdbcType=VARCHAR},
+      permit_late_minutes = #{permitLateMinutes,jdbcType=INTEGER},
+      serious_late_minutes = #{seriousLateMinutes,jdbcType=INTEGER},
+      work_time_minutes = #{workTimeMinutes,jdbcType=INTEGER},
+      yl1 = #{yl1,jdbcType=VARCHAR},
+      yl2 = #{yl2,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

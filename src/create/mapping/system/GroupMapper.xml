@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.system.GroupMapper">
+	<resultMap id="BaseResultMap" type="create.model.system.Group">
+		<id column="tg_id" property="tgId" jdbcType="INTEGER" />
+		<result column="tg_mark" property="tgMark" jdbcType="VARCHAR" />
+		<result column="group_name" property="groupName"
+			jdbcType="VARCHAR" />
+		<result column="parent_tg_id" property="parentTgId"
+			jdbcType="INTEGER" />
+		<result column="descrption" property="descrption"
+			jdbcType="VARCHAR" />
+		<result column="createby" property="createby"
+			jdbcType="INTEGER" />
+		<result column="createtime" property="createtime"
+			jdbcType="DATE" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		tg_id, tg_mark, group_name, parent_tg_id, createby, createtime
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from tgroup where tg_id = #{tgId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tgroup where tg_id = #{tgId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="create.model.system.Group">
+		insert into tgroup (tg_id, tg_mark, group_name, parent_tg_id,
+		createby, createtime ) values (#{tgId,jdbcType=INTEGER},
+		#{tgMark,jdbcType=VARCHAR}, #{groupName,jdbcType=VARCHAR},
+		#{parentTgId,jdbcType=INTEGER}, #{createby,jdbcType=INTEGER},
+		#{createtime,jdbcType=DATE} )
+	</insert>
+	<insert id="insertSelective"
+		parameterType="create.model.system.Group">
+		insert into tgroup
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="tgId != null">tg_id,</if>
+			<if test="tgMark != null">tg_mark,</if>
+			<if test="groupName != null">group_name,</if>
+			<if test="parentTgId != null">parent_tg_id,</if>
+			<if test="createby != null">createby,</if>
+			<if test="createtime != null">createtime,</if>
+			<if test="descrption != null">descrption,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="tgId != null">#{tgId,jdbcType=INTEGER},</if>
+			<if test="tgMark != null">#{tgMark,jdbcType=VARCHAR},</if>
+			<if test="groupName != null">
+				#{groupName,jdbcType=VARCHAR},
+			</if>
+			<if test="parentTgId != null">
+				#{parentTgId,jdbcType=INTEGER},
+			</if>
+			<if test="createby != null">
+				#{createby,jdbcType=INTEGER},
+			</if>
+			<if test="createtime != null">
+				#{createtime,jdbcType=DATE},
+			</if>
+			<if test="descrption != null">
+				#{descrption,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<!--  根据属性查询-->
+	<select id="selectByGroupByParamMap" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from tgroup where 1 = 1
+		<if test="tgMark != null">
+			and tg_mark = #{tgMark,jdbcType=VARCHAR},
+		</if>
+		<if test="groupName != null">
+			and group_name = #{groupName,jdbcType=VARCHAR},
+		</if>
+		<if test="parentTgId != null">
+			and parent_tg_id = #{parentTgId,jdbcType=INTEGER},
+		</if>
+		<if test="createby != null">
+			and createby = #{createby,jdbcType=INTEGER},
+		</if>
+		<if test="createtime != null">
+			and createtime = #{createtime,jdbcType=DATE},
+		</if>
+	</select>
+
+	<update id="updateByPrimaryKeySelective"
+		parameterType="create.model.system.Group">
+		update tgroup
+		<set>
+			<if test="tgMark != null">
+				tg_mark = #{tgMark,jdbcType=VARCHAR},
+			</if>
+			<if test="groupName != null">
+				group_name = #{groupName,jdbcType=VARCHAR},
+			</if>
+			<if test="parentTgId != null">
+				parent_tg_id = #{parentTgId,jdbcType=INTEGER},
+			</if>
+			<if test="createby != null">
+				createby = #{createby,jdbcType=INTEGER},
+			</if>
+			<if test="createtime != null">
+				createtime = #{createtime,jdbcType=DATE},
+			</if>
+			<if test="descrption != null">
+				descrption = #{descrption,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where tg_id = #{tgId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="create.model.system.Group">
+		update tgroup set tg_mark = #{tgMark,jdbcType=VARCHAR},
+		group_name = #{groupName,jdbcType=VARCHAR}, parent_tg_id =
+		#{parentTgId,jdbcType=INTEGER}, createby =
+		#{createby,jdbcType=INTEGER}, createtime =
+		#{createtime,jdbcType=DATE}, descrption =
+		#{descrption,jdbcType=VARCHAR} where tg_id =
+		#{tgId,jdbcType=INTEGER}
+	</update>
+</mapper>

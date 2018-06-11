@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="create.dao.hrm.SysNoticeMapper" >
+  <resultMap id="BaseResultMap" type="create.model.hrm.SysNotice" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="noticeName" property="noticename" jdbcType="VARCHAR" />
+    <result column="noticeFilePath" property="noticefilepath" jdbcType="VARCHAR" />
+    <result column="ReleaseDate" property="releasedate" jdbcType="TIMESTAMP" />
+    <result column="yl1" property="yl1" jdbcType="VARCHAR" />
+    <result column="yl2" property="yl2" jdbcType="VARCHAR" />
+    <result column="yl3" property="yl3" jdbcType="VARCHAR" />
+    <result column="yl4" property="yl4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, noticeName, noticeFilePath, ReleaseDate, yl1, yl2, yl3, yl4
+  </sql>
+  <!--  根据属性查询-->
+	<select id="pageListByParamMap" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from sysnotice
+		<where>
+		      <if test="staffname != null" >
+		        noticeName like concat('%',#{noticeName,jdbcType=VARCHAR},'%')
+		      </if>
+		      <if test="yl3 != null" >
+		        yl3 = #{yl3,jdbcType=VARCHAR}
+		      </if>
+		</where>
+		order by ReleaseDate desc
+	</select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sysnotice
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from sysnotice where id = #{id,jdbcType=INTEGER}
+	</delete>
+  <insert id="insert" parameterType="create.model.hrm.SysNotice" >
+    insert into sysnotice (id, noticeName, noticeFilePath, 
+      ReleaseDate, yl1, yl2, 
+      yl3, yl4)
+    values (#{id,jdbcType=INTEGER}, #{noticename,jdbcType=VARCHAR}, #{noticefilepath,jdbcType=VARCHAR}, 
+      #{releasedate,jdbcType=TIMESTAMP}, #{yl1,jdbcType=VARCHAR}, #{yl2,jdbcType=VARCHAR}, 
+      #{yl3,jdbcType=VARCHAR}, #{yl4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="create.model.hrm.SysNotice" >
+    insert into sysnotice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="noticename != null" >
+        noticeName,
+      </if>
+      <if test="noticefilepath != null" >
+        noticeFilePath,
+      </if>
+      <if test="releasedate != null" >
+        ReleaseDate,
+      </if>
+      <if test="yl1 != null" >
+        yl1,
+      </if>
+      <if test="yl2 != null" >
+        yl2,
+      </if>
+      <if test="yl3 != null" >
+        yl3,
+      </if>
+      <if test="yl4 != null" >
+        yl4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="noticename != null" >
+        #{noticename,jdbcType=VARCHAR},
+      </if>
+      <if test="noticefilepath != null" >
+        #{noticefilepath,jdbcType=VARCHAR},
+      </if>
+      <if test="releasedate != null" >
+        #{releasedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="yl1 != null" >
+        #{yl1,jdbcType=VARCHAR},
+      </if>
+      <if test="yl2 != null" >
+        #{yl2,jdbcType=VARCHAR},
+      </if>
+      <if test="yl3 != null" >
+        #{yl3,jdbcType=VARCHAR},
+      </if>
+      <if test="yl4 != null" >
+        #{yl4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="create.model.hrm.SysNotice" >
+    update sysnotice
+    <set >
+      <if test="noticename != null" >
+        noticeName = #{noticename,jdbcType=VARCHAR},
+      </if>
+      <if test="noticefilepath != null" >
+        noticeFilePath = #{noticefilepath,jdbcType=VARCHAR},
+      </if>
+      <if test="releasedate != null" >
+        ReleaseDate = #{releasedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="yl1 != null" >
+        yl1 = #{yl1,jdbcType=VARCHAR},
+      </if>
+      <if test="yl2 != null" >
+        yl2 = #{yl2,jdbcType=VARCHAR},
+      </if>
+      <if test="yl3 != null" >
+        yl3 = #{yl3,jdbcType=VARCHAR},
+      </if>
+      <if test="yl4 != null" >
+        yl4 = #{yl4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="create.model.hrm.SysNotice" >
+    update sysnotice
+    set noticeName = #{noticename,jdbcType=VARCHAR},
+      noticeFilePath = #{noticefilepath,jdbcType=VARCHAR},
+      ReleaseDate = #{releasedate,jdbcType=TIMESTAMP},
+      yl1 = #{yl1,jdbcType=VARCHAR},
+      yl2 = #{yl2,jdbcType=VARCHAR},
+      yl3 = #{yl3,jdbcType=VARCHAR},
+      yl4 = #{yl4,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
