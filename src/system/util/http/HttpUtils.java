@@ -12,6 +12,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import create.test.dingTalk.SSLClient;
+import test.Main;
+
 /**
  * http请求工具类
  * @author ghh
@@ -47,6 +49,8 @@ public class HttpUtils {
         return result;
     }
 
+	private static final String ACCESS_TOKEN_URL="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxc2c705d84eec52ed&secret=3a6e5c939072c88397741382db94191b";
+	
     public static String doGet(String url){
         String result = null;
         HttpGet request = new HttpGet(url);
@@ -62,4 +66,9 @@ public class HttpUtils {
         return result;
 	
 }
+    
+    public static void main(String[] args) {
+    	System.out.println(doGet(ACCESS_TOKEN_URL));
+	}
+
 }
