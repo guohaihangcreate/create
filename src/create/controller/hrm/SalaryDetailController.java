@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
@@ -486,10 +487,10 @@ public class SalaryDetailController {
     		}
     		List<SalaryDetail> salaryDetails = salaryDetailService.selectSalaryByParamMap(paramMap);
 			
-    		if(salaryDetails!=null&&salaryDetails.size()==0){
+    		if(salaryDetails!=null&&salaryDetails.size()==0&&paramMap.get("idno")!=null&&StringUtils.isNotEmpty((String) paramMap.get("idno"))){
     			salaryDetailService.insertSalaryDetail(sd);
     		}else{
-    			if(salaryDetails!=null&&salaryDetails.size()>0){
+    			if(salaryDetails!=null&&salaryDetails.size()>0&&paramMap.get("idno")!=null&&StringUtils.isNotEmpty((String) paramMap.get("idno"))){
     				sd.setId(salaryDetails.get(0).getId());
     			}
     			salaryDetailService.updateSalaryDetail(sd);
