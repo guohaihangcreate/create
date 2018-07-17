@@ -1,10 +1,11 @@
-#Thu Jan 18 14:45:37 CST 2018
 eclipse.preferences.version=1
-encoding//WebRoot/WEB-INF/classes/config/MailServer.properties=UTF-8
+encoding//WebContent/WEB-INF/classes/config/MailServer.properties=UTF-8
 encoding//src/config/MailServer.properties=UTF-8
+encoding//src/config/config.properties=UTF-8
 encoding//src/config/dingtalk.properties=GBK
 encoding//src/create/controller/hrm/TreeNodeController.java=UTF-8
 encoding//src/create/controller/hrm/UserController.java=GBK
 encoding//src/system/util/StringUtils_.java=UTF-8
 encoding//src/test/SendMailUtil.java=GBK
 encoding/<project>=UTF-8
+encoding/src=UTF-8
